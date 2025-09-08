@@ -1,4 +1,5 @@
-﻿using Dominio.Interfaces;
+﻿using Dominio.Exceptions;
+using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,27 @@ namespace Dominio.Entidades
 {
     public class TipoGasto : IValidable
     {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
         public void Validar()
         {
-            throw new NotImplementedException();
+            ValidarNombre();
+            ValidarDescripcion();
+        }
+        private void ValidarNombre()
+        {
+            if (string.IsNullOrEmpty(Nombre))
+            {
+                throw new TipoGastoException("El nombre del tipo de gasto no puede ser vacio.");
+            }
+        }
+        private void ValidarDescripcion()
+        {
+            if (string.IsNullOrEmpty(Descripcion))
+            {
+                throw new TipoGastoException("La descripcion del tipo de gasto no puede ser vacia.");
+            }
         }
     }
 }
