@@ -1,3 +1,9 @@
+using AccesoDatos.EnMemoria;
+using AccesoDatos.EntityFramework.Repositorios;
+using Dominio.InterfacesRepositorio;
+using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+
 namespace DominioWebApp
 {
     public class Program
@@ -8,6 +14,12 @@ namespace DominioWebApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Inicializamos Repositorios
+            builder.Services.AddScoped<ITipoGastoRepositorio, RepositorioTipoGastosEF>();
+
+            // Inicializamos Casos de Uso
+            builder.Services.AddScoped<IObtenerTipoGastos, ObtenerTipoGastosCU>();
 
             var app = builder.Build();
 
@@ -28,7 +40,7 @@ namespace DominioWebApp
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=TipoGasto}/{action=Index}/{id?}");
 
             app.Run();
         }

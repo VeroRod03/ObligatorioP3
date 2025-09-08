@@ -1,21 +1,20 @@
 ﻿using Dominio.Entidades;
 using Dominio.InterfacesRepositorio;
-using Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AccesoDatos.EnMemoria
+namespace AccesoDatos.EntityFramework.Repositorios
 {
-    public class RepositorioTipoGasto : ITipoGastoRepositorio
+    public class RepositorioTipoGastosEF : ITipoGastoRepositorio
     {
+        private DominioContext _context;
 
-        private List<TipoGasto> _tipoGastos = new List<TipoGasto>();
-
-        public RepositorioTipoGasto()
+        public RepositorioTipoGastosEF()
         {
+            _context = new DominioContext();
         }
         public bool Add(TipoGasto obj)
         {
@@ -24,7 +23,7 @@ namespace AccesoDatos.EnMemoria
 
         public IEnumerable<TipoGasto> FindAll()
         {
-            return new List<TipoGasto>(_tipoGastos);
+            return _context.TipoGastos;
         }
 
         public TipoGasto FindById(int id)
@@ -43,3 +42,4 @@ namespace AccesoDatos.EnMemoria
         }
     }
 }
+

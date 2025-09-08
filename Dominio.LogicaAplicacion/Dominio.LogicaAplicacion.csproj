@@ -11,9 +11,4 @@
     <ProjectReference Include="..\Dominio\Dominio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Mappers\" />
-  </ItemGroup>
-
 </Project>
