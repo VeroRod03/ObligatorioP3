@@ -15,6 +15,7 @@ namespace Dominio.LogicaAplicacion.Mappers
         {
             return new TipoGasto
             {
+                Id = dto.Id,
                 Nombre = dto.Nombre,
                 Descripcion = dto.Descripcion,
             };
@@ -23,6 +24,7 @@ namespace Dominio.LogicaAplicacion.Mappers
         {
             return new TipoGastoDTO
             {
+                Id = gasto.Id,
                 Nombre = gasto.Nombre,
                 Descripcion = gasto.Descripcion,
             };
