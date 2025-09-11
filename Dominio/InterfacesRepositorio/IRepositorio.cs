@@ -8,9 +8,9 @@ namespace Dominio.InterfacesRepositorio
 {
     public interface IRepositorio<T>
     {
-        bool Add(T obj);
-        bool Remove(int id);
-        bool Update(T obj);
+        void Add(T obj);
+        void Remove(int id);
+        void Update(T obj);
         IEnumerable<T> FindAll();
         T FindById(int id);
     }

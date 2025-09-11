@@ -10,17 +10,18 @@ using System.Threading.Tasks;
 
 namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
 {
-    public class AltaTipoGastoCU : IAltaTipoGasto
+    public class ObtenerTipoGastoPorIdCU : IGetById
     {
         private ITipoGastoRepositorio _repositorio;
-        public AltaTipoGastoCU(ITipoGastoRepositorio repositorio)
+        public ObtenerTipoGastoPorIdCU (ITipoGastoRepositorio repositorio)
         {
             _repositorio = repositorio;
         }
 
-        public void AgregarTipoGasto(TipoGastoDTO nuevo)
+        public TipoGastoDTO ObtenerTipoGasto(int id)
         {
-            _repositorio.Add(TipoGastoMapper.FromDTO(nuevo));
+            return TipoGastoMapper.ToDTO(_repositorio.FindById(id));
         }
-    }
+    
+}
 }

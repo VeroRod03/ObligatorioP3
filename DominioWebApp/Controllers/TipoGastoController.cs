@@ -1,4 +1,5 @@
-﻿using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+﻿using Dominio.LogicaAplicacion.DTOs;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,20 @@ namespace DominioWebApp.Controllers
     public class TipoGastoController : Controller
     {
         private IObtenerTipoGastos _obtenerTipoGastosCU;
-        public TipoGastoController(IObtenerTipoGastos obtenerTipoGastosCU)
+        private IAltaTipoGasto _altaTipoGastoCU;
+        private IEditarTipoGasto _editarTipoGastoCU;
+        private IGetById _getById;
+
+        public TipoGastoController(
+            IObtenerTipoGastos obtenerTipoGastosCU, 
+            IAltaTipoGasto altaTipoGastoCU,
+            IEditarTipoGasto editarTipoGastoCU,
+            IGetById getById)
         {
             _obtenerTipoGastosCU = obtenerTipoGastosCU;
+            _altaTipoGastoCU = altaTipoGastoCU;
+            _editarTipoGastoCU = editarTipoGastoCU;
+            _getById = getById;
         }
         // GET: TipoGastoController
         public ActionResult Index()
@@ -32,10 +44,11 @@ namespace DominioWebApp.Controllers
         // POST: TipoGastoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(TipoGastoDTO gasto)
         {
             try
             {
+                _altaTipoGastoCU.AgregarTipoGasto(gasto);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -47,16 +60,17 @@ namespace DominioWebApp.Controllers
         // GET: TipoGastoController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(_getById.ObtenerTipoGasto(id));
         }
 
         // POST: TipoGastoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(TipoGastoDTO dto)
         {
             try
             {
+                _editarTipoGastoCU.EditarTipoGasto(dto);
                 return RedirectToAction(nameof(Index));
             }
             catch

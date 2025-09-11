@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,22 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             _context = new DominioContext();
         }
-        public bool Add(TipoGasto obj)
+        public void Add(TipoGasto obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                obj.Validar();
+                _context.Add(obj);
+                _context.SaveChanges();
+            }
+            catch(TipoGastoException tge)
+            {
+                throw tge;
+            }
+            catch(Exception ex)
+            {
+                throw new TipoGastoException("Hubo un error: ", ex);
+            }
         }
 
         public IEnumerable<TipoGasto> FindAll()
@@ -28,17 +42,37 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public TipoGasto FindById(int id)
         {
-            throw new NotImplementedException();
+            foreach (TipoGasto obj in _context.TipoGastos)
+            {
+                if (obj.Id == id)
+                {
+                    return obj;
+                }
+            }
+            throw new TipoGastoException("No fue encontrado un tipo de gasto con ese id");
         }
 
-        public bool Remove(int id)
+        public void Remove(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(TipoGasto obj)
+        public void Update(TipoGasto obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                obj.Validar();
+                _context.TipoGastos.Update(obj);
+                _context.SaveChanges();
+            }
+            catch (TipoGastoException tge)
+            {
+                throw tge;
+            }
+            catch (Exception ex)
+            {
+                throw new TipoGastoException("Hubo un error: ", ex);
+            }
         }
     }
 }

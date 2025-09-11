@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto
 {
-    public interface IAltaTipoGasto
+    public interface IGetById
     {
-        public void AgregarTipoGasto(TipoGastoDTO nuevo);
+        public TipoGastoDTO ObtenerTipoGasto(int id);
     }
 }
