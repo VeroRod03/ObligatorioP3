@@ -1,5 +1,6 @@
 ﻿using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,17 +12,21 @@ namespace DominioWebApp.Controllers
         private IAltaTipoGasto _altaTipoGastoCU;
         private IEditarTipoGasto _editarTipoGastoCU;
         private IGetById _getById;
+        private IEliminarTipoGasto _eliminarTipoGastoCU;
+
 
         public TipoGastoController(
             IObtenerTipoGastos obtenerTipoGastosCU, 
             IAltaTipoGasto altaTipoGastoCU,
             IEditarTipoGasto editarTipoGastoCU,
-            IGetById getById)
+            IGetById getById,
+            IEliminarTipoGasto eliminarTipoGastoCU)
         {
             _obtenerTipoGastosCU = obtenerTipoGastosCU;
             _altaTipoGastoCU = altaTipoGastoCU;
             _editarTipoGastoCU = editarTipoGastoCU;
             _getById = getById;
+            _eliminarTipoGastoCU = eliminarTipoGastoCU;
         }
         // GET: TipoGastoController
         public ActionResult Index()
@@ -82,16 +87,18 @@ namespace DominioWebApp.Controllers
         // GET: TipoGastoController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View((_getById.ObtenerTipoGasto(id)));
         }
 
         // POST: TipoGastoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, TipoGastoDTO dto)
         {
             try
             {
+
+                _eliminarTipoGastoCU.EliminarTipoGasto(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -4,6 +4,7 @@ using AccesoDatos.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(DominioContext))]
-    partial class DominioContextModelSnapshot : ModelSnapshot
+    [Migration("20250918173938_UsuariosPagos")]
+    partial class UsuariosPagos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,9 +125,6 @@ namespace AccesoDatos.Migrations
                     b.Property<int>("EquipoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rol")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EquipoId");
@@ -136,11 +136,11 @@ namespace AccesoDatos.Migrations
                 {
                     b.HasBaseType("Dominio.Entidades.Pago");
 
-                    b.Property<DateTime>("Desde")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Desde")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("Hasta")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Hasta")
+                        .HasColumnType("date");
 
                     b.HasDiscriminator().HasValue("Recurrente");
                 });
@@ -149,8 +149,8 @@ namespace AccesoDatos.Migrations
                 {
                     b.HasBaseType("Dominio.Entidades.Pago");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<string>("NumRecibo")
                         .IsRequired()

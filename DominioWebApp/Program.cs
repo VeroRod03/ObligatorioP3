@@ -22,9 +22,7 @@ namespace DominioWebApp
             builder.Services.AddScoped<IAltaTipoGasto, AltaTipoGastoCU>();
             builder.Services.AddScoped<IGetById, ObtenerTipoGastoPorIdCU>();
             builder.Services.AddScoped<IEditarTipoGasto, EditarTipoGastoCU>();
-
-
-
+            builder.Services.AddScoped<IEliminarTipoGasto, EliminarTipoGastoCU>();
 
             var app = builder.Build();
 

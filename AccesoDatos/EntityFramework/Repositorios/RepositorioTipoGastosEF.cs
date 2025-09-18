@@ -52,9 +52,35 @@ namespace AccesoDatos.EntityFramework.Repositorios
             throw new TipoGastoException("No fue encontrado un tipo de gasto con ese id");
         }
 
+        //???
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TipoGasto aBorrar = new TipoGasto { Id = id };
+
+                foreach (Recurrente r in _context.Recurrentes)
+                {
+                    if (r.TipoGasto.Equals(aBorrar))
+                    {
+                        if (r.Hasta == null || r.Hasta > DateTime.Today)
+                        {
+                            throw new TipoGastoException("El tipo de gasto esta en uso.");
+                        }
+                    }
+                }
+
+                _context.TipoGastos.Remove(aBorrar);
+                _context.SaveChanges();
+            }
+            catch (TipoGastoException tge)
+            {
+                throw tge;
+            }
+            catch (Exception ex)
+            {
+                throw new TipoGastoException("Hubo un error: ", ex);
+            }
         }
 
         public void Update(TipoGasto obj)

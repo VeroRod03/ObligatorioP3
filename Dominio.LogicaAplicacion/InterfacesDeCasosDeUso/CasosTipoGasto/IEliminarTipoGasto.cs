@@ -8,5 +8,6 @@ namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto
 {
     public interface IEliminarTipoGasto
     {
+        public void EliminarTipoGasto(int id);
     }
 }

@@ -16,6 +16,7 @@ namespace Dominio.Entidades
         public string Nombre { get; set; }
         [Required(ErrorMessage = "La descripcion del tipo de gasto es requerido")]
         public string Descripcion { get; set; }
+        public TipoGasto() { }
         public void Validar()
         {
             ValidarNombre();
@@ -35,5 +36,6 @@ namespace Dominio.Entidades
                 throw new TipoGastoException("La descripcion del tipo de gasto no puede ser vacia.");
             }
         }
+
     }
 }

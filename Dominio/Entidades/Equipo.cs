@@ -1,4 +1,5 @@
-﻿using Dominio.Interfaces;
+﻿using Dominio.Exceptions;
+using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,18 @@ namespace Dominio.Entidades
 {
     public class Equipo : IValidable
     {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
         public void Validar()
         {
-            throw new NotImplementedException();
+            ValidarNombre();
+        }
+        private void ValidarNombre()
+        {
+            if (string.IsNullOrEmpty(Nombre))
+            {
+                throw new EquipoException("El nombre del equipo no puede ser vacio");
+            }
         }
     }
 }

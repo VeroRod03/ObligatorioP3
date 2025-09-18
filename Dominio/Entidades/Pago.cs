@@ -1,4 +1,6 @@
-﻿using Dominio.Interfaces;
+﻿using Dominio.Enumerations;
+using Dominio.Exceptions;
+using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,69 @@ namespace Dominio.Entidades
 {
     public abstract class Pago : IValidable
     {
+        public int Id { get; set; }
+        public TipoGasto TipoGasto { get; set; }
+        public MetodoPago MetodoPago { get; set; }
+        public Usuario Usuario { get; set; }
+        public Equipo Equipo { get; set; }
+        public string Descripcion { get; set; }
+        public double Monto { get; set; }
+
+        public Pago() { }
+
         public void Validar()
         {
-            throw new NotImplementedException();
+            ValidarTipoGasto();
+            ValidarMetodoPago();
+            ValidarUsuario();
+            ValidarEquipo();
+            ValidarDescripcion();
+            ValidarMonto();
+
         }
+
+        private void ValidarTipoGasto()
+        {
+            if(TipoGasto == null)
+            {
+                throw new PagoException("El tipo de gasto no puede ser nulo");
+            }
+        }
+        private void ValidarMetodoPago()
+        {
+            if (MetodoPago == null)
+            {
+                throw new PagoException("El metodo de pago no puede ser nulo");
+            }
+        }
+        private void ValidarUsuario()
+        {
+            if (Usuario == null)
+            {
+                throw new PagoException("El usuario no puede ser nulo");
+            }
+        }
+        private void ValidarEquipo()
+        {
+            if (Equipo == null)
+            {
+                throw new PagoException("El equipo no puede ser nulo");
+            }
+        }
+        private void ValidarDescripcion()
+        {
+            if (string.IsNullOrEmpty(Descripcion))
+            {
+                throw new PagoException("La descripcion no puede ser vacia");
+            }
+        }
+        private void ValidarMonto()
+        {
+            if (Monto <= 0)
+            {
+                throw new PagoException("El monto no puede ser mayor a 0");
+            }
+        }
+
     }
 }

@@ -9,6 +9,9 @@ namespace Dominio.Entidades
 {
     public class Unico : Pago, IValidable
     {
+        public DateTime Fecha { get; set; }
+        public string NumRecibo {  get; set; }
+
         public void Validar()
         {
             throw new NotImplementedException();
