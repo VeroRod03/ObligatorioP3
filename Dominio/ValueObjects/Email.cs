@@ -13,7 +13,7 @@ namespace Dominio.ValueObjects
     public class Email
     {
         static string dominio = "@laEmpresa.com";
-        public string EmailUsuario { get; private set; }
+        public string EmailUsuario { get; set; } //private??
         public Email(NombreCompleto nombreCompleto)
         {
             string uno;

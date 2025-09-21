@@ -16,8 +16,7 @@ namespace AccesoDatos.EntityFramework
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<Recurrente> Recurrentes { get; set; }
         public DbSet<Unico> Unicos { get; set; }
-
-
+        public DbSet<Auditoria> Auditorias { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,8 +1,11 @@
-﻿using Dominio.LogicaAplicacion.DTOs;
+﻿using AccesoDatos.EntityFramework;
+using Dominio.Entidades;
+using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DominioWebApp.Controllers
 {
@@ -13,7 +16,6 @@ namespace DominioWebApp.Controllers
         private IEditarTipoGasto _editarTipoGastoCU;
         private IGetById _getById;
         private IEliminarTipoGasto _eliminarTipoGastoCU;
-
 
         public TipoGastoController(
             IObtenerTipoGastos obtenerTipoGastosCU, 

@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Dominio.InterfacesRepositorio
 {
     public interface IUsuarioRepositorio : IRepositorio<Usuario>
     {
+        public Usuario Login(string email, string pass);
     }
 }

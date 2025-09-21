@@ -1,7 +1,9 @@
 using AccesoDatos.EntityFramework.Repositorios;
 using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
+using Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 
 namespace DominioWebApp
 {
@@ -14,8 +16,12 @@ namespace DominioWebApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddSession();
+
             // Inicializamos Repositorios
             builder.Services.AddScoped<ITipoGastoRepositorio, RepositorioTipoGastosEF>();
+            builder.Services.AddScoped<IUsuarioRepositorio, RepositorioUsuariosEF>();
+
 
             // Inicializamos Casos de Uso
             builder.Services.AddScoped<IObtenerTipoGastos, ObtenerTipoGastosCU>();
@@ -23,6 +29,8 @@ namespace DominioWebApp
             builder.Services.AddScoped<IGetById, ObtenerTipoGastoPorIdCU>();
             builder.Services.AddScoped<IEditarTipoGasto, EditarTipoGastoCU>();
             builder.Services.AddScoped<IEliminarTipoGasto, EliminarTipoGastoCU>();
+
+            builder.Services.AddScoped<ILogin, LoginCU>();
 
             var app = builder.Build();
 
@@ -39,11 +47,13 @@ namespace DominioWebApp
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Login}/{id?}");
 
             app.Run();
         }

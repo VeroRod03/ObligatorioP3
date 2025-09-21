@@ -1,31 +1,51 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using Dominio.Exceptions;
+using Dominio.LogicaAplicacion.DTOs;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+using DominioWebApp.Filters;
 using DominioWebApp.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace DominioWebApp.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private ILogin _loginCU;
+    public HomeController(ILogin loginCU)
     {
-        _logger = logger;
+        _loginCU = loginCU;
     }
-
+    [FilterAutenticado]
     public IActionResult Index()
     {
         return View();
     }
-
-    public IActionResult Privacy()
+    public IActionResult Login(string mensaje)
     {
+        ViewBag.Error = mensaje;
         return View();
     }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    
+    [HttpPost]
+    public IActionResult Login(string email, string contra)
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        try
+        {
+            UsuarioDTO logueado = _loginCU.Login(email, contra);
+            HttpContext.Session.SetString("usuario", logueado.Email);
+            HttpContext.Session.SetString("usuarioRol", logueado.Rol.ToString());
+            return RedirectToAction("Index");
+        }
+        catch (UsuarioException ue)
+        {
+            ViewBag.Error = ue.Message;
+            return View();
+        }
+        catch (Exception e)
+        {
+            ViewBag.Error = "Error inesperado.";
+            return View();
+        }
     }
+    
 }

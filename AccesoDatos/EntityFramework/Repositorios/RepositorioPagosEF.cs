@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AccesoDatos.EntityFramework.Repositorios
 {
-    public class RepositorioPagoEF : IPagoRepositorio
+    public class RepositorioPagosEF : IPagoRepositorio
     {
         private DominioContext _context;
 
-        public RepositorioPagoEF()
+        public RepositorioPagosEF()
         {
             _context = new DominioContext();
         }

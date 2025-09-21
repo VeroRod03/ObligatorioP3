@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Exceptions
 {
-    class UsuarioException : Exception
+    public class UsuarioException : Exception
     {
         public UsuarioException() { }
         public UsuarioException(string mensaje) : base(mensaje) { }
