@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using DominioWebApp.Filters;
 using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,7 @@ namespace DominioWebApp.Controllers
             _eliminarTipoGastoCU = eliminarTipoGastoCU;
         }
         // GET: TipoGastoController
+        [FilterAdministrador]
         public ActionResult Index()
         {
             return View(_obtenerTipoGastosCU.ObtenerTipoGastos());
