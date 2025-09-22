@@ -18,7 +18,7 @@ namespace Dominio.LogicaAplicacion.Mappers
                 Id = dto.Id,
                 NombreCompleto = new NombreCompleto(dto.Nombre,dto.Apellido),
                 Contra = dto.Contra,
-                Email = new Email { EmailUsuario = dto.Email},
+                Email = new Email (dto.Email),
                 EquipoId = dto.EquipoId,
                 Equipo = EquipoMapper.FromDTO(dto.Equipo),
                 Rol = dto.Rol
