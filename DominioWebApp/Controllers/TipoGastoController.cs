@@ -101,7 +101,6 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-
                 _eliminarTipoGastoCU.EliminarTipoGasto(id,HttpContext.Session.GetInt32("usuarioId"));
                 return RedirectToAction(nameof(Index));
             }

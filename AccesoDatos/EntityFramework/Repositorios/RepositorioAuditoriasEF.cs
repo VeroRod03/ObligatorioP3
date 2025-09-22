@@ -19,7 +19,8 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public void Add(Auditoria obj)
         {
-            throw new NotImplementedException();
+            _context.Auditorias.Add(obj);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Auditoria> FindAll()
