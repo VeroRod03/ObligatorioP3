@@ -21,6 +21,8 @@ namespace DominioWebApp
             // Inicializamos Repositorios
             builder.Services.AddScoped<ITipoGastoRepositorio, RepositorioTipoGastosEF>();
             builder.Services.AddScoped<IUsuarioRepositorio, RepositorioUsuariosEF>();
+            builder.Services.AddScoped<IAuditoriaRepositorio, RepositorioAuditoriasEF>();
+
 
 
             // Inicializamos Casos de Uso

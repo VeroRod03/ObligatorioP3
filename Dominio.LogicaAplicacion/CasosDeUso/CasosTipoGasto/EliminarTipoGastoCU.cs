@@ -18,7 +18,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             _repositorio = repositorio;
             _repositorioAuditoria = repositorioAuditoria;
         }
-        public void EliminarTipoGasto(int id, int usuarioId)
+        public void EliminarTipoGasto(int id, int? usuarioId)
         {
             _repositorio.Remove(id);
             _repositorioAuditoria.Add(new Auditoria

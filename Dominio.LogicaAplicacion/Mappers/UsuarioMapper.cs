@@ -26,6 +26,11 @@ namespace Dominio.LogicaAplicacion.Mappers
         }
         public static UsuarioDTO ToDTO(Usuario usuario)
         {
+            EquipoDTO equipoDTO = null;
+            if (usuario.Equipo != null)
+            {
+                equipoDTO = EquipoMapper.ToDTO(usuario.Equipo);
+            }
             return new UsuarioDTO
             {
                 Id = usuario.Id,
@@ -34,7 +39,7 @@ namespace Dominio.LogicaAplicacion.Mappers
                 Contra = usuario.Contra,
                 Email = usuario.Email.EmailUsuario,
                 EquipoId = usuario.EquipoId,
-                Equipo = EquipoMapper.ToDTO(usuario.Equipo),
+                Equipo = equipoDTO,
                 Rol = usuario.Rol
             };
         }

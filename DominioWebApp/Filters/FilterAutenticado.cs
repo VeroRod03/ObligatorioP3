@@ -7,7 +7,7 @@ namespace DominioWebApp.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            string logueado = context.HttpContext.Session.GetString("usuario");
+            string logueado = context.HttpContext.Session.GetString("usuarioId");
             if (string.IsNullOrWhiteSpace(logueado))
             {
                 context.Result = new RedirectToActionResult("Login", "Home", new { mensaje = "Inicie sesion para continuar." });

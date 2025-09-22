@@ -42,20 +42,5 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             throw new NotImplementedException();
         }
-
-        //???
-        public void VerificarTipoGastoEnUso(TipoGasto gasto)
-        {
-            foreach(Recurrente r in _context.Recurrentes)
-            {
-                if (r.TipoGasto.Equals(gasto))
-                {
-                    if(r.Hasta == null || r.Hasta > DateTime.Today)
-                    {
-                        throw new TipoGastoException("El tipo de gasto esta en uso.");
-                    }
-                }
-            }
-        }
     }
 }

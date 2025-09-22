@@ -24,7 +24,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             _repositorioAuditoria = repositorioAuditoria; 
         }
 
-        public void AgregarTipoGasto(TipoGastoDTO nuevo,int usuarioId)
+        public void AgregarTipoGasto(TipoGastoDTO nuevo,int? usuarioId)
         {
             _repositorio.Add(TipoGastoMapper.FromDTO(nuevo));
 
@@ -34,7 +34,6 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
                 Fecha = DateTime.Today,
                 UsuarioId = usuarioId
             });
-
 
         }
     }

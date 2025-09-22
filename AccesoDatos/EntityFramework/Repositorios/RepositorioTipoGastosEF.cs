@@ -1,6 +1,7 @@
 ﻿using Dominio.Entidades;
 using Dominio.Exceptions;
 using Dominio.InterfacesRepositorio;
+using Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,26 +53,22 @@ namespace AccesoDatos.EntityFramework.Repositorios
             throw new TipoGastoException("No fue encontrado un tipo de gasto con ese id");
         }
 
-        //???
         public void Remove(int id)
         {
             try
             {
                 TipoGasto aBorrar = new TipoGasto { Id = id };
-                //_repositorio.VerificarTipoGastoEnUso(aBorrar);
 
-                foreach (Recurrente r in _context.Recurrentes)
+                Pago pago = _context.Pagos.Where(
+                                pago =>
+                                pago.TipoGasto.Id == id
+                                ).FirstOrDefault();
+
+                if ( pago != null)
                 {
-                    if (r.TipoGasto.Equals(aBorrar))
-                    {
-                        if (r.Hasta == null || r.Hasta >= DateTime.Today)
-                        {
-                            throw new TipoGastoException("El tipo de gasto esta en uso.");
-                        }
-                    }
+                    throw new TipoGastoException("El tipo de gasto esta en uso.");
                 }
                 _context.TipoGastos.Remove(aBorrar);
-
                 _context.SaveChanges();
             }
             catch (TipoGastoException tge)

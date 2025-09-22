@@ -9,6 +9,5 @@ namespace Dominio.InterfacesRepositorio
 {
     public interface IPagoRepositorio : IRepositorio<Pago>
     {
-        public void VerificarTipoGastoEnUso(TipoGasto gasto);
     }
 }

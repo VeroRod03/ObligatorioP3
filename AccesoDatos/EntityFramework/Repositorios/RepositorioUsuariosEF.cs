@@ -22,18 +22,18 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public Usuario Login(string email, string pass)
         {
-            foreach (Usuario usuario in _context.Usuarios)
+            Usuario logueado = _context.Usuarios.Where(
+                            user =>
+                            user.Email.EmailUsuario == email
+                            && user.Contra == pass
+                        ).FirstOrDefault();
+
+            if (logueado == null)
             {
-                if (usuario.Email.EmailUsuario == email)
-                {
-                    if (pass == usuario.Contra)
-                    {
-                        return usuario;
-                    }
-                    throw new UsuarioException("Usuario o contraseña incorrecta.");
-                }
+                throw new UsuarioException("Usuario o contraseña incorrecta.");
             }
-            throw new UsuarioException("Usuario o contraseña incorrecta.");
+
+            return logueado;
         }
         public void Add(Usuario obj)
         {
@@ -42,7 +42,8 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Usuario> FindAll()
         {
-            throw new NotImplementedException();
+            return _context.Usuarios.Include(content => content.Equipo);
+
         }
 
         public Usuario FindById(int id)
