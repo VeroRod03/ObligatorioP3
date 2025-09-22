@@ -32,7 +32,7 @@ public class HomeController : Controller
         try
         {
             UsuarioDTO logueado = _loginCU.Login(email, contra);
-            HttpContext.Session.SetString("usuario", logueado.Email);
+            HttpContext.Session.SetInt32("usuarioId", logueado.Id);
             HttpContext.Session.SetString("usuarioRol", logueado.Rol.ToString());
             return RedirectToAction("Index");
         }

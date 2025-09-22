@@ -1,4 +1,5 @@
-﻿using Dominio.InterfacesRepositorio;
+﻿using Dominio.Entidades;
+using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.Mappers;
@@ -13,13 +14,22 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
     public class EditarTipoGastoCU : IEditarTipoGasto
     {
         private ITipoGastoRepositorio _repositorio;
-        public EditarTipoGastoCU(ITipoGastoRepositorio repositorio)
+        private IAuditoriaRepositorio _repositorioAuditoria;
+        public EditarTipoGastoCU(ITipoGastoRepositorio repositorio, IAuditoriaRepositorio repositorioAuditoria)
         {
             _repositorio = repositorio;
+            _repositorioAuditoria = repositorioAuditoria;
         }
-        public void EditarTipoGasto(TipoGastoDTO gasto)
+        public void EditarTipoGasto(TipoGastoDTO gasto,int usuarioId)
         {
             _repositorio.Update(TipoGastoMapper.FromDTO(gasto));
+
+            _repositorioAuditoria.Add(new Auditoria
+            {
+                Accion = "Editar",
+                Fecha = DateTime.Today,
+                UsuarioId = usuarioId
+            });
         }
     }
 }

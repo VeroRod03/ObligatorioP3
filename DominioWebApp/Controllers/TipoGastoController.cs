@@ -55,7 +55,7 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                _altaTipoGastoCU.AgregarTipoGasto(gasto);
+                _altaTipoGastoCU.AgregarTipoGasto(gasto,HttpContext.Session.GetInt32("usuarioId"));
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -77,7 +77,7 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                _editarTipoGastoCU.EditarTipoGasto(dto);
+                _editarTipoGastoCU.EditarTipoGasto(dto,HttpContext.Session.GetInt32("usuarioId"));
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -100,7 +100,7 @@ namespace DominioWebApp.Controllers
             try
             {
 
-                _eliminarTipoGastoCU.EliminarTipoGasto(id);
+                _eliminarTipoGastoCU.EliminarTipoGasto(id,HttpContext.Session.GetInt32("usuarioId"));
                 return RedirectToAction(nameof(Index));
             }
             catch

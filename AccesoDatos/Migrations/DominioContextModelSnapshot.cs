@@ -22,6 +22,31 @@ namespace AccesoDatos.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Dominio.Entidades.Auditoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Accion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Auditorias");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.Equipo", b =>
                 {
                     b.Property<int>("Id")
@@ -56,9 +81,6 @@ namespace AccesoDatos.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<int>("EquipoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MetodoPago")
                         .HasColumnType("int");
 
@@ -72,8 +94,6 @@ namespace AccesoDatos.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EquipoId");
 
                     b.HasIndex("TipoGastoId");
 
@@ -159,14 +179,19 @@ namespace AccesoDatos.Migrations
                     b.HasDiscriminator().HasValue("Unico");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Pago", b =>
+            modelBuilder.Entity("Dominio.Entidades.Auditoria", b =>
                 {
-                    b.HasOne("Dominio.Entidades.Equipo", "Equipo")
+                    b.HasOne("Dominio.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("EquipoId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Pago", b =>
+                {
                     b.HasOne("Dominio.Entidades.TipoGasto", "TipoGasto")
                         .WithMany()
                         .HasForeignKey("TipoGastoId")
@@ -178,8 +203,6 @@ namespace AccesoDatos.Migrations
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Equipo");
 
                     b.Navigation("TipoGasto");
 

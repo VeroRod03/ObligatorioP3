@@ -18,7 +18,7 @@ namespace Dominio.Entidades
         public NombreCompleto NombreCompleto { get; set; } 
         public string Contra {  get; set; }
         public Email Email {  get; set; }
-        //[ForeignKey(nameof(Equipo))] public int EquipoId { get; set; }
+        [ForeignKey(nameof(Equipo))] public int EquipoId { get; set; }
         public Equipo Equipo { get; set; }
         public RolUsuario Rol {  get; set; }
 

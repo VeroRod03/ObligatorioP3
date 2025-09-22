@@ -16,7 +16,8 @@ namespace Dominio.LogicaAplicacion.DTOs
         public string Apellido { get; set; }
         public string Contra { get; set; }
         public string Email { get; set; }
-        public Equipo Equipo { get; set; }
+        public int EquipoId { get; set; } //?
+        public EquipoDTO Equipo { get; set; }
         public RolUsuario Rol { get; set; }
     }
 }

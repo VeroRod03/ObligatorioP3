@@ -13,13 +13,11 @@ namespace Dominio.Entidades
     public abstract class Pago : IValidable
     {
         public int Id { get; set; }
-        //[ForeignKey(nameof(TipoGasto))] public int TipoGastoId { get; set; }
+        [ForeignKey(nameof(TipoGasto))] public int TipoGastoId { get; set; }
         public TipoGasto TipoGasto { get; set; }
         public MetodoPago MetodoPago { get; set; }
-        //[ForeignKey(nameof(Usuario))] public int UsuarioId { get; set; }
+        [ForeignKey(nameof(Usuario))] public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
-        //[ForeignKey(nameof(Equipo))] public int EquipoId { get; set; }
-        public Equipo Equipo { get; set; }
         public string Descripcion { get; set; }
         public double Monto { get; set; }
 
@@ -59,10 +57,10 @@ namespace Dominio.Entidades
         }
         private void ValidarEquipo()
         {
-            if (Equipo == null)
-            {
-                throw new PagoException("El equipo no puede ser nulo");
-            }
+            //if (Equipo == null)
+            //{
+            //    throw new PagoException("El equipo no puede ser nulo");
+            //}
         }
         private void ValidarDescripcion()
         {

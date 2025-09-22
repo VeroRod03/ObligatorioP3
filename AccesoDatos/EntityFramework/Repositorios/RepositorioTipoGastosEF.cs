@@ -12,14 +12,10 @@ namespace AccesoDatos.EntityFramework.Repositorios
     public class RepositorioTipoGastosEF : ITipoGastoRepositorio
     {
         private DominioContext _context;
-        //private IPagoRepositorio _repositorio;
 
-        public RepositorioTipoGastosEF(
-            //IPagoRepositorio repositorio
-            )
+        public RepositorioTipoGastosEF()
         {
             _context = new DominioContext();
-            //_repositorio = repositorio;
         }
         public void Add(TipoGasto obj)
         {
@@ -27,14 +23,6 @@ namespace AccesoDatos.EntityFramework.Repositorios
             {
                 obj.Validar();
                 _context.Add(obj);
-
-                _context.Auditorias.Add(new Auditoria
-                {
-                    Accion = "Alta",
-                    Fecha = DateTime.Today,
-                    //Usuario =
-                });
-
                 _context.SaveChanges();
             }
             catch(TipoGastoException tge)
@@ -84,13 +72,6 @@ namespace AccesoDatos.EntityFramework.Repositorios
                 }
                 _context.TipoGastos.Remove(aBorrar);
 
-                _context.Auditorias.Add(new Auditoria
-                {
-                    Accion = "Borrar",
-                    Fecha = DateTime.Today,
-                    //Usuario = 
-                });
-
                 _context.SaveChanges();
             }
             catch (TipoGastoException tge)
@@ -109,14 +90,6 @@ namespace AccesoDatos.EntityFramework.Repositorios
             {
                 obj.Validar();
                 _context.TipoGastos.Update(obj);
-
-                _context.Auditorias.Add(new Auditoria
-                {
-                    Accion = "Editar",
-                    Fecha = DateTime.Today,
-                    //Usuario = 
-                });
-
                 _context.SaveChanges();
             }
             catch (TipoGastoException tge)

@@ -19,7 +19,8 @@ namespace Dominio.LogicaAplicacion.Mappers
                 NombreCompleto = new NombreCompleto(dto.Nombre,dto.Apellido),
                 Contra = dto.Contra,
                 Email = new Email { EmailUsuario = dto.Email},
-                Equipo = dto.Equipo,
+                EquipoId = dto.EquipoId,
+                Equipo = EquipoMapper.FromDTO(dto.Equipo),
                 Rol = dto.Rol
             };
         }
@@ -32,7 +33,8 @@ namespace Dominio.LogicaAplicacion.Mappers
                 Apellido = usuario.NombreCompleto.Apellido,
                 Contra = usuario.Contra,
                 Email = usuario.Email.EmailUsuario,
-                Equipo = usuario.Equipo,
+                EquipoId = usuario.EquipoId,
+                Equipo = EquipoMapper.ToDTO(usuario.Equipo),
                 Rol = usuario.Rol
             };
         }
