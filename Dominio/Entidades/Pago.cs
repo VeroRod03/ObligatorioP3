@@ -3,6 +3,7 @@ using Dominio.Exceptions;
 using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,12 @@ namespace Dominio.Entidades
     public abstract class Pago : IValidable
     {
         public int Id { get; set; }
+        //[ForeignKey(nameof(TipoGasto))] public int TipoGastoId { get; set; }
         public TipoGasto TipoGasto { get; set; }
         public MetodoPago MetodoPago { get; set; }
+        //[ForeignKey(nameof(Usuario))] public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+        //[ForeignKey(nameof(Equipo))] public int EquipoId { get; set; }
         public Equipo Equipo { get; set; }
         public string Descripcion { get; set; }
         public double Monto { get; set; }
