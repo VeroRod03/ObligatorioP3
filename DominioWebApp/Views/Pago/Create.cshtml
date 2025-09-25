@@ -1,0 +1,60 @@
+﻿@using Dominio.Enumerations
+@model Dominio.LogicaAplicacion.DTOs.PagoDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PagoDTO</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="MetodoPago" class="control-label">Metodo De Pago</label>
+                <select name="MetodoPago" id="MetodoPago" class="form-control" required>
+                    <option value="@MetodoPago.CREDITO">@MetodoPago.CREDITO.ToString()</option>
+                    <option value="@MetodoPago.EFECTIVO">@MetodoPago.EFECTIVO.ToString()</option>
+                </select>
+                <span asp-validation-for="MetodoPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Monto" class="control-label"></label>
+                <input asp-for="Monto" class="form-control" />
+                <span asp-validation-for="Monto" class="text-danger"></span>
+            </div>
+            @if(ViewBag.TipoPago == "unico")
+            {
+                <div class="form-group">
+                    <label asp-for="Fecha" class="control-label"></label>
+                    <input asp-for="Fecha" class="form-control" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumRecibo" class="control-label"></label>
+                    <input asp-for="NumRecibo" class="form-control" />
+                    <span asp-validation-for="NumRecibo" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

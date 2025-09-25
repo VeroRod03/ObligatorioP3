@@ -20,7 +20,15 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public void Add(Pago obj)
         {
-            throw new NotImplementedException();
+            obj.Validar();
+            _context.Pagos.Add(obj);
+            if(obj is Recurrente recurrente){
+                _context.Recurrentes.Add(recurrente);
+            } else
+            {
+                _context.Unicos.Add(obj as Unico);
+            }
+            _context.SaveChanges();
         }
 
         public IEnumerable<Pago> FindAll()

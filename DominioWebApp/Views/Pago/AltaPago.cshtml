@@ -1,0 +1,10 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Elegir Tipo de Pago a crear</h1>
+<form asp-action="Create" method="get">
+    <button type="submit" name="tipoPago" value="unico" class="btn btn-primary">Crear</button>
+    <button type="submit" name ="tipoPago" value="recurrente" class="btn btn-primary">Pago Recurrente</button>
+</form>
