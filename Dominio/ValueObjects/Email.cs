@@ -12,7 +12,7 @@ namespace Dominio.ValueObjects
     [Owned]
     public class Email
     {
-        static string dominio = "@laEmpresa.com";
+        static string dominio = "@laEmpresa.com"; //public static?
         public string EmailUsuario { get; private set; } 
         public Email(string emailUsuario)
         {

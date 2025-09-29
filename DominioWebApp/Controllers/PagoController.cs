@@ -11,11 +11,14 @@ namespace DominioWebApp.Controllers
     public class PagoController : Controller
     {
         private IAltaPago _altaPagoCU;
+        private IObtenerTipoGastos _obtenerTipoGastos;
 
         public PagoController(
-            IAltaPago altaPagoCU)
+            IAltaPago altaPagoCU,
+            IObtenerTipoGastos obtenerTipoGastos)
         {
             _altaPagoCU = altaPagoCU;
+            _obtenerTipoGastos = obtenerTipoGastos;
         }
 
         // GET: PagoController
@@ -39,6 +42,7 @@ namespace DominioWebApp.Controllers
         public ActionResult Create(string tipoPago)
         {
             ViewBag.TipoPago = tipoPago;
+            ViewBag.TipoGastos = _obtenerTipoGastos.ObtenerTipoGastos();
             return View();
         }
 
@@ -49,15 +53,10 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                if (tipoPago == "Recurrente")
-                {
-                    _altaPagoCU.AgregarPago(pagoDto as RecurrenteDTO);
-                }
-                else if (tipoPago == "Unico")
-                {
-                    _altaPagoCU.AgregarPago(pagoDto as UnicoDTO);
-                }
-                return RedirectToAction(nameof(Index));
+                pagoDto.TipoPago = tipoPago;
+                pagoDto.UsuarioId = HttpContext.Session.GetInt32("usuarioId");
+                _altaPagoCU.AgregarPago(pagoDto);
+                return RedirectToAction(nameof(Create));
             }
             catch
             {

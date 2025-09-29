@@ -1,4 +1,5 @@
 ﻿@using Dominio.Enumerations
+@using Dominio.LogicaAplicacion.DTOs
 @model Dominio.LogicaAplicacion.DTOs.PagoDTO
 
 @{
@@ -14,9 +15,19 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label for="TipoGastoId" class="control-label">Tipo De Gasto</label>
+                <select name="TipoGastoId" id="TipoGastoId" class="form-control" required>
+                    @foreach(TipoGastoDTO gastoDTO in ViewBag.TipoGastos)
+                    {
+                        <option value="@gastoDTO.Id">@gastoDTO.Nombre</option>
+                    }
+                </select>
+                <span asp-validation-for="TipoGasto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label for="MetodoPago" class="control-label">Metodo De Pago</label>
                 <select name="MetodoPago" id="MetodoPago" class="form-control" required>
-                    <option value="@MetodoPago.CREDITO">@MetodoPago.CREDITO.ToString()</option>
+                    <option value="@MetodoPago.CREDITO">@MetodoPago.CREDITO.ToString() </option >
                     <option value="@MetodoPago.EFECTIVO">@MetodoPago.EFECTIVO.ToString()</option>
                 </select>
                 <span asp-validation-for="MetodoPago" class="text-danger"></span>
@@ -31,7 +42,19 @@
                 <input asp-for="Monto" class="form-control" />
                 <span asp-validation-for="Monto" class="text-danger"></span>
             </div>
-            @if(ViewBag.TipoPago == "unico")
+            @if(ViewBag.TipoPago == "recurrente")
+            {
+                <div class="form-group">
+                    <label asp-for="Desde" class="control-label"></label>
+                    <input asp-for="Desde" class="form-control" />
+                    <span asp-validation-for="Desde" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Hasta" class="control-label"></label>
+                    <input asp-for="Hasta" class="form-control" />
+                    <span asp-validation-for="Hasta" class="text-danger"></span>
+                </div>
+            } else if (ViewBag.TipoPago == "unico")
             {
                 <div class="form-group">
                     <label asp-for="Fecha" class="control-label"></label>

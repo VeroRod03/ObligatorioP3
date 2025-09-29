@@ -21,14 +21,12 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
         }
         public void AgregarPago(PagoDTO pagodto)
         {
-            if(pagodto is RecurrenteDTO recurrentedto)
+            if(pagodto.TipoPago == "unico")
             {
-                _repositorio.Add(PagoMapper.ToRecurrente(recurrentedto));
-
-            }
-            else
+                _repositorio.Add(PagoMapper.ToUnico(pagodto));
+            }else if (pagodto.TipoPago == "recurrente")
             {
-                _repositorio.Add(PagoMapper.ToUnico(pagodto as UnicoDTO));
+                _repositorio.Add(PagoMapper.ToRecurrente(pagodto));
 
             }
         }

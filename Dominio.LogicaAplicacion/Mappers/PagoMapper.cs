@@ -16,6 +16,7 @@ namespace Dominio.LogicaAplicacion.Mappers
             return new PagoDTO
             {
                 Id = pago.Id,
+                TipoGastoId=pago.TipoGastoId,
                 TipoGasto  = TipoGastoMapper.ToDTO(pago.TipoGasto),
                 MetodoPago = pago.MetodoPago,
                 Descripcion = pago.Descripcion,
@@ -25,11 +26,12 @@ namespace Dominio.LogicaAplicacion.Mappers
             };
         }
 
-        public static Recurrente ToRecurrente(RecurrenteDTO dto)
+        public static Recurrente ToRecurrente(PagoDTO dto)
         {
             return new Recurrente
             {
                 Id = dto.Id,
+                TipoGastoId=dto.TipoGastoId,
                 TipoGasto = TipoGastoMapper.FromDTO(dto.TipoGasto),
                 MetodoPago = dto.MetodoPago,
                 Descripcion = dto.Descripcion,
@@ -40,7 +42,24 @@ namespace Dominio.LogicaAplicacion.Mappers
             };
         }
 
-        public static RecurrenteDTO ToRecurrenteDTO(Recurrente recurrente)
+        public static Unico ToUnico(PagoDTO dto)
+        {
+            return new Unico
+            {
+                Id = dto.Id,
+                TipoGastoId = dto.TipoGastoId,
+                TipoGasto = TipoGastoMapper.FromDTO(dto.TipoGasto),
+                MetodoPago = dto.MetodoPago,
+                Descripcion = dto.Descripcion,
+                Usuario = UsuarioMapper.FromDTO(dto.Usuario),
+                Monto = dto.Monto,
+                Fecha = dto.Fecha,
+                NumRecibo = dto.NumRecibo
+            };
+        }
+
+        /*
+         public static RecurrenteDTO ToRecurrenteDTO(Recurrente recurrente)
         {
             return new RecurrenteDTO
             {
@@ -53,21 +72,6 @@ namespace Dominio.LogicaAplicacion.Mappers
                 Desde = recurrente.Desde,
                 Hasta = recurrente.Hasta
             };
-        }
-
-        public static Unico ToUnico(UnicoDTO dto)
-        {
-            return new Unico
-            {
-                Id = dto.Id,
-                TipoGasto = TipoGastoMapper.FromDTO(dto.TipoGasto),
-                MetodoPago = dto.MetodoPago,
-                Descripcion = dto.Descripcion,
-                Usuario = UsuarioMapper.FromDTO(dto.Usuario),
-                Monto = dto.Monto,
-                Fecha = dto.Fecha,
-                NumRecibo = dto.NumRecibo
-            };
-        }
+        }*/
     }
 }

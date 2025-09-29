@@ -1,7 +1,9 @@
 using AccesoDatos.EntityFramework.Repositorios;
 using Dominio.InterfacesRepositorio;
+using Dominio.LogicaAplicacion.CasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 
@@ -22,6 +24,8 @@ namespace DominioWebApp
             builder.Services.AddScoped<ITipoGastoRepositorio, RepositorioTipoGastosEF>();
             builder.Services.AddScoped<IUsuarioRepositorio, RepositorioUsuariosEF>();
             builder.Services.AddScoped<IAuditoriaRepositorio, RepositorioAuditoriasEF>();
+            builder.Services.AddScoped<IPagoRepositorio, RepositorioPagosEF>();
+
 
 
 
@@ -33,6 +37,8 @@ namespace DominioWebApp
             builder.Services.AddScoped<IEliminarTipoGasto, EliminarTipoGastoCU>();
 
             builder.Services.AddScoped<ILogin, LoginCU>();
+
+            builder.Services.AddScoped<IAltaPago, AltaPagoCU>();
 
             var app = builder.Build();
 
