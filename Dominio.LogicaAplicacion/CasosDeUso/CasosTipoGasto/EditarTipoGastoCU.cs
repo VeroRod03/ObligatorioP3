@@ -20,7 +20,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             _repositorio = repositorio;
             _repositorioAuditoria = repositorioAuditoria;
         }
-        public void EditarTipoGasto(TipoGastoDTO gasto,int? usuarioId)
+        public void EditarTipoGasto(TipoGastoDTO gasto,int usuarioId)
         {
             _repositorio.Update(TipoGastoMapper.FromDTO(gasto));
 

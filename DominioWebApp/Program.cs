@@ -26,9 +26,6 @@ namespace DominioWebApp
             builder.Services.AddScoped<IAuditoriaRepositorio, RepositorioAuditoriasEF>();
             builder.Services.AddScoped<IPagoRepositorio, RepositorioPagosEF>();
 
-
-
-
             // Inicializamos Casos de Uso
             builder.Services.AddScoped<IObtenerTipoGastos, ObtenerTipoGastosCU>();
             builder.Services.AddScoped<IAltaTipoGasto, AltaTipoGastoCU>();
@@ -39,6 +36,8 @@ namespace DominioWebApp
             builder.Services.AddScoped<ILogin, LoginCU>();
 
             builder.Services.AddScoped<IAltaPago, AltaPagoCU>();
+
+            builder.Services.AddScoped<IObtenerUsuarioPorId, ObtenerUsuarioPorIdCU>();
 
             var app = builder.Build();
 

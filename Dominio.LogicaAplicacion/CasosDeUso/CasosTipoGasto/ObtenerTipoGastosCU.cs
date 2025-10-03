@@ -20,12 +20,8 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
         }
         public IEnumerable<TipoGastoDTO> ObtenerTipoGastos()
         {
-            List<TipoGastoDTO> toReturn = new List<TipoGastoDTO>();
-            foreach (TipoGasto gasto in _repositorio.FindAll())
-            {
-                toReturn.Add(TipoGastoMapper.ToDTO(gasto));
-            }
-            return toReturn;
+            IEnumerable<TipoGasto> toReturn = _repositorio.FindAll();
+            return toReturn.Select(gasto => TipoGastoMapper.ToDTO(gasto));
         }
     }
 }

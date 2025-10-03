@@ -51,13 +51,14 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: TipoGastoController/Create
+        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TipoGastoDTO gasto)
         {
             try
             {
-                _altaTipoGastoCU.AgregarTipoGasto(gasto,HttpContext.Session.GetInt32("usuarioId"));
+                _altaTipoGastoCU.AgregarTipoGasto(gasto,(int)HttpContext.Session.GetInt32("usuarioId"));
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -73,13 +74,14 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: TipoGastoController/Edit/5
+        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TipoGastoDTO dto)
         {
             try
             {
-                _editarTipoGastoCU.EditarTipoGasto(dto,HttpContext.Session.GetInt32("usuarioId"));
+                _editarTipoGastoCU.EditarTipoGasto(dto,(int)HttpContext.Session.GetInt32("usuarioId"));
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -95,13 +97,14 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: TipoGastoController/Delete/5
+        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, TipoGastoDTO dto)
         {
             try
             {
-                _eliminarTipoGastoCU.EliminarTipoGasto(id,HttpContext.Session.GetInt32("usuarioId"));
+                _eliminarTipoGastoCU.EliminarTipoGasto(id,(int)HttpContext.Session.GetInt32("usuarioId"));
                 return RedirectToAction(nameof(Index));
             }
             catch

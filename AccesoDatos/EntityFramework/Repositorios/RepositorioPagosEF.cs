@@ -20,15 +20,30 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public void Add(Pago obj)
         {
-            obj.Validar();
-            _context.Pagos.Add(obj);
-            if(obj is Recurrente recurrente){
-                _context.Recurrentes.Add(recurrente);
-            } else
+            try
             {
-                _context.Unicos.Add(obj as Unico);
+                obj.Validar();
+                _context.Pagos.Add(obj);
+                /*
+                if (obj is Recurrente recurrente)
+                {
+                    _context.Recurrentes.Add(recurrente);
+                }
+                else
+                {
+                    _context.Unicos.Add(obj as Unico);
+                }*/
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            catch (PagoException pe)
+            {
+                throw pe;
+            }
+            catch (Exception ex)
+            {
+                throw new PagoException("Hubo un error: ", ex);
+            }
+
         }
 
         public IEnumerable<Pago> FindAll()

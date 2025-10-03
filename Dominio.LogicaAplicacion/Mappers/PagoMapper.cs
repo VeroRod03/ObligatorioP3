@@ -13,14 +13,25 @@ namespace Dominio.LogicaAplicacion.Mappers
     {
         public static PagoDTO ToDTO(Pago pago)
         {
+            UsuarioDTO usuario = null;
+            if(pago.Usuario != null)
+            {
+                usuario = UsuarioMapper.ToDTO(pago.Usuario);
+            }
+            TipoGastoDTO gasto = null;
+            if (pago.TipoGasto != null)
+            {
+                gasto = TipoGastoMapper.ToDTO(pago.TipoGasto);
+            }
             return new PagoDTO
             {
                 Id = pago.Id,
                 TipoGastoId=pago.TipoGastoId,
-                TipoGasto  = TipoGastoMapper.ToDTO(pago.TipoGasto),
+                TipoGasto  = gasto,
                 MetodoPago = pago.MetodoPago,
                 Descripcion = pago.Descripcion,
-                Usuario = UsuarioMapper.ToDTO(pago.Usuario),
+                UsuarioId = pago.UsuarioId,
+                Usuario = usuario,
                 Monto = pago.Monto
 
             };
@@ -28,14 +39,25 @@ namespace Dominio.LogicaAplicacion.Mappers
 
         public static Recurrente ToRecurrente(PagoDTO dto)
         {
+            Usuario usuario = null;
+            if (dto.Usuario != null)
+            {
+                usuario = UsuarioMapper.FromDTO(dto.Usuario);
+            }
+            TipoGasto gasto = null;
+            if (dto.TipoGasto != null)
+            {
+                gasto = TipoGastoMapper.FromDTO(dto.TipoGasto);
+            }
             return new Recurrente
             {
                 Id = dto.Id,
                 TipoGastoId=dto.TipoGastoId,
-                TipoGasto = TipoGastoMapper.FromDTO(dto.TipoGasto),
+                TipoGasto = gasto,
                 MetodoPago = dto.MetodoPago,
                 Descripcion = dto.Descripcion,
-                Usuario = UsuarioMapper.FromDTO(dto.Usuario),
+                UsuarioId = dto.UsuarioId,
+                Usuario = usuario,
                 Monto = dto.Monto,
                 Desde = dto.Desde,
                 Hasta = dto.Hasta
@@ -44,14 +66,25 @@ namespace Dominio.LogicaAplicacion.Mappers
 
         public static Unico ToUnico(PagoDTO dto)
         {
+            Usuario usuario = null;
+            if (dto.Usuario != null)
+            {
+                usuario = UsuarioMapper.FromDTO(dto.Usuario);
+            }
+            TipoGasto gasto = null;
+            if (dto.TipoGasto != null)
+            {
+                gasto = TipoGastoMapper.FromDTO(dto.TipoGasto);
+            }
             return new Unico
             {
                 Id = dto.Id,
                 TipoGastoId = dto.TipoGastoId,
-                TipoGasto = TipoGastoMapper.FromDTO(dto.TipoGasto),
+                TipoGasto = gasto,
                 MetodoPago = dto.MetodoPago,
                 Descripcion = dto.Descripcion,
-                Usuario = UsuarioMapper.FromDTO(dto.Usuario),
+                UsuarioId= dto.UsuarioId,
+                Usuario = usuario,
                 Monto = dto.Monto,
                 Fecha = dto.Fecha,
                 NumRecibo = dto.NumRecibo

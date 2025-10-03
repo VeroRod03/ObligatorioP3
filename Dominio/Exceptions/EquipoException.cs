@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Exceptions
 {
-    class EquipoException : Exception
+    public class EquipoException : Exception
     {
         public EquipoException() { }
         public EquipoException(string mensaje) : base(mensaje) { }

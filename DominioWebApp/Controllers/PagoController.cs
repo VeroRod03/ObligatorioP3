@@ -1,8 +1,11 @@
-﻿using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
+﻿using Dominio.Exceptions;
+using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 using Dominio.LogicaAplicacion.Mappers;
+using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +15,19 @@ namespace DominioWebApp.Controllers
     {
         private IAltaPago _altaPagoCU;
         private IObtenerTipoGastos _obtenerTipoGastos;
+        private IGetById _obtenerTipoGastoPorId;
+        private IObtenerUsuarioPorId _obtenerUsuarioPorId;
 
         public PagoController(
             IAltaPago altaPagoCU,
-            IObtenerTipoGastos obtenerTipoGastos)
+            IObtenerTipoGastos obtenerTipoGastos,
+            IGetById obtenerTipoGastoPorId,
+            IObtenerUsuarioPorId obtenerUsuarioPorId)
         {
             _altaPagoCU = altaPagoCU;
             _obtenerTipoGastos = obtenerTipoGastos;
+            _obtenerTipoGastoPorId = obtenerTipoGastoPorId;
+            _obtenerUsuarioPorId = obtenerUsuarioPorId;
         }
 
         // GET: PagoController
@@ -47,19 +56,32 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: PagoController/Create
+        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(PagoDTO pagoDto, string tipoPago)
         {
             try
             {
+                //pagoDto.TipoGasto = _obtenerTipoGastoPorId.ObtenerTipoGasto(pagoDto.TipoGastoId);
                 pagoDto.TipoPago = tipoPago;
-                pagoDto.UsuarioId = HttpContext.Session.GetInt32("usuarioId");
+                pagoDto.UsuarioId = (int)HttpContext.Session.GetInt32("usuarioId");
+                //pagoDto.Usuario = _obtenerUsuarioPorId.ObtenerUsuarioPorId(pagoDto.UsuarioId);
                 _altaPagoCU.AgregarPago(pagoDto);
-                return RedirectToAction(nameof(Create));
+                return RedirectToAction(nameof(AltaPago));
             }
-            catch
+            catch (PagoException pe)
             {
+                ViewBag.Error = pe.Message;
+                ViewBag.TipoPago = tipoPago;
+                ViewBag.TipoGastos = _obtenerTipoGastos.ObtenerTipoGastos();
+                return View();
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = "Error inesperado.";
+                ViewBag.TipoPago = tipoPago;
+                ViewBag.TipoGastos = _obtenerTipoGastos.ObtenerTipoGastos();
                 return View();
             }
         }

@@ -9,6 +9,6 @@ namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto
 {
     public interface IEditarTipoGasto
     {
-        public void EditarTipoGasto(TipoGastoDTO gasto, int? usuarioId);
+        public void EditarTipoGasto(TipoGastoDTO gasto, int usuarioId);
     }
 }

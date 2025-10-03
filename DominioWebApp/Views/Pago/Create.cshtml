@@ -6,6 +6,11 @@
     ViewData["Title"] = "Create";
 }
 
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
 <h1>Create</h1>
 
 <h4>PagoDTO</h4>
@@ -67,6 +72,10 @@
                     <span asp-validation-for="NumRecibo" class="text-danger"></span>
                 </div>
             }
+            <div class="form-group">
+                <input asp-for="TipoPago" class="form-control" type="hidden"/>
+                <span asp-validation-for="TipoPago" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

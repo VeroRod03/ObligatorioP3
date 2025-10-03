@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Exceptions
 {
-    class PagoException : Exception
+    public class PagoException : Exception
     {
         public PagoException() { }
         public PagoException(string mensaje) : base(mensaje) { }

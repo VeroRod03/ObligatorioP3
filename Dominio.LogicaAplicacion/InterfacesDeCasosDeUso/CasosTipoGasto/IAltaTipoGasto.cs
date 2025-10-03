@@ -9,6 +9,6 @@ namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto
 {
     public interface IAltaTipoGasto
     {
-        public void AgregarTipoGasto(TipoGastoDTO nuevo,int? usuarioId);
+        public void AgregarTipoGasto(TipoGastoDTO nuevo,int usuarioId);
     }
 }
