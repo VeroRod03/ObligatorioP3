@@ -1,5 +1,6 @@
 ﻿using AccesoDatos.EntityFramework;
 using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using DominioWebApp.Filters;
@@ -33,8 +34,9 @@ namespace DominioWebApp.Controllers
         }
         // GET: TipoGastoController
         [FilterAdministrador]
-        public ActionResult Index()
+        public ActionResult Index(string mensaje)
         {
+            ViewBag.Mensaje = mensaje;
             return View(_obtenerTipoGastosCU.ObtenerTipoGastos());
         }
 
@@ -91,8 +93,9 @@ namespace DominioWebApp.Controllers
         }
 
         // GET: TipoGastoController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, string mensaje)
         {
+            ViewBag.Error = mensaje;
             return View((_getById.ObtenerTipoGasto(id)));
         }
 
@@ -105,11 +108,12 @@ namespace DominioWebApp.Controllers
             try
             {
                 _eliminarTipoGastoCU.EliminarTipoGasto(id,(int)HttpContext.Session.GetInt32("usuarioId"));
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new { mensaje = "Tipo de Gasto borrado correctamente" });
             }
-            catch
+            catch (TipoGastoException tge)
             {
-                return View();
+                ViewBag.Error = tge.Message;
+                return View((_getById.ObtenerTipoGasto(id)));
             }
         }
     }
