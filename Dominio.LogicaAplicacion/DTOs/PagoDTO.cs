@@ -19,7 +19,10 @@ namespace Dominio.LogicaAplicacion.DTOs
         public UsuarioDTO? Usuario { get; set; }
         public string Descripcion { get; set; }
         public double Monto { get; set; }
+        //extras
         public string TipoPago { get; set; }
+        public double MontoTotal { get; set; }
+        public double SaldoPendiente {  get; set; }
 
         //recurrente
         public DateTime Desde { get; set; }

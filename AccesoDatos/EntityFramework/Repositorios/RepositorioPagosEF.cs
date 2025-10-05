@@ -1,6 +1,7 @@
 ﻿using Dominio.Entidades;
 using Dominio.Exceptions;
 using Dominio.InterfacesRepositorio;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Pago> FindAll()
         {
-            throw new NotImplementedException();
+            return _context.Pagos
+                    .Include(pago => pago.Usuario);
+                    //.ThenInclude(usuario => usuario.Equipo)
         }
 
         public Pago FindById(int id)

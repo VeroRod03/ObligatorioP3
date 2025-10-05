@@ -23,6 +23,16 @@ namespace Dominio.Entidades
         public double Monto { get; set; }
         public Pago() { }
 
+        public virtual double CalcularMontoTotal()
+        {
+            return Monto;
+        }
+
+        public virtual double CalcularSaldoPendiente()
+        {
+            return 0;
+        }
+
         public void Validar()
         {
             ValidarTipoGasto();
@@ -54,7 +64,6 @@ namespace Dominio.Entidades
                 throw new PagoException("El usuario no puede ser nulo");
             }
         }
-
         private void ValidarDescripcion()
         {
             if (string.IsNullOrEmpty(Descripcion))

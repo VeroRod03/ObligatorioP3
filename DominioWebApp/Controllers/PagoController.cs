@@ -17,36 +17,47 @@ namespace DominioWebApp.Controllers
         private IObtenerTipoGastos _obtenerTipoGastos;
         private IGetById _obtenerTipoGastoPorId;
         private IObtenerUsuarioPorId _obtenerUsuarioPorId;
+        private IObtenerPagos _obtenerPagosCU;
 
         public PagoController(
             IAltaPago altaPagoCU,
             IObtenerTipoGastos obtenerTipoGastos,
             IGetById obtenerTipoGastoPorId,
-            IObtenerUsuarioPorId obtenerUsuarioPorId)
+            IObtenerUsuarioPorId obtenerUsuarioPorId,
+            IObtenerPagos obtenerPagosCU)
         {
             _altaPagoCU = altaPagoCU;
             _obtenerTipoGastos = obtenerTipoGastos;
             _obtenerTipoGastoPorId = obtenerTipoGastoPorId;
             _obtenerUsuarioPorId = obtenerUsuarioPorId;
+            _obtenerPagosCU = obtenerPagosCU;
         }
 
         // GET: PagoController
+        [FilterAutenticado]
+        [FilterGerente]
         public ActionResult Index()
         {
-            return View();
+            //List<PagoDTO> test = new List<PagoDTO>();
+            //return View(test);
+
+            return View(_obtenerPagosCU.ObtenerPagos());
         }
 
         // GET: PagoController/Details/5
+        [FilterAutenticado]
         public ActionResult Details(int id)
         {
             return View();
         }
 
+        [FilterAutenticado]
         public IActionResult AltaPago()
         {
             return View();
         }
 
+        [FilterAutenticado]
         // GET: PagoController/Create
         public ActionResult Create(string tipoPago)
         {

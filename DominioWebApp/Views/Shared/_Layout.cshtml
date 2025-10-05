@@ -28,9 +28,19 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="TipoGasto" asp-action="Index">Gestion Gastos</a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="AltaPago">Crear Pago</a>
-                        </li>
+                        @if (Context.Session.GetString("usuarioRol") == "GERENTE")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="Index">Gestion Mensual Pagos</a>
+                            </li>
+                        }
+                        @if (Context.Session.GetInt32("usuarioId") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="AltaPago">Crear Pago</a>
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
             </div>

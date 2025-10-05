@@ -1,0 +1,107 @@
+﻿@using Dominio.LogicaAplicacion.DTOs
+@model IEnumerable<Dominio.LogicaAplicacion.DTOs.PagoDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="AltaPago">Create New</a>
+</p>
+
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-warning">No hay Pagos registrados</div>
+}
+else
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TipoPago)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuario.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MontoTotal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SaldoPendiente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Desde)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Hasta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumRecibo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PagoDTO item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usuario.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MontoTotal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaldoPendiente)
+                    </td>
+                    @if (item.TipoPago == "recurrente")
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Desde)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Hasta)
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                    }
+                    else if (item.TipoPago == "unico")
+                    {
+                        <td>-</td>
+                        <td>-</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fecha)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumRecibo)
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

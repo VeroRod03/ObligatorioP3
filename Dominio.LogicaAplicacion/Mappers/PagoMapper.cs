@@ -23,17 +23,42 @@ namespace Dominio.LogicaAplicacion.Mappers
             {
                 gasto = TipoGastoMapper.ToDTO(pago.TipoGasto);
             }
+            //??
+            string tipoPago = "";
+            DateTime desde = DateTime.Now;
+            DateTime hasta = DateTime.Now;
+            DateTime fecha = DateTime.Now;
+            string recibo = "";
+            if (pago is Recurrente recurrente)
+            {
+                tipoPago = "recurrente";
+                desde = recurrente.Desde;
+                hasta = recurrente.Hasta;
+            }
+            else if(pago is Unico unico)
+            {
+                tipoPago = "unico";
+                fecha = unico.Fecha;
+                recibo = unico.NumRecibo;
+            }
             return new PagoDTO
             {
                 Id = pago.Id,
-                TipoGastoId=pago.TipoGastoId,
-                TipoGasto  = gasto,
+                TipoGastoId = pago.TipoGastoId,
+                TipoGasto = gasto,
                 MetodoPago = pago.MetodoPago,
                 Descripcion = pago.Descripcion,
                 UsuarioId = pago.UsuarioId,
                 Usuario = usuario,
-                Monto = pago.Monto
-
+                Monto = pago.Monto,
+                MontoTotal = pago.CalcularMontoTotal(),
+                SaldoPendiente = pago.CalcularSaldoPendiente(),
+                TipoPago = tipoPago,
+                //??
+                Desde = desde,
+                Hasta = hasta,
+                Fecha = fecha,
+                NumRecibo = recibo,
             };
         }
 
@@ -60,7 +85,7 @@ namespace Dominio.LogicaAplicacion.Mappers
                 Usuario = usuario,
                 Monto = dto.Monto,
                 Desde = dto.Desde,
-                Hasta = dto.Hasta
+                Hasta = dto.Hasta,
             };
         }
 
