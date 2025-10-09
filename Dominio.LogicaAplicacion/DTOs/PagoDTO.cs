@@ -19,17 +19,18 @@ namespace Dominio.LogicaAplicacion.DTOs
         public UsuarioDTO? Usuario { get; set; }
         public string Descripcion { get; set; }
         public double Monto { get; set; }
+        public DateTime Fecha { get; set; }
+
+
         //extras
         public string TipoPago { get; set; }
         public double MontoTotal { get; set; }
         public double SaldoPendiente {  get; set; }
 
         //recurrente
-        public DateTime Desde { get; set; }
-        public DateTime Hasta { get; set; }
+        public DateTime? Hasta { get; set; }
 
         //unico
-        public DateTime Fecha { get; set; }
         public string NumRecibo { get; set; }
 
     }

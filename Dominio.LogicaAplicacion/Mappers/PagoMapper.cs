@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ namespace Dominio.LogicaAplicacion.Mappers
     {
         public static PagoDTO ToDTO(Pago pago)
         {
+            if(pago == null)
+            {
+                throw new PagoException("El pago esta nulo");///??
+            }
             UsuarioDTO usuario = null;
             if(pago.Usuario != null)
             {
@@ -23,24 +28,7 @@ namespace Dominio.LogicaAplicacion.Mappers
             {
                 gasto = TipoGastoMapper.ToDTO(pago.TipoGasto);
             }
-            //??
-            string tipoPago = "";
-            DateTime desde = DateTime.Now;
-            DateTime hasta = DateTime.Now;
-            DateTime fecha = DateTime.Now;
-            string recibo = "";
-            if (pago is Recurrente recurrente)
-            {
-                tipoPago = "recurrente";
-                desde = recurrente.Desde;
-                hasta = recurrente.Hasta;
-            }
-            else if(pago is Unico unico)
-            {
-                tipoPago = "unico";
-                fecha = unico.Fecha;
-                recibo = unico.NumRecibo;
-            }
+
             return new PagoDTO
             {
                 Id = pago.Id,
@@ -53,12 +41,10 @@ namespace Dominio.LogicaAplicacion.Mappers
                 Monto = pago.Monto,
                 MontoTotal = pago.CalcularMontoTotal(),
                 SaldoPendiente = pago.CalcularSaldoPendiente(),
-                TipoPago = tipoPago,
-                //??
-                Desde = desde,
-                Hasta = hasta,
-                Fecha = fecha,
-                NumRecibo = recibo,
+                TipoPago = pago.GetType().Name,
+                Hasta = pago.DevolverFechaHasta(),
+                Fecha = pago.Fecha,
+                NumRecibo = pago.DevolverRecibo()
             };
         }
 
@@ -84,7 +70,7 @@ namespace Dominio.LogicaAplicacion.Mappers
                 UsuarioId = dto.UsuarioId,
                 Usuario = usuario,
                 Monto = dto.Monto,
-                Desde = dto.Desde,
+                Fecha = dto.Fecha,
                 Hasta = dto.Hasta,
             };
         }
@@ -115,21 +101,5 @@ namespace Dominio.LogicaAplicacion.Mappers
                 NumRecibo = dto.NumRecibo
             };
         }
-
-        /*
-         public static RecurrenteDTO ToRecurrenteDTO(Recurrente recurrente)
-        {
-            return new RecurrenteDTO
-            {
-                Id = recurrente.Id,
-                TipoGasto = TipoGastoMapper.ToDTO(recurrente.TipoGasto),
-                MetodoPago = recurrente.MetodoPago,
-                Descripcion = recurrente.Descripcion,
-                Usuario = UsuarioMapper.ToDTO(recurrente.Usuario),
-                Monto = recurrente.Monto,
-                Desde = recurrente.Desde,
-                Hasta = recurrente.Hasta
-            };
-        }*/
     }
 }

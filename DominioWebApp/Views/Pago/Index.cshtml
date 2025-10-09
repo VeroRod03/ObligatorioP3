@@ -41,13 +41,10 @@ else
                     @Html.DisplayNameFor(model => model.SaldoPendiente)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Desde)
+                    @Html.DisplayNameFor(model => model.Fecha)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Hasta)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fecha)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.NumRecibo)
@@ -77,24 +74,20 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.SaldoPendiente)
                     </td>
-                    @if (item.TipoPago == "recurrente")
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    @if (item.TipoPago == "Recurrente")
                     {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Desde)
-                        </td>
+                        
                         <td>
                             @Html.DisplayFor(modelItem => item.Hasta)
                         </td>
                         <td>-</td>
-                        <td>-</td>
                     }
-                    else if (item.TipoPago == "unico")
+                    else if (item.TipoPago == "Unico")
                     {
                         <td>-</td>
-                        <td>-</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fecha)
-                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.NumRecibo)
                         </td>

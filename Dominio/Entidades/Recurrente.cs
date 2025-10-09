@@ -9,27 +9,37 @@ namespace Dominio.Entidades
 {
     public class Recurrente : Pago, IValidable
     {
-        public DateTime Desde { get; set; }
-        public DateTime Hasta { get; set; }
+        public DateTime? Hasta { get; set; }
 
         public override double CalcularMontoTotal()
         {
-            int cantMeses = (Hasta.Year - Desde.Year) * 12 + (Hasta.Month - Desde.Month);
+            int cantMeses = (Hasta.Value.Year - Fecha.Year) * 12 + (Hasta.Value.Month - Fecha.Month);
             return cantMeses * Monto;
         }
         public override double CalcularSaldoPendiente()
         {
-            if(Desde > DateTime.Now)
+            if(Fecha > DateTime.Now)
             {
                 return CalcularMontoTotal();
             }
-            int cantMeses = (Hasta.Year - DateTime.Now.Year) * 12 + (Hasta.Month - DateTime.Now.Month);
+            int cantMeses = (Hasta.Value.Year - DateTime.Now.Year) * 12 + (Hasta.Value.Month - DateTime.Now.Month);
             if(cantMeses < 0)
             {
                 return 0;
             }
-            return cantMeses * Monto;
+            return (cantMeses + 1) * Monto; // tenemos que incluir el mes en el que estamos parados/termina la suscripcion
         }
+
+        public override DateTime? DevolverFechaHasta()
+        {
+            return Hasta;
+        }
+
+        public override string DevolverRecibo()
+        {
+            return null;
+        }
+
         public void Validar()
         {
             throw new NotImplementedException();

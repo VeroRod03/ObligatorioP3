@@ -21,6 +21,8 @@ namespace Dominio.Entidades
         public Usuario Usuario { get; set; }
         public string Descripcion { get; set; }
         public double Monto { get; set; }
+        public DateTime Fecha { get; set; }
+
         public Pago() { }
 
         public virtual double CalcularMontoTotal()
@@ -32,6 +34,10 @@ namespace Dominio.Entidades
         {
             return 0;
         }
+
+        public abstract DateTime? DevolverFechaHasta();
+
+        public abstract string DevolverRecibo();
 
         public void Validar()
         {

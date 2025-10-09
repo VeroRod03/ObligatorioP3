@@ -47,13 +47,14 @@
                 <input asp-for="Monto" class="form-control" />
                 <span asp-validation-for="Monto" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
             @if(ViewBag.TipoPago == "recurrente")
             {
-                <div class="form-group">
-                    <label asp-for="Desde" class="control-label"></label>
-                    <input asp-for="Desde" class="form-control" />
-                    <span asp-validation-for="Desde" class="text-danger"></span>
-                </div>
+                
                 <div class="form-group">
                     <label asp-for="Hasta" class="control-label"></label>
                     <input asp-for="Hasta" class="form-control" />
@@ -61,11 +62,6 @@
                 </div>
             } else if (ViewBag.TipoPago == "unico")
             {
-                <div class="form-group">
-                    <label asp-for="Fecha" class="control-label"></label>
-                    <input asp-for="Fecha" class="form-control" />
-                    <span asp-validation-for="Fecha" class="text-danger"></span>
-                </div>
                 <div class="form-group">
                     <label asp-for="NumRecibo" class="control-label"></label>
                     <input asp-for="NumRecibo" class="form-control" />

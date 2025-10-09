@@ -9,8 +9,17 @@ namespace Dominio.Entidades
 {
     public class Unico : Pago, IValidable
     {
-        public DateTime Fecha { get; set; }
         public string NumRecibo {  get; set; }
+
+        public override DateTime? DevolverFechaHasta()
+        {
+            return null;
+        }
+
+        public override string DevolverRecibo()
+        {
+            return NumRecibo;
+        }
 
         public void Validar()
         {
