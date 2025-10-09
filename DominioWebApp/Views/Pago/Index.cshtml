@@ -1,4 +1,5 @@
-﻿@using Dominio.LogicaAplicacion.DTOs
+﻿@using Dominio.Enumerations
+@using Dominio.LogicaAplicacion.DTOs
 @model IEnumerable<Dominio.LogicaAplicacion.DTOs.PagoDTO>
 
 @{
@@ -18,6 +19,26 @@
 }
 else
 {
+
+    <form method="post">
+        <select name="mes">
+            <option value="0"> Seleccione el mes </option>
+           @foreach (Mes mes in Enum.GetValues(typeof(Mes)))
+            {
+                <option value="@mes">@mes</option>
+            }
+        </select>
+        <select name="anio">
+            <option value="0"> Seleccione el año </option>
+            @for (int i = DateTime.Now.Year; i >= 1900; i--)
+            {
+                <option value="@i">@i</option>
+            }
+            
+        </select>
+        
+        <input type="submit" value="Filtrar" />
+    </form>
 
     <table class="table">
         <thead>

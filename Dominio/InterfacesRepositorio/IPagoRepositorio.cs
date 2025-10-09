@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Dominio.InterfacesRepositorio
 {
     public interface IPagoRepositorio : IRepositorio<Pago>
     {
+        public IEnumerable<Pago> FiltrarPagos(Mes mes, int anio);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.Enumerations;
 using Dominio.Exceptions;
 using Dominio.InterfacesRepositorio;
 using Microsoft.EntityFrameworkCore;
@@ -24,16 +25,8 @@ namespace AccesoDatos.EntityFramework.Repositorios
             try
             {
                 obj.Validar();
+               
                 _context.Pagos.Add(obj);
-                /*
-                if (obj is Recurrente recurrente)
-                {
-                    _context.Recurrentes.Add(recurrente);
-                }
-                else
-                {
-                    _context.Unicos.Add(obj as Unico);
-                }*/
                 _context.SaveChanges();
             }
             catch (PagoException pe)
@@ -52,6 +45,30 @@ namespace AccesoDatos.EntityFramework.Repositorios
             return _context.Pagos
                     .Include(pago => pago.Usuario);
                     //.ThenInclude(usuario => usuario.Equipo)
+        }
+
+        public IEnumerable<Pago> FiltrarPagos(Mes mes, int anio)
+        {
+            if(mes == 0 && anio == 0)
+            {
+                return FindAll();
+            }
+            else if (mes == 0)
+            {
+                return _context.Pagos
+            .Include(pago => pago.Usuario)
+            .Where(pago => pago.Fecha.Year == anio);
+            }
+            else if (anio == 0)
+            {
+                return _context.Pagos
+                .Include(pago => pago.Usuario)
+                .Where(pago => pago.Fecha.Month == (int)mes);
+            }
+
+            return _context.Pagos
+                .Include(pago => pago.Usuario)
+                .Where(pago => pago.Fecha.Month == (int)mes && pago.Fecha.Year == anio);
         }
 
         public Pago FindById(int id)

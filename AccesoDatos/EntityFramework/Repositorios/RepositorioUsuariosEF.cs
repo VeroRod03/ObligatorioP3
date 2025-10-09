@@ -38,6 +38,11 @@ namespace AccesoDatos.EntityFramework.Repositorios
         public void Add(Usuario obj)
         {
             throw new NotImplementedException();
+
+            /* while (ExisteCorreo)
+                {
+                    Usuario.Email.Agregr=arRandom
+                }*/
         }
 
         public IEnumerable<Usuario> FindAll()

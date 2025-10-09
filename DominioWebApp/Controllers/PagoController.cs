@@ -1,4 +1,6 @@
-﻿using Dominio.Exceptions;
+﻿using Dominio.Enumerations;
+using Dominio.Exceptions;
+using Dominio.LogicaAplicacion.CasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
@@ -18,19 +20,22 @@ namespace DominioWebApp.Controllers
         private IGetById _obtenerTipoGastoPorId;
         private IObtenerUsuarioPorId _obtenerUsuarioPorId;
         private IObtenerPagos _obtenerPagosCU;
+        private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
 
         public PagoController(
             IAltaPago altaPagoCU,
             IObtenerTipoGastos obtenerTipoGastos,
             IGetById obtenerTipoGastoPorId,
             IObtenerUsuarioPorId obtenerUsuarioPorId,
-            IObtenerPagos obtenerPagosCU)
+            IObtenerPagos obtenerPagosCU,
+            IObtenerPagosFiltrados obtenerPagosFiltradosCU)
         {
             _altaPagoCU = altaPagoCU;
             _obtenerTipoGastos = obtenerTipoGastos;
             _obtenerTipoGastoPorId = obtenerTipoGastoPorId;
             _obtenerUsuarioPorId = obtenerUsuarioPorId;
             _obtenerPagosCU = obtenerPagosCU;
+            _obtenerPagosFiltradosCU = obtenerPagosFiltradosCU;
         }
 
         // GET: PagoController
@@ -42,6 +47,14 @@ namespace DominioWebApp.Controllers
             //return View(test);
 
             return View(_obtenerPagosCU.ObtenerPagos());
+        }
+
+        [FilterAutenticado]
+        [FilterGerente]
+        [HttpPost]
+        public ActionResult Index(Mes mes, int anio)
+        {
+            return View(_obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio));
         }
 
         // GET: PagoController/Details/5
