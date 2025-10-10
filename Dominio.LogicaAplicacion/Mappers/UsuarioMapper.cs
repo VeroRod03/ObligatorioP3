@@ -32,8 +32,9 @@ namespace Dominio.LogicaAplicacion.Mappers
             else
             {
                 email = new Email(new NombreCompleto(dto.Nombre, dto.Apellido));
+
             }
-                return new Usuario
+            return new Usuario
                 {
                     Id = dto.Id,
                     NombreCompleto = new NombreCompleto(dto.Nombre, dto.Apellido),

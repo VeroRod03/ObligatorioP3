@@ -15,10 +15,12 @@ namespace Dominio.ValueObjects
         public static string dominio = "@laEmpresa.com";
         public string EmailUsuario { get; private set; }
         public Email() { }
+        
         public Email(string emailUsuario)
         {
             EmailUsuario = emailUsuario;
         }
+
         public Email(NombreCompleto nombreCompleto)
         {
             string uno;
@@ -57,13 +59,6 @@ namespace Dominio.ValueObjects
             string[] emailSplit = EmailUsuario.Split("@");
             emailSplit[0] += secuenciaRandom;
             EmailUsuario = emailSplit[0] + "@" + emailSplit[1];
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj is null || !(obj is Email)) return false;
-            Email email = (Email)obj;
-            return email.EmailUsuario.Equals(EmailUsuario);
         }
 
     }

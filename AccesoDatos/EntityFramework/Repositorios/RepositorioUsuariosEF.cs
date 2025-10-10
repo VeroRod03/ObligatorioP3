@@ -53,13 +53,13 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             catch (Exception ex)
             {
-                throw new UsuarioException("Hubo un error: ", ex);
+                throw new UsuarioException("Hubo un error: ",ex);
             }
         }
         public bool ExisteEmail(Email email)
         {
             return _context.Usuarios
-                    .Any(usuario => usuario.Email == email);
+                    .Any(usuario => usuario.Email.EmailUsuario == email.EmailUsuario);
         }
 
         public IEnumerable<Usuario> FindAll()
