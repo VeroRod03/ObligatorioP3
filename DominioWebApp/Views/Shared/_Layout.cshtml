@@ -40,6 +40,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="AltaPago">Crear Pago</a>
                             </li>
                         }
+                        @if (Context.Session.GetString("usuarioRol") == "GERENTE" || Context.Session.GetString("usuarioRol") == "ADMINISTRADOR")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Create">Crear Usuario</a>
+                            </li>
+                        }
                         
                     </ul>
                 </div>

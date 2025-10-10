@@ -16,8 +16,9 @@ public class HomeController : Controller
         _loginCU = loginCU;
     }
     [FilterAutenticado]
-    public IActionResult Index()
+    public IActionResult Index(string mensaje)
     {
+        ViewBag.Error = mensaje;
         return View();
     }
     public IActionResult Login(string mensaje)

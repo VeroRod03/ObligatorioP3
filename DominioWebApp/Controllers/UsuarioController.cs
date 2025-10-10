@@ -2,6 +2,8 @@
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosEquipo;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +12,13 @@ namespace DominioWebApp.Controllers
     public class UsuarioController : Controller
     {
         private IObtenerEquipos _obtenerEquiposCU;
-        public UsuarioController(IObtenerEquipos obtenerEquiposCU)
+        private IAltaUsuario _altaUsuarioCU;
+        public UsuarioController(
+            IObtenerEquipos obtenerEquiposCU,
+            IAltaUsuario altaUsuario)
         {
             _obtenerEquiposCU = obtenerEquiposCU;
+            _altaUsuarioCU = altaUsuario;
         }
 
         // GET: UsuarioController
@@ -28,6 +34,8 @@ namespace DominioWebApp.Controllers
         }
 
         // GET: UsuarioController/Create
+        [FilterAutenticado]
+        [FilterGerenteAdmin]
         public ActionResult Create()
         {
             ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();

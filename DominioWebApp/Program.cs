@@ -1,8 +1,10 @@
 using AccesoDatos.EntityFramework.Repositorios;
 using Dominio.InterfacesRepositorio;
+using Dominio.LogicaAplicacion.CasosDeUso.CasosEquipos;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosEquipo;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
@@ -25,6 +27,7 @@ namespace DominioWebApp
             builder.Services.AddScoped<IUsuarioRepositorio, RepositorioUsuariosEF>();
             builder.Services.AddScoped<IAuditoriaRepositorio, RepositorioAuditoriasEF>();
             builder.Services.AddScoped<IPagoRepositorio, RepositorioPagosEF>();
+            builder.Services.AddScoped<IEquipoRepositorio, RepositorioEquiposEF>();
 
             // Inicializamos Casos de Uso
             builder.Services.AddScoped<IObtenerTipoGastos, ObtenerTipoGastosCU>();
@@ -33,6 +36,8 @@ namespace DominioWebApp
             builder.Services.AddScoped<IEditarTipoGasto, EditarTipoGastoCU>();
             builder.Services.AddScoped<IEliminarTipoGasto, EliminarTipoGastoCU>();
 
+            builder.Services.AddScoped<IObtenerEquipos, ObtenerEquiposCU>();
+
             builder.Services.AddScoped<ILogin, LoginCU>();
 
             builder.Services.AddScoped<IAltaPago, AltaPagoCU>();
@@ -40,6 +45,7 @@ namespace DominioWebApp
             builder.Services.AddScoped<IObtenerPagosFiltrados, ObtenerPagosFiltradosCU>();
 
             builder.Services.AddScoped<IObtenerUsuarioPorId, ObtenerUsuarioPorIdCU>();
+            builder.Services.AddScoped<IAltaUsuario, AltaUsuarioCU>();
 
             var app = builder.Build();
 
