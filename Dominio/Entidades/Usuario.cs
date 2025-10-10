@@ -22,6 +22,7 @@ namespace Dominio.Entidades
         public Equipo Equipo { get; set; }
         public RolUsuario Rol {  get; set; }
 
+        /*
         public Usuario(NombreCompleto nombreCompleto,string contra, Equipo equipo, RolUsuario rol)
         {
             NombreCompleto = nombreCompleto;
@@ -31,6 +32,8 @@ namespace Dominio.Entidades
             Rol = rol;
             Validar();
         }
+        */
+
         public Usuario() { }
 
         public void Validar()
@@ -38,6 +41,7 @@ namespace Dominio.Entidades
             NombreCompleto.Validar();
             ValidarContra();
             ValidarEquipo();
+            ValidarRol();
         }
 
         private void ValidarContra()
@@ -49,9 +53,16 @@ namespace Dominio.Entidades
         }
         private void ValidarEquipo()
         {
-            if (Equipo == null)
+            if (EquipoId == null)
             {
                 throw new UsuarioException("El equipo no puede ser nulo");
+            }
+        }
+        private void ValidarRol()
+        {
+            if (Rol == null)
+            {
+                throw new UsuarioException("El rol no puede ser nulo");
             }
         }
     }

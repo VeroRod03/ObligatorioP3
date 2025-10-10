@@ -1,4 +1,7 @@
-﻿using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+﻿using Dominio.InterfacesRepositorio;
+using Dominio.LogicaAplicacion.DTOs;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+using Dominio.LogicaAplicacion.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +12,14 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario
 {
     public class AltaUsuarioCU : IAltaUsuario
     {
+        private IUsuarioRepositorio _repositorio;
+        public AltaUsuarioCU(IUsuarioRepositorio repositorio)
+        {
+            _repositorio = repositorio;
+        }
+        public void AgregarUsuario(UsuarioDTO usuario)
+        {
+            _repositorio.Add(UsuarioMapper.FromDTO(usuario));
+        }
     }
 }

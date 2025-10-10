@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario
+namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosEquipo
 {
-    public interface IAltaUsuario
+    public interface IObtenerEquipos
     {
-        public void AgregarUsuario(UsuarioDTO usuario);
+        public IEnumerable<EquipoDTO> ObtenerEquipos();
     }
 }

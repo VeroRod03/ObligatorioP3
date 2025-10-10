@@ -1,4 +1,6 @@
-﻿using Dominio.Entidades;
+﻿using Azure;
+using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.ValueObjects;
 using System;
@@ -13,19 +15,41 @@ namespace Dominio.LogicaAplicacion.Mappers
     {
         public static Usuario FromDTO(UsuarioDTO dto)
         {
-            return new Usuario
+            if (dto == null)
             {
-                Id = dto.Id,
-                NombreCompleto = new NombreCompleto(dto.Nombre,dto.Apellido),
-                Contra = dto.Contra,
-                Email = new Email (dto.Email),
-                EquipoId = dto.EquipoId,
-                Equipo = EquipoMapper.FromDTO(dto.Equipo),
-                Rol = dto.Rol
-            };
+                throw new UsuarioException("El usuario esta nulo");
+            }
+            Equipo equipo = null;
+            if (dto.Equipo != null)
+            {
+                equipo = EquipoMapper.FromDTO(dto.Equipo);
+            }
+            Email email = null;
+            if(dto.Email != null)
+            {
+                email = new Email(dto.Email);
+            }
+            else
+            {
+                email = new Email(new NombreCompleto(dto.Nombre, dto.Apellido));
+            }
+                return new Usuario
+                {
+                    Id = dto.Id,
+                    NombreCompleto = new NombreCompleto(dto.Nombre, dto.Apellido),
+                    Contra = dto.Contra,
+                    Email = email,
+                    EquipoId = dto.EquipoId,
+                    Equipo = equipo,
+                    Rol = dto.Rol
+                };
         }
         public static UsuarioDTO ToDTO(Usuario usuario)
         {
+            if (usuario == null)
+            {
+                throw new UsuarioException("El usuario esta nulo");
+            }
             EquipoDTO equipoDTO = null;
             if (usuario.Equipo != null)
             {

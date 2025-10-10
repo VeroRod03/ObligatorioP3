@@ -37,12 +37,29 @@ namespace AccesoDatos.EntityFramework.Repositorios
         }
         public void Add(Usuario obj)
         {
-            throw new NotImplementedException();
-
-            /* while (ExisteCorreo)
+            try
+            {
+                obj.Validar();
+                while (ExisteEmail(obj.Email))
                 {
-                    Usuario.Email.Agregr=arRandom
-                }*/
+                    obj.Email.AgregarNumeroRandom();
+                }
+                _context.Usuarios.Add(obj);
+                _context.SaveChanges();
+            }
+            catch (UsuarioException ue)
+            {
+                throw ue;
+            }
+            catch (Exception ex)
+            {
+                throw new UsuarioException("Hubo un error: ", ex);
+            }
+        }
+        public bool ExisteEmail(Email email)
+        {
+            return _context.Usuarios
+                    .Any(usuario => usuario.Email == email);
         }
 
         public IEnumerable<Usuario> FindAll()
