@@ -72,7 +72,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public Pago FindById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Pagos
+                    .Where(pago => pago.Id == id)
+                    .FirstOrDefault();
         }
 
         public void Remove(int id)

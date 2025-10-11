@@ -18,6 +18,8 @@ namespace AccesoDatos.EntityFramework
         public DbSet<Unico> Unicos { get; set; }
         public DbSet<Auditoria> Auditorias { get; set; }
 
+        public DominioContext(DbContextOptions options) : base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"SERVER=(localdb)\MsSqlLocalDb;DATABASE=Dominio;Integrated Security = true;");

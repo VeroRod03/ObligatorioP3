@@ -1,0 +1,6 @@
+@Dominio.WebApi_HostAddress = http://localhost:5027
+
+GET {{Dominio.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
