@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario
 {
-    public interface IObtenerUsuarios
+    public interface IObtenerUsuariosFiltrados
     {
-        public IEnumerable<UsuarioDTO> ObtenerUsuarios();
+        public IEnumerable<UsuarioDTO> ObtenerUsuariosFiltrados(double monto);
     }
 }

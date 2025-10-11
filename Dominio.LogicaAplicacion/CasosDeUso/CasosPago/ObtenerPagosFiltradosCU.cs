@@ -23,7 +23,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
 
          public IEnumerable<PagoDTO> ObtenerPagosFiltrados(Mes mes, int anio)
         {
-            IEnumerable<Pago> aRetornar = _repositorio.FiltrarPagos(mes, anio);
+            IEnumerable<Pago> aRetornar = _repositorio.FiltrarPagosPorFecha(mes, anio);
             return aRetornar.Select(p => PagoMapper.ToDTO(p));
         }
     }

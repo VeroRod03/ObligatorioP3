@@ -11,5 +11,6 @@ namespace Dominio.InterfacesRepositorio
     public interface IUsuarioRepositorio : IRepositorio<Usuario>
     {
         public Usuario Login(string email, string pass);
+        public IEnumerable<Usuario> FiltrarUsuariosPorMonto(double monto);
     }
 }

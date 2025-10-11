@@ -44,10 +44,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             return _context.Pagos
                     .Include(pago => pago.Usuario);
-                    //.ThenInclude(usuario => usuario.Equipo)
         }
 
-        public IEnumerable<Pago> FiltrarPagos(Mes mes, int anio)
+        public IEnumerable<Pago> FiltrarPagosPorFecha(Mes mes, int anio)
         {
             if(mes == 0 && anio == 0)
             {

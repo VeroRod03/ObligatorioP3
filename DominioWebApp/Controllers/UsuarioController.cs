@@ -13,18 +13,45 @@ namespace DominioWebApp.Controllers
     {
         private IObtenerEquipos _obtenerEquiposCU;
         private IAltaUsuario _altaUsuarioCU;
+        private IObtenerUsuarios _obtenerUsuariosCU;
+        private IObtenerUsuariosFiltrados _obtenerUsuariosFiltradosCU;
         public UsuarioController(
             IObtenerEquipos obtenerEquiposCU,
-            IAltaUsuario altaUsuario)
+            IAltaUsuario altaUsuario,
+            IObtenerUsuarios obtenerUsuariosCU,
+            IObtenerUsuariosFiltrados obtenerUsuariosFiltradosCU)
         {
             _obtenerEquiposCU = obtenerEquiposCU;
             _altaUsuarioCU = altaUsuario;
+            _obtenerUsuariosCU = obtenerUsuariosCU;
+            _obtenerUsuariosFiltradosCU = obtenerUsuariosFiltradosCU;
         }
 
         // GET: UsuarioController
+        [FilterAutenticado]
+        [FilterGerente]
         public ActionResult Index()
         {
-            return View();
+            return View(_obtenerUsuariosCU.ObtenerUsuarios());
+        }
+
+        [HttpPost]
+        public ActionResult Index(double monto)
+        {
+            try
+            {
+                return View(_obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto));
+            }
+            catch (UsuarioException us)
+            {
+                ViewBag.Error = us.Message;
+                return View(_obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto));
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return View(_obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto));
+            }
         }
 
         // GET: UsuarioController/Details/5
@@ -52,19 +79,20 @@ namespace DominioWebApp.Controllers
                 _altaUsuarioCU.AgregarUsuario(usuarioDTO);
                 ViewBag.Mensaje = "Usuario creado exitosamente!";
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                return View();
+                //para que se limpien los campos
+                return RedirectToAction(nameof(Create));
             }
             catch (UsuarioException us)
             {
                 ViewBag.Error = us.Message;
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                return View();
+                return RedirectToAction(nameof(Create));
             }
             catch (Exception e)
             {
                 ViewBag.Error = "Error inesperado.";
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                return View();
+                return RedirectToAction(nameof(Create));
             }
         }
 

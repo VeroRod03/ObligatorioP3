@@ -13,32 +13,32 @@
     <a asp-action="AltaPago">Create New</a>
 </p>
 
+<form method="post">
+    <select name="mes">
+        <option value="0"> Seleccione el mes </option>
+        @foreach (Mes mes in Enum.GetValues(typeof(Mes)))
+        {
+            <option value="@mes">@mes</option>
+        }
+    </select>
+    <select name="anio">
+        <option value="0"> Seleccione el año </option>
+        @for (int i = DateTime.Now.Year; i >= 1900; i--)
+        {
+            <option value="@i">@i</option>
+        }
+
+    </select>
+
+    <input type="submit" value="Filtrar" />
+</form>
+
 @if (Model.Count() == 0)
 {
     <div class="alert alert-warning">No hay Pagos registrados</div>
 }
 else
 {
-
-    <form method="post">
-        <select name="mes">
-            <option value="0"> Seleccione el mes </option>
-           @foreach (Mes mes in Enum.GetValues(typeof(Mes)))
-            {
-                <option value="@mes">@mes</option>
-            }
-        </select>
-        <select name="anio">
-            <option value="0"> Seleccione el año </option>
-            @for (int i = DateTime.Now.Year; i >= 1900; i--)
-            {
-                <option value="@i">@i</option>
-            }
-            
-        </select>
-        
-        <input type="submit" value="Filtrar" />
-    </form>
 
     <table class="table">
         <thead>

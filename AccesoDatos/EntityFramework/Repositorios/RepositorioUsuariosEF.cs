@@ -68,6 +68,14 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         }
 
+        public IEnumerable<Usuario> FiltrarUsuariosPorMonto(double monto)
+        {
+            return _context.Pagos
+                    .Where(pago => pago.Monto >= monto)
+                    .Select(pago => pago.Usuario)
+                    .Distinct();
+        }
+
         public Usuario FindById(int id)
         {
             return _context.Usuarios

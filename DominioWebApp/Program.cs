@@ -46,6 +46,8 @@ namespace DominioWebApp
 
             builder.Services.AddScoped<IObtenerUsuarioPorId, ObtenerUsuarioPorIdCU>();
             builder.Services.AddScoped<IAltaUsuario, AltaUsuarioCU>();
+            builder.Services.AddScoped<IObtenerUsuarios, ObtenerUsuariosCU>();
+            builder.Services.AddScoped<IObtenerUsuariosFiltrados, ObtenerUsuariosFiltradosCU>();
 
             var app = builder.Build();
 
