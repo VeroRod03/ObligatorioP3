@@ -15,9 +15,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
     {
         private DominioContext _context;
 
-        public RepositorioPagosEF()
+        public RepositorioPagosEF(DominioContext context)
         {
-            _context = new DominioContext();
+            _context = context;
         }
 
         public void Add(Pago obj)

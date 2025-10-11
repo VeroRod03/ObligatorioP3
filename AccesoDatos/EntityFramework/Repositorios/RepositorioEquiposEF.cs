@@ -11,9 +11,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
     public class RepositorioEquiposEF : IEquipoRepositorio
     {
         private DominioContext _context;
-        public RepositorioEquiposEF()
+        public RepositorioEquiposEF(DominioContext context)
         {
-            _context = new DominioContext();
+            _context = context;
         }
         public void Add(Equipo obj)
         {

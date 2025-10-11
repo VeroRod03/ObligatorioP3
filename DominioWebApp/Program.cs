@@ -1,3 +1,4 @@
+using AccesoDatos.EntityFramework;
 using AccesoDatos.EntityFramework.Repositorios;
 using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosEquipos;
@@ -8,6 +9,7 @@ using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosEquipo;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+using Microsoft.EntityFrameworkCore;
 
 namespace DominioWebApp
 {
@@ -21,6 +23,13 @@ namespace DominioWebApp
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddSession();
+
+            //Configuracion de Base de datos
+            builder.Services.AddDbContext<DominioContext>(
+                options => options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("Dominio")
+                )
+            );
 
             // Inicializamos Repositorios
             builder.Services.AddScoped<ITipoGastoRepositorio, RepositorioTipoGastosEF>();

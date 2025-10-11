@@ -12,9 +12,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
     {
         private DominioContext _context;
 
-        public RepositorioAuditoriasEF()
+        public RepositorioAuditoriasEF(DominioContext context)
         {
-            _context = new DominioContext();
+            _context = context;
         }
 
         public void Add(Auditoria obj)

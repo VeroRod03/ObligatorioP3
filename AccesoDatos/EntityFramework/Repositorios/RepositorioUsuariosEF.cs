@@ -15,9 +15,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
     {
         private DominioContext _context;
 
-        public RepositorioUsuariosEF()
+        public RepositorioUsuariosEF(DominioContext context)
         {
-            _context = new DominioContext();
+            _context = context;
         }
 
         public Usuario Login(string email, string pass)

@@ -14,9 +14,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
     {
         private DominioContext _context;
 
-        public RepositorioTipoGastosEF()
+        public RepositorioTipoGastosEF(DominioContext context)
         {
-            _context = new DominioContext();
+            _context = context;
         }
         public void Add(TipoGasto obj)
         {
