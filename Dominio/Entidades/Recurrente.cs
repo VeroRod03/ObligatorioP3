@@ -44,16 +44,31 @@ namespace Dominio.Entidades
 
         public override bool PagoIncluyeFecha(Mes mes, int anio)
         {
-            if(anio == Fecha.Year && anio == Hasta.Value.Year 
+            bool incluyeFecha = false;
+            //en el caso que sea un pago en el mismo anio, y se verifica que sea el mismo mes
+            if (anio == Fecha.Year && anio == Hasta.Value.Year
                 && (int)mes >= Fecha.Month && (int)mes <= Hasta.Value.Month)
             {
-                return true;
+                incluyeFecha = true;
             }
+            /*
+            //en el caso de que sea en anios diferentes, pero que la diferencia entre ellos sea mas de un anio
+            //por ende, todos los meses estan incluidos 
             else if (anio >= Fecha.Year && anio <= Hasta.Value.Year
-                   && (int)mes >= Fecha.Month && (int)mes <= Hasta.Value.Month)
+                            && Hasta.Value.Year - Fecha.Year > 1)
             {
-                return true;
+                incluyeFecha = true; ;
             }
+            */
+            //en el caso de que sean anios diferentes pero con un solo anio de diferencia (Octubre 2024 - Febrero 2025)
+            else if (anio >= Fecha.Year && anio <= Hasta.Value.Year
+                    && (((int)mes >= Fecha.Month && (int)mes <= 12)
+                            || ((int)mes >= 1 && (int)mes <= Hasta.Value.Month)))
+
+            {
+                incluyeFecha = true;
+            }
+            return incluyeFecha;
         }
 
         public void Validar()

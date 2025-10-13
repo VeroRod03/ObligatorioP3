@@ -60,21 +60,27 @@ namespace AccesoDatos.EntityFramework.Repositorios
                 throw new PagoException("Debe seleccionar un año");
 
             }
-            
+
 
             return _context.Pagos
                 .Include(pago => pago.Usuario)
-                .Where(pago => pago.PagoIncluyeFecha(mes, anio)
-                
-                pago.Fecha.Month == (int)mes && pago.Fecha.Year == anio);
+                .Where(pago => pago.PagoIncluyeFecha(mes, anio));
+
+
+                //pago.Fecha.Month == (int)mes && pago.Fecha.Year == anio);
                 
         }
 
         public Pago FindById(int id)
         {
-            return _context.Pagos
+            Pago aRetornar = _context.Pagos
                     .Where(pago => pago.Id == id)
                     .FirstOrDefault();
+            if(aRetornar == null)
+            {
+                throw new PagoException("No hay ningun pago con ese id");
+            }
+            return aRetornar;
         }
 
         public void Remove(int id)

@@ -1,4 +1,5 @@
-﻿using Dominio.Exceptions;
+﻿using Dominio.Enumerations;
+using Dominio.Exceptions;
 using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,11 @@ namespace Dominio.Entidades
         public override string DevolverRecibo()
         {
             return NumRecibo;
+        }
+
+        public override bool PagoIncluyeFecha(Mes mes, int anio)
+        {
+            throw new NotImplementedException();
         }
 
         public void Validar()
