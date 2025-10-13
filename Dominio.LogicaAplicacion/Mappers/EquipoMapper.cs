@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,10 @@ namespace Dominio.LogicaAplicacion.Mappers
     {
         public static Equipo FromDTO(EquipoDTO dto)
         {
+            if (dto == null)
+            {
+                throw new EquipoException("El equipo esta nulo");
+            }
             return new Equipo
             {
                 Id = dto.Id,
@@ -20,6 +25,10 @@ namespace Dominio.LogicaAplicacion.Mappers
         }
         public static EquipoDTO ToDTO(Equipo equipo)
         {
+            if (equipo == null)
+            {
+                throw new EquipoException("El equipo esta nulo");
+            }
             return new EquipoDTO
             {
                 Id = equipo.Id,

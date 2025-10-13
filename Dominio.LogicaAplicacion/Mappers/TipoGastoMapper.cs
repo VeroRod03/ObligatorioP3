@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.ValueObjects;
 using System;
@@ -11,8 +12,13 @@ namespace Dominio.LogicaAplicacion.Mappers
 {
     public class TipoGastoMapper
     {
+        
         public static TipoGasto FromDTO(TipoGastoDTO dto)
         {
+            if (dto == null)
+            {
+                throw new TipoGastoException("El tipo de gasto esta nulo");
+            }
             return new TipoGasto
             {
                 Id = dto.Id,
@@ -22,6 +28,10 @@ namespace Dominio.LogicaAplicacion.Mappers
         }
         public static TipoGastoDTO ToDTO(TipoGasto gasto)
         {
+            if (gasto == null)
+            {
+                throw new TipoGastoException("El tipo de gasto esta nulo");
+            }
             return new TipoGastoDTO
             {
                 Id = gasto.Id,

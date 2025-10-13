@@ -22,18 +22,6 @@ namespace Dominio.Entidades
         public Equipo Equipo { get; set; }
         public RolUsuario Rol {  get; set; }
 
-        /*
-        public Usuario(NombreCompleto nombreCompleto,string contra, Equipo equipo, RolUsuario rol)
-        {
-            NombreCompleto = nombreCompleto;
-            Contra = contra;
-            Equipo = equipo;
-            Email = new Email(NombreCompleto);
-            Rol = rol;
-            Validar();
-        }
-        */
-
         public Usuario() { }
 
         public void Validar()
@@ -46,9 +34,9 @@ namespace Dominio.Entidades
 
         private void ValidarContra()
         {
-            if (string.IsNullOrEmpty(Contra))
+            if (Contra.Length < 8)
             {
-                throw new UsuarioException("La contraseña no puede ser vacia");
+                throw new UsuarioException("La contraseña debe tener al menos 8 caracteres");
             }
         }
         private void ValidarEquipo()

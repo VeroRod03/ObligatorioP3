@@ -1,4 +1,5 @@
-﻿using Dominio.Interfaces;
+﻿using Dominio.Exceptions;
+using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,10 @@ namespace Dominio.Entidades
 
         public void Validar()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(NumRecibo))
+            {
+                throw new PagoException("El pago unico debe tener un numero de recibo");
+            }
         }
     }
 }
