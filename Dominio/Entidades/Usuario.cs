@@ -4,6 +4,7 @@ using Dominio.Interfaces;
 using Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,9 @@ namespace Dominio.Entidades
     public class Usuario : IValidable
     {
         public int Id {  get; set; }
-        public NombreCompleto NombreCompleto { get; set; } 
+        public NombreCompleto NombreCompleto { get; set; }
+        //[Required(ErrorMessage = "La contraseña del usuario es requerido")]
+        //[Range(8, int.MinValue, ErrorMessage = "La contraseña debe tener al menos 8 caracteres")]
         public string Contra {  get; set; }
         public Email Email {  get; set; }
         [ForeignKey(nameof(Equipo))] public int EquipoId { get; set; }

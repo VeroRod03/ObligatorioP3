@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,19 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public void Add(Auditoria obj)
         {
-            _context.Auditorias.Add(obj);
-            _context.SaveChanges();
+            try
+            {
+                _context.Auditorias.Add(obj);
+                _context.SaveChanges();
+            }catch(TipoGastoException tge)
+            {
+                throw tge;
+            }
+            catch (Exception ex)
+            {
+                throw new TipoGastoException("Hubo un error: ", ex);
+            }
+
         }
 
         public IEnumerable<Auditoria> FindAll()

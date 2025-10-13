@@ -41,7 +41,6 @@
             <div class="form-group">
                 <label for="Equipo" class="control-label">Equipo</label>
                 <select name="EquipoId" id="Equipo" class="form-control" required>
-                    <option value="">Seleccione el equipo</option>
                     @foreach (EquipoDTO equipo in ViewBag.Equipos)
                     {
                         <option value=@equipo.Id>@equipo.Nombre</option>
@@ -52,7 +51,6 @@
             <div class="form-group">
                 <label for="Rol" class="control-label">Rol</label>
                 <select name="Rol" id="Rol" class="form-control" required>
-                    <option value="">Seleccione el rol</option>
                     <option value="@RolUsuario.EMPLEADO">@RolUsuario.EMPLEADO</option>
                     <option value="@RolUsuario.GERENTE">@RolUsuario.GERENTE</option>
                     <span asp-validation-for="Rol" class="text-danger"></span>

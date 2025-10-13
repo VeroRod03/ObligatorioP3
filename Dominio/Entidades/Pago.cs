@@ -4,6 +4,7 @@ using Dominio.Interfaces;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,12 @@ namespace Dominio.Entidades
         public MetodoPago MetodoPago { get; set; }
         [ForeignKey(nameof(Usuario))] public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+        //[Required(ErrorMessage = "La descripcion del pago es requerida")]
         public string Descripcion { get; set; }
+        //[Required(ErrorMessage = "El monto del pago es requerido")]
         public double Monto { get; set; }
+        //[Required(ErrorMessage = "La fecha del pago es requerida")]
+
         public DateTime Fecha { get; set; }
 
         public Pago() { }
@@ -34,6 +39,8 @@ namespace Dominio.Entidades
         {
             return 0;
         }
+
+        public abstract bool PagoIncluyeFecha(Mes mes, int anio);
 
         public abstract DateTime? DevolverFechaHasta();
 

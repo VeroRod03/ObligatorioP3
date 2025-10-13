@@ -24,8 +24,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             try
             {
-                obj.Validar();
-               
+                obj.Validar();         
                 _context.Pagos.Add(obj);
                 _context.SaveChanges();
             }
@@ -54,20 +53,21 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             else if (mes == 0)
             {
-                return _context.Pagos
-            .Include(pago => pago.Usuario)
-            .Where(pago => pago.Fecha.Year == anio);
+                throw new PagoException("Debe seleccionar un mes");
             }
             else if (anio == 0)
             {
-                return _context.Pagos
-                .Include(pago => pago.Usuario)
-                .Where(pago => pago.Fecha.Month == (int)mes);
+                throw new PagoException("Debe seleccionar un año");
+
             }
+            
 
             return _context.Pagos
                 .Include(pago => pago.Usuario)
-                .Where(pago => pago.Fecha.Month == (int)mes && pago.Fecha.Year == anio);
+                .Where(pago => pago.PagoIncluyeFecha(mes, anio)
+                
+                pago.Fecha.Month == (int)mes && pago.Fecha.Year == anio);
+                
         }
 
         public Pago FindById(int id)
