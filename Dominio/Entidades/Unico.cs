@@ -27,7 +27,12 @@ namespace Dominio.Entidades
 
         public override bool PagoIncluyeFecha(Mes mes, int anio)
         {
-            throw new NotImplementedException();
+            bool incluyeFecha = false;
+            if (Fecha.Month == (int)mes && Fecha.Year == anio)
+            {
+                incluyeFecha = true;
+            }
+            return incluyeFecha;
         }
 
         public void Validar()

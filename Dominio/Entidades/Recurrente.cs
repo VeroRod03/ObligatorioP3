@@ -45,28 +45,20 @@ namespace Dominio.Entidades
         public override bool PagoIncluyeFecha(Mes mes, int anio)
         {
             bool incluyeFecha = false;
-            //en el caso que sea un pago en el mismo anio, y se verifica que sea el mismo mes
-            if (anio == Fecha.Year && anio == Hasta.Value.Year
-                && (int)mes >= Fecha.Month && (int)mes <= Hasta.Value.Month)
-            {
-                incluyeFecha = true;
-            }
-            /*
-            //en el caso de que sea en anios diferentes, pero que la diferencia entre ellos sea mas de un anio
-            //por ende, todos los meses estan incluidos 
-            else if (anio >= Fecha.Year && anio <= Hasta.Value.Year
-                            && Hasta.Value.Year - Fecha.Year > 1)
-            {
-                incluyeFecha = true; ;
-            }
-            */
-            //en el caso de que sean anios diferentes pero con un solo anio de diferencia (Octubre 2024 - Febrero 2025)
-            else if (anio >= Fecha.Year && anio <= Hasta.Value.Year
-                    && (((int)mes >= Fecha.Month && (int)mes <= 12)
-                            || ((int)mes >= 1 && (int)mes <= Hasta.Value.Month)))
 
+            DateTime fechaInicioMes = new DateTime(anio, (int)mes, 1);
+            DateTime fechaFinDeMes = fechaInicioMes.AddMonths(1).AddDays(-1);
+
+            //Primero creamos una fecha a partir del mes y el anio para poder comparar
+            //Despues mirando si nuestra fecha "desde" es menor al final de ese mes buscado, contemplamos
+            //todos los dias de ese mes, y que tambien pueda ser menor (no excluimos meses anteriores)
+            //Igual para el hasta; al ser mayor que el primer dia de ese mes, lo incluye entero,
+            //y puede ser posterior a ese mes.
+            
+            if(Fecha <= fechaFinDeMes && Hasta.Value >= fechaInicioMes )
             {
                 incluyeFecha = true;
+                
             }
             return incluyeFecha;
         }

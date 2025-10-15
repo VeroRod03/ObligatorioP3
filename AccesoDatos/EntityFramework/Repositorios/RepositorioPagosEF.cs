@@ -60,15 +60,12 @@ namespace AccesoDatos.EntityFramework.Repositorios
                 throw new PagoException("Debe seleccionar un año");
 
             }
-
-
             return _context.Pagos
                 .Include(pago => pago.Usuario)
-                .Where(pago => pago.PagoIncluyeFecha(mes, anio));
-
-
-                //pago.Fecha.Month == (int)mes && pago.Fecha.Year == anio);
-                
+                //preguntar
+                .AsEnumerable()
+                .Where(pago => pago.PagoIncluyeFecha(mes, anio))
+                .ToList();                
         }
 
         public Pago FindById(int id)

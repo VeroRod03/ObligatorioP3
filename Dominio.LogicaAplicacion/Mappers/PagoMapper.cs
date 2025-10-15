@@ -16,7 +16,7 @@ namespace Dominio.LogicaAplicacion.Mappers
         {
             if(pago == null)
             {
-                throw new PagoException("El pago esta nulo");///??
+                throw new PagoException("El pago esta nulo");
             }
             UsuarioDTO usuario = null;
             if(pago.Usuario != null)

@@ -54,7 +54,21 @@ namespace DominioWebApp.Controllers
         [HttpPost]
         public ActionResult Index(Mes mes, int anio)
         {
-            return View(_obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio));
+            try
+            {
+                return View(_obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio));
+            }
+            catch (PagoException pe)
+            {
+                ViewBag.Error = pe.Message;
+                return View(_obtenerPagosCU.ObtenerPagos());
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(_obtenerPagosCU.ObtenerPagos());
+            }
         }
 
         // GET: PagoController/Details/5

@@ -80,19 +80,20 @@ namespace DominioWebApp.Controllers
                 ViewBag.Mensaje = "Usuario creado exitosamente!";
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
                 //para que se limpien los campos
-                return RedirectToAction(nameof(Create));
+                ModelState.Clear();
+                return View();
             }
             catch (UsuarioException us)
             {
                 ViewBag.Error = us.Message;
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                return RedirectToAction(nameof(Create));
+                return View();
             }
             catch (Exception e)
             {
                 ViewBag.Error = "Error inesperado.";
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                return RedirectToAction(nameof(Create));
+                return View();
             }
         }
 

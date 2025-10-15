@@ -6,6 +6,11 @@
     ViewData["Title"] = "Index";
 }
 
+@if(!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
 
 <h1>Index</h1>
 
@@ -63,6 +68,7 @@ else
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Fecha)
+
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Hasta)
@@ -96,13 +102,13 @@ else
                         @Html.DisplayFor(modelItem => item.SaldoPendiente)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Fecha)
+                        @item.Fecha.ToShortDateString()
                     </td>
                     @if (item.TipoPago == "Recurrente")
                     {
                         
                         <td>
-                            @Html.DisplayFor(modelItem => item.Hasta)
+                            @item.Hasta.Value.ToShortDateString()
                         </td>
                         <td>-</td>
                     }
