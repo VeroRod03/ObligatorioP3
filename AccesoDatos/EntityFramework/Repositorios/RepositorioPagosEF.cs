@@ -41,8 +41,12 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Pago> FindAll()
         {
-            return _context.Pagos
-                    .Include(pago => pago.Usuario);
+            IEnumerable < Pago > aRetornar = _context.Pagos
+                                                .Include(pago => pago.Usuario);
+
+            //hacemos el .count directamente en la vista; permitimos devolverla vacia
+
+            return aRetornar;
         }
 
         public IEnumerable<Pago> FiltrarPagosPorFecha(Mes mes, int anio)

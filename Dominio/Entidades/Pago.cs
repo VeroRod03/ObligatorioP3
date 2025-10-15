@@ -53,6 +53,7 @@ namespace Dominio.Entidades
             ValidarUsuario();
             ValidarDescripcion();
             ValidarMonto();
+            ValidarFecha();
 
         }
 
@@ -89,6 +90,14 @@ namespace Dominio.Entidades
             if (Monto <= 0)
             {
                 throw new PagoException("El monto no puede ser mayor a 0");
+            }
+        }
+
+        private void ValidarFecha()
+        {
+            if(Fecha > DateTime.Today)
+            {
+                throw new PagoException("La fecha no puede ser posterior a la fecha actual");
             }
         }
 

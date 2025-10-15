@@ -18,7 +18,6 @@ namespace DominioWebApp.Controllers
         private IAltaPago _altaPagoCU;
         private IObtenerTipoGastos _obtenerTipoGastos;
         private IGetById _obtenerTipoGastoPorId;
-        private IObtenerUsuarioPorId _obtenerUsuarioPorId;
         private IObtenerPagos _obtenerPagosCU;
         private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
 
@@ -26,14 +25,12 @@ namespace DominioWebApp.Controllers
             IAltaPago altaPagoCU,
             IObtenerTipoGastos obtenerTipoGastos,
             IGetById obtenerTipoGastoPorId,
-            IObtenerUsuarioPorId obtenerUsuarioPorId,
             IObtenerPagos obtenerPagosCU,
             IObtenerPagosFiltrados obtenerPagosFiltradosCU)
         {
             _altaPagoCU = altaPagoCU;
             _obtenerTipoGastos = obtenerTipoGastos;
             _obtenerTipoGastoPorId = obtenerTipoGastoPorId;
-            _obtenerUsuarioPorId = obtenerUsuarioPorId;
             _obtenerPagosCU = obtenerPagosCU;
             _obtenerPagosFiltradosCU = obtenerPagosFiltradosCU;
         }
@@ -101,10 +98,8 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                //pagoDto.TipoGasto = _obtenerTipoGastoPorId.ObtenerTipoGasto(pagoDto.TipoGastoId);
                 pagoDto.TipoPago = tipoPago;
-                pagoDto.UsuarioId = (int)HttpContext.Session.GetInt32("usuarioId");
-                //pagoDto.Usuario = _obtenerUsuarioPorId.ObtenerUsuarioPorId(pagoDto.UsuarioId);
+                pagoDto.UsuarioId = HttpContext.Session.GetInt32("usuarioId").Value;
                 _altaPagoCU.AgregarPago(pagoDto);
                 return RedirectToAction(nameof(AltaPago));
             }

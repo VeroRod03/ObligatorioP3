@@ -10,7 +10,7 @@ namespace DominioWebApp.Filters
             string rol = context.HttpContext.Session.GetString("usuarioRol");
             if (rol != "ADMINISTRADOR")
             {
-                context.Result = new RedirectToActionResult("Index", "Home", new { mensaje = "Debe ser un administrador para acceder." });
+                context.Result = new RedirectToActionResult("Index", "Home", new { mensaje = "No tiene acceso." });
             }
             base.OnActionExecuting(context);
         }

@@ -78,10 +78,8 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public Usuario FindById(int id)
         {
-            return _context.Usuarios
-                    .Where(user => user.Id == id)
-                    .Include(user => user.Equipo)
-                    .FirstOrDefault();
+            throw new NotImplementedException();
+
         }
 
         public void Remove(int id)

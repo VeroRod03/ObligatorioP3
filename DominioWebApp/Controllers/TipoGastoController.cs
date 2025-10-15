@@ -34,9 +34,10 @@ namespace DominioWebApp.Controllers
         }
         // GET: TipoGastoController
         [FilterAdministrador]
-        public ActionResult Index(string mensaje)
+        public ActionResult Index(string mensaje, string error)
         {
             ViewBag.Mensaje = mensaje;
+            ViewBag.Error = error;
             return View(_obtenerTipoGastosCU.ObtenerTipoGastos());
         }
 
@@ -72,7 +73,20 @@ namespace DominioWebApp.Controllers
         // GET: TipoGastoController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_getById.ObtenerTipoGasto(id));
+            try
+            {
+                return View(_getById.ObtenerTipoGasto(id));
+
+            }
+            catch (TipoGastoException tge)
+            {
+                return RedirectToAction(nameof(Index), new { error = tge.Message });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Index), new { error = ex.Message });
+
+            }
         }
 
         // POST: TipoGastoController/Edit/5
@@ -84,19 +98,33 @@ namespace DominioWebApp.Controllers
             try
             {
                 _editarTipoGastoCU.EditarTipoGasto(dto,(int)HttpContext.Session.GetInt32("usuarioId"));
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { mensaje = "Tipo de Gasto editado correctamente" });
             }
-            catch
+            catch (TipoGastoException tge)
             {
-                return View();
+                ViewBag.Error = tge.Message;
+                return View((_getById.ObtenerTipoGasto(dto.Id)));
             }
         }
 
         // GET: TipoGastoController/Delete/5
         public ActionResult Delete(int id, string mensaje)
         {
-            ViewBag.Error = mensaje;
-            return View((_getById.ObtenerTipoGasto(id)));
+            try
+            {
+                ViewBag.Error = mensaje;
+                return View((_getById.ObtenerTipoGasto(id)));
+            }catch(TipoGastoException tge)
+            {
+                ViewBag.Error = tge.Message;
+                return RedirectToAction(nameof(Index));
+
+            }catch(Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         // POST: TipoGastoController/Delete/5

@@ -4,6 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
 @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
 {
     <div class="alert alert-success">@ViewBag.Mensaje</div>

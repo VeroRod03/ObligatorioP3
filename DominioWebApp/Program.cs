@@ -53,7 +53,6 @@ namespace DominioWebApp
             builder.Services.AddScoped<IObtenerPagos, ObtenerPagosCU>();
             builder.Services.AddScoped<IObtenerPagosFiltrados, ObtenerPagosFiltradosCU>();
 
-            builder.Services.AddScoped<IObtenerUsuarioPorId, ObtenerUsuarioPorIdCU>();
             builder.Services.AddScoped<IAltaUsuario, AltaUsuarioCU>();
             builder.Services.AddScoped<IObtenerUsuarios, ObtenerUsuariosCU>();
             builder.Services.AddScoped<IObtenerUsuariosFiltrados, ObtenerUsuariosFiltradosCU>();

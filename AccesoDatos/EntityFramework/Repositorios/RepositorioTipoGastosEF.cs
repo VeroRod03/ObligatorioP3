@@ -43,14 +43,13 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public TipoGasto FindById(int id)
         {
-            foreach (TipoGasto obj in _context.TipoGastos)
+            TipoGasto aRetornar = _context.TipoGastos.Where(tg => tg.Id == id).FirstOrDefault();
+            if(aRetornar == null)
             {
-                if (obj.Id == id)
-                {
-                    return obj;
-                }
+                throw new TipoGastoException("No fue encontrado un tipo de gasto con ese id");
+
             }
-            throw new TipoGastoException("No fue encontrado un tipo de gasto con ese id");
+            return aRetornar;
         }
 
         public void Remove(int id)
