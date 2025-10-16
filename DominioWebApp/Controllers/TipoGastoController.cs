@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DominioWebApp.Controllers
 {
+    [FilterAutenticado]
     public class TipoGastoController : Controller
     {
         private IObtenerTipoGastos _obtenerTipoGastosCU;
@@ -48,7 +49,6 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: TipoGastoController/Create
-        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TipoGastoDTO gasto)
@@ -91,7 +91,6 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: TipoGastoController/Edit/5
-        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TipoGastoDTO dto)
@@ -129,7 +128,6 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: TipoGastoController/Delete/5
-        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, TipoGastoDTO dto)

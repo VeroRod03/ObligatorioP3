@@ -49,6 +49,7 @@ public class HomeController : Controller
         }
     }
 
+    [FilterAutenticado]
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();

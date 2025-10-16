@@ -10,6 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DominioWebApp.Controllers
 {
+    [FilterAutenticado]
     public class UsuarioController : Controller
     {
         private IObtenerEquipos _obtenerEquiposCU;
@@ -29,7 +30,6 @@ namespace DominioWebApp.Controllers
         }
 
         // GET: UsuarioController
-        [FilterAutenticado]
         [FilterGerente]
         public ActionResult Index(string mensaje)
         {
@@ -57,7 +57,6 @@ namespace DominioWebApp.Controllers
         }
 
         // GET: UsuarioController/Create
-        [FilterAutenticado]
         [FilterGerenteAdmin]
         public ActionResult Create(string mensaje, string error)
         {
