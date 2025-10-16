@@ -15,8 +15,8 @@ namespace Dominio.Entidades
 
         public override double CalcularMontoTotal()
         {
-            int cantMeses = (Hasta.Value.Year - Fecha.Year) * 12 + (Hasta.Value.Month - Fecha.Month);
-            return cantMeses * Monto;
+            int cantMeses = (Hasta.Value.Year - Fecha.Year) * 12 + (Hasta.Value.Month - Fecha.Month) ; //agregamos el mes de partida/fin
+            return (cantMeses + 1) * Monto;
         }
         public override double CalcularSaldoPendiente()
         {
@@ -29,7 +29,7 @@ namespace Dominio.Entidades
             {
                 return 0;
             }
-            return (cantMeses + 1) * Monto; // tenemos que incluir el mes en el que estamos parados/termina la suscripcion
+            return (cantMeses) * Monto; 
         }
 
         public override DateTime? DevolverFechaHasta()
@@ -63,13 +63,30 @@ namespace Dominio.Entidades
             return incluyeFecha;
         }
 
-        public void Validar()
+        public override void Validar()
+        {
+            base.Validar();
+            ValidarFecha();
+        
+        }
+
+        private void ValidarFecha()
         {
             if(Hasta == null)
             {
                 throw new PagoException("El pago recurrente debe tener una fecha de finalizacion");
             }
-            ;
+            if(Hasta <= Fecha)
+            {
+                throw new PagoException("La fecha de finalizacion debe ser posterior a la de inicio");
+            }
+            if (Hasta.Value <= Fecha.AddMonths(1))
+            {
+                throw new PagoException("Los pagos recurrentes se repiten ");
+
+            }
         }
+
+       
     }
 }

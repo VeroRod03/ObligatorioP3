@@ -19,9 +19,12 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        @if (Context.Session.GetInt32("usuarioId") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        }
                         @if(Context.Session.GetString("usuarioRol") == "ADMINISTRADOR")
                         {
                             <li class="nav-item">
@@ -37,16 +40,19 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Filtrado Usuarios</a>
                             </li>
                         }
+                        @if (Context.Session.GetString("usuarioRol") == "GERENTE" || Context.Session.GetString("usuarioRol") == "ADMINISTRADOR")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Create">Crear Usuario</a>
+                            </li>
+                        }
                         @if (Context.Session.GetInt32("usuarioId") != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="AltaPago">Crear Pago</a>
                             </li>
-                        }
-                        @if (Context.Session.GetString("usuarioRol") == "GERENTE" || Context.Session.GetString("usuarioRol") == "ADMINISTRADOR")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Create">Crear Usuario</a>
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-danger fw-bold" asp-controller="Home" asp-action="Logout">Logout</a>
                             </li>
                         }
                         

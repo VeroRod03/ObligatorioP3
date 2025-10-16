@@ -35,7 +35,12 @@ namespace Dominio.Entidades
             return incluyeFecha;
         }
 
-        public void Validar()
+        public override void Validar()
+        {
+            base.Validar();
+            ValidarNumRecibo();
+        }
+        private void ValidarNumRecibo()
         {
             if (string.IsNullOrEmpty(NumRecibo))
             {

@@ -41,12 +41,6 @@ namespace DominioWebApp.Controllers
             return View(_obtenerTipoGastosCU.ObtenerTipoGastos());
         }
 
-        // GET: TipoGastoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: TipoGastoController/Create
         public ActionResult Create()
         {
@@ -61,11 +55,18 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                _altaTipoGastoCU.AgregarTipoGasto(gasto,(int)HttpContext.Session.GetInt32("usuarioId"));
-                return RedirectToAction(nameof(Index));
+                _altaTipoGastoCU.AgregarTipoGasto(gasto,HttpContext.Session.GetInt32("usuarioId").Value);
+                return RedirectToAction(nameof(Index), new {mensaje = "Tipo de gasto creado existosamente! :)"});
             }
-            catch
+            catch (TipoGastoException tge)
             {
+                ViewBag.Error = tge.Message;
+                return View();
+
+            }
+            catch (Exception ex) 
+            {
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
@@ -97,13 +98,13 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                _editarTipoGastoCU.EditarTipoGasto(dto,(int)HttpContext.Session.GetInt32("usuarioId"));
+                _editarTipoGastoCU.EditarTipoGasto(dto,HttpContext.Session.GetInt32("usuarioId").Value);
                 return RedirectToAction(nameof(Index), new { mensaje = "Tipo de Gasto editado correctamente" });
             }
             catch (TipoGastoException tge)
             {
                 ViewBag.Error = tge.Message;
-                return View((_getById.ObtenerTipoGasto(dto.Id)));
+                return View(_getById.ObtenerTipoGasto(dto.Id));
             }
         }
 
@@ -113,7 +114,7 @@ namespace DominioWebApp.Controllers
             try
             {
                 ViewBag.Error = mensaje;
-                return View((_getById.ObtenerTipoGasto(id)));
+                return View(_getById.ObtenerTipoGasto(id));
             }catch(TipoGastoException tge)
             {
                 ViewBag.Error = tge.Message;
@@ -135,14 +136,25 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                _eliminarTipoGastoCU.EliminarTipoGasto(id,(int)HttpContext.Session.GetInt32("usuarioId"));
+                _eliminarTipoGastoCU.EliminarTipoGasto(id,HttpContext.Session.GetInt32("usuarioId").Value);
                 return RedirectToAction(nameof(Index),new { mensaje = "Tipo de Gasto borrado correctamente" });
             }
             catch (TipoGastoException tge)
             {
                 ViewBag.Error = tge.Message;
-                return View((_getById.ObtenerTipoGasto(id)));
+                return View(_getById.ObtenerTipoGasto(id));
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(_getById.ObtenerTipoGasto(id));
+            }
+        }
+
+        // GET: TipoGastoController/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
         }
     }
 }

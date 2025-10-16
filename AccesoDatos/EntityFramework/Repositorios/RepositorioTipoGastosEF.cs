@@ -58,12 +58,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
             {
                 TipoGasto aBorrar = new TipoGasto { Id = id };
 
-                Pago pago = _context.Pagos.Where(
-                                pago =>
-                                pago.TipoGasto.Id == id
-                                ).FirstOrDefault();
-
-                if ( pago != null)
+                bool enUso = _context.Pagos.Any(pago => pago.TipoGasto.Id == id);
+ 
+                if (enUso)
                 {
                     throw new TipoGastoException("El tipo de gasto esta en uso.");
                 }

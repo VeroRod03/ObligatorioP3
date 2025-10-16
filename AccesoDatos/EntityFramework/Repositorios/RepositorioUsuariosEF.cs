@@ -23,10 +23,10 @@ namespace AccesoDatos.EntityFramework.Repositorios
         public Usuario Login(string email, string pass)
         {
             Usuario logueado = _context.Usuarios.Where(
-                            user =>
-                            user.Email.EmailUsuario == email
-                            && user.Contra == pass
-                        ).FirstOrDefault();
+                                user =>
+                                user.Email.EmailUsuario == email
+                                && user.Contra == pass
+                            ).FirstOrDefault();
 
             if (logueado == null)
             {

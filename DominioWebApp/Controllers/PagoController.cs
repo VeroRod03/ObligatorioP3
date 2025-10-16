@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DominioWebApp.Controllers
 {
+    [FilterAutenticado]
     public class PagoController : Controller
     {
         private IAltaPago _altaPagoCU;
@@ -36,17 +37,12 @@ namespace DominioWebApp.Controllers
         }
 
         // GET: PagoController
-        [FilterAutenticado]
         [FilterGerente]
         public ActionResult Index()
         {
-            //List<PagoDTO> test = new List<PagoDTO>();
-            //return View(test);
-
             return View(_obtenerPagosCU.ObtenerPagos());
         }
 
-        [FilterAutenticado]
         [FilterGerente]
         [HttpPost]
         public ActionResult Index(Mes mes, int anio)
@@ -68,20 +64,11 @@ namespace DominioWebApp.Controllers
             }
         }
 
-        // GET: PagoController/Details/5
-        [FilterAutenticado]
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        [FilterAutenticado]
         public IActionResult AltaPago()
         {
             return View();
         }
 
-        [FilterAutenticado]
         // GET: PagoController/Create
         public ActionResult Create(string tipoPago)
         {
@@ -91,7 +78,6 @@ namespace DominioWebApp.Controllers
         }
 
         // POST: PagoController/Create
-        [FilterAutenticado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(PagoDTO pagoDto, string tipoPago)
@@ -159,6 +145,12 @@ namespace DominioWebApp.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: PagoController/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
         }
     }
 }

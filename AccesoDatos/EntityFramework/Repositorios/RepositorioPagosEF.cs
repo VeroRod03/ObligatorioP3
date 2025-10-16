@@ -41,12 +41,10 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Pago> FindAll()
         {
-            IEnumerable < Pago > aRetornar = _context.Pagos
-                                                .Include(pago => pago.Usuario);
-
             //hacemos el .count directamente en la vista; permitimos devolverla vacia
 
-            return aRetornar;
+            return _context.Pagos
+                        .Include(pago => pago.Usuario);
         }
 
         public IEnumerable<Pago> FiltrarPagosPorFecha(Mes mes, int anio)
@@ -66,10 +64,10 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             return _context.Pagos
                 .Include(pago => pago.Usuario)
-                //preguntar
+                //EF no sabe ejecutar PagoIncluyeFecha en una consulta SQL
+                //Con AsEnumberable() traemos los datos antes y luego filtramos en C# en lugar de SQL
                 .AsEnumerable()
-                .Where(pago => pago.PagoIncluyeFecha(mes, anio))
-                .ToList();                
+                .Where(pago => pago.PagoIncluyeFecha(mes, anio));
         }
 
         public Pago FindById(int id)

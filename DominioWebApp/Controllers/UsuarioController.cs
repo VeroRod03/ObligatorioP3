@@ -6,6 +6,7 @@ using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DominioWebApp.Controllers
 {
@@ -30,8 +31,9 @@ namespace DominioWebApp.Controllers
         // GET: UsuarioController
         [FilterAutenticado]
         [FilterGerente]
-        public ActionResult Index()
+        public ActionResult Index(string mensaje)
         {
+            ViewBag.Error = mensaje;
             return View(_obtenerUsuariosCU.ObtenerUsuarios());
         }
 
@@ -45,26 +47,22 @@ namespace DominioWebApp.Controllers
             catch (UsuarioException us)
             {
                 ViewBag.Error = us.Message;
-                return View(_obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto));
+                return View();
             }
             catch (Exception e)
             {
                 ViewBag.Error = e.Message;
-                return View(_obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto));
+                return View();
             }
-        }
-
-        // GET: UsuarioController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: UsuarioController/Create
         [FilterAutenticado]
         [FilterGerenteAdmin]
-        public ActionResult Create()
+        public ActionResult Create(string mensaje, string error)
         {
+            ViewBag.Mensaje = mensaje;
+            ViewBag.Error = error;
             ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
             return View();
         }
@@ -77,11 +75,7 @@ namespace DominioWebApp.Controllers
             try
             {
                 _altaUsuarioCU.AgregarUsuario(usuarioDTO);
-                ViewBag.Mensaje = "Usuario creado exitosamente!";
-                ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                //para que se limpien los campos
-                ModelState.Clear();
-                return View();
+                return RedirectToAction(nameof(Create), new {mensaje = "Usuario creado exitosamente!"});
             }
             catch (UsuarioException us)
             {
@@ -91,7 +85,7 @@ namespace DominioWebApp.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Error = "Error inesperado.";
+                ViewBag.Error = e.Message;
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
                 return View();
             }
@@ -137,6 +131,13 @@ namespace DominioWebApp.Controllers
             {
                 return View();
             }
+        }
+
+
+        // GET: UsuarioController/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
         }
     }
 }

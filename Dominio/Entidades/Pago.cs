@@ -46,7 +46,7 @@ namespace Dominio.Entidades
 
         public abstract string DevolverRecibo();
 
-        public void Validar()
+        public virtual void Validar() 
         {
             ValidarTipoGasto();
             ValidarMetodoPago();
@@ -100,6 +100,8 @@ namespace Dominio.Entidades
                 throw new PagoException("La fecha no puede ser posterior a la fecha actual");
             }
         }
+
+
 
     }
 }
