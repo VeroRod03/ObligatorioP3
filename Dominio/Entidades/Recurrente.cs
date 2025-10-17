@@ -3,6 +3,7 @@ using Dominio.Exceptions;
 using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Dominio.Entidades
 {
     public class Recurrente : Pago, IValidable
     {
-
+        [Required]
         public DateTime? Hasta { get; set; }
 
         public override double CalcularMontoTotal()
@@ -68,7 +69,6 @@ namespace Dominio.Entidades
         {
             base.Validar();
             ValidarFecha();
-        
         }
 
         private void ValidarFecha()
