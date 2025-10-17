@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DominioWebApp.Controllers
 {
     [FilterAutenticado]
+    [FilterAdministrador]
     public class TipoGastoController : Controller
     {
         private IObtenerTipoGastos _obtenerTipoGastosCU;
@@ -34,7 +35,6 @@ namespace DominioWebApp.Controllers
             _eliminarTipoGastoCU = eliminarTipoGastoCU;
         }
         // GET: TipoGastoController
-        [FilterAdministrador]
         public ActionResult Index(string mensaje, string error)
         {
             ViewBag.Mensaje = mensaje;

@@ -23,6 +23,7 @@ namespace Dominio.Entidades
         //[Required(ErrorMessage = "La descripcion del pago es requerida")]
         public string Descripcion { get; set; }
         //[Required(ErrorMessage = "El monto del pago es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "El mmonto no puede ser negativo")]
         public double Monto { get; set; }
         //[Required(ErrorMessage = "La fecha del pago es requerida")]
 
@@ -89,7 +90,7 @@ namespace Dominio.Entidades
         {
             if (Monto <= 0)
             {
-                throw new PagoException("El monto no puede ser mayor a 0");
+                throw new PagoException("El monto no puede ser menor a 0");
             }
         }
 

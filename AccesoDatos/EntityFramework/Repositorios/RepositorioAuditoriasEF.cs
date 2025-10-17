@@ -22,6 +22,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             try
             {
+                obj.Validar();
                 _context.Auditorias.Add(obj);
                 _context.SaveChanges();
             }catch(TipoGastoException tge)
