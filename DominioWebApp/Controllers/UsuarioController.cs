@@ -47,12 +47,12 @@ namespace DominioWebApp.Controllers
             catch (UsuarioException us)
             {
                 ViewBag.Error = us.Message;
-                return View();
+                return View(_obtenerUsuariosCU.ObtenerUsuarios());
             }
             catch (Exception e)
             {
                 ViewBag.Error = e.Message;
-                return View();
+                return View(_obtenerUsuariosCU.ObtenerUsuarios());
             }
         }
 

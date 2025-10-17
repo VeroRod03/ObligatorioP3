@@ -20,12 +20,8 @@ namespace Dominio.Entidades
         public MetodoPago MetodoPago { get; set; }
         [ForeignKey(nameof(Usuario))] public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
-        //[Required(ErrorMessage = "La descripcion del pago es requerida")]
         public string Descripcion { get; set; }
-        //[Required(ErrorMessage = "El monto del pago es requerido")]
-        [Range(0, int.MaxValue, ErrorMessage = "El mmonto no puede ser negativo")]
         public double Monto { get; set; }
-        //[Required(ErrorMessage = "La fecha del pago es requerida")]
 
         public DateTime Fecha { get; set; }
 

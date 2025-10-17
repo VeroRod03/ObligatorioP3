@@ -17,8 +17,6 @@ namespace Dominio.Entidades
     {
         public int Id {  get; set; }
         public NombreCompleto NombreCompleto { get; set; }
-        //[Required(ErrorMessage = "La contraseña del usuario es requerido")]
-        //[Range(8, int.MinValue, ErrorMessage = "La contraseña debe tener al menos 8 caracteres")]
         public string Contra {  get; set; }
         public Email Email {  get; set; }
         [ForeignKey(nameof(Equipo))] public int EquipoId { get; set; }

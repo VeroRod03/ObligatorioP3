@@ -70,8 +70,14 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Usuario> FiltrarUsuariosPorMonto(double monto)
         {
+            if(monto < 0)
+            {
+                throw new UsuarioException("El monto para el filtrado no puede ser negativo");
+            }
             return _context.Pagos
                     .Where(pago => pago.Monto >= monto)
+                    .Include(pago => pago.Usuario)
+                    .ThenInclude(usuario => usuario.Equipo)
                     .Select(pago => pago.Usuario)
                     .Distinct();
         }

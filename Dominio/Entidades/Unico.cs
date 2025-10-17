@@ -12,7 +12,6 @@ namespace Dominio.Entidades
 {
     public class Unico : Pago, IValidable
     {
-        //[Required(ErrorMessage = "El numero de recibo del pago es requerido")]
         public string NumRecibo {  get; set; }
 
         public override DateTime? DevolverFechaHasta()

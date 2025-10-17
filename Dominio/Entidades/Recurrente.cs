@@ -81,9 +81,9 @@ namespace Dominio.Entidades
             {
                 throw new PagoException("La fecha de finalizacion debe ser posterior a la de inicio");
             }
-            if (Hasta.Value <= Fecha.AddMonths(1))
+            if (Hasta.Value < Fecha.AddMonths(1))
             {
-                throw new PagoException("Los pagos recurrentes se repiten ");
+                throw new PagoException("Los pagos recurrentes se repiten una vez al mes");
 
             }
         }

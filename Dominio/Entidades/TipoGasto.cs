@@ -12,9 +12,7 @@ namespace Dominio.Entidades
     public class TipoGasto : IValidable
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "El nombre del tipo de gasto es requerido")]
         public string Nombre { get; set; }
-        [Required(ErrorMessage = "La descripcion del tipo de gasto es requerido")]
         public string Descripcion { get; set; }
         public TipoGasto() { }
         public void Validar()
