@@ -1,4 +1,5 @@
-﻿using Dominio.LogicaAplicacion.DTOs;
+﻿using Dominio.Exceptions;
+using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,25 @@ namespace Dominio.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public PagoDTO Get(int id)
+        public IActionResult Get(int id)
         {
-            return _obtenerPagoPorId.ObtenerPagoPorId(id);
+            try
+            {
+                //si sale todo bien que retorne status code 200 y la informacion del pago.
+                PagoDTO pago = _obtenerPagoPorId.ObtenerPagoPorId(id);
+                return Ok(pago);
+
+            }
+            catch (PagoException pe)
+            {
+                //devolver 404 si el id que el usuario ingreso no existe.
+                return NotFound(new { error = pe.Message });
+            }
+            catch (Exception ex)
+            {
+                //con cualquier otro error que mande un 500, internal error.
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+            }
         }
     }
 }

@@ -15,7 +15,6 @@ namespace Dominio.Entidades
         [Required]
         public string Accion { get; set; }
         public DateTime Fecha { get; set; }
-        [Required]
         public int? UsuarioId { get; set; }
 
         public Auditoria() { }
