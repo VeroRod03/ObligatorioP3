@@ -12,7 +12,9 @@ namespace Dominio.Entidades
     public class TipoGasto : IValidable
     {
         public int Id { get; set; }
+        [Required]
         public string Nombre { get; set; }
+        [Required]
         public string Descripcion { get; set; }
         public TipoGasto() { }
         public void Validar()

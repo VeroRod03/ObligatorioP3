@@ -20,6 +20,7 @@ namespace Dominio.Entidades
         public MetodoPago MetodoPago { get; set; }
         [ForeignKey(nameof(Usuario))] public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+        [Required]
         public string Descripcion { get; set; }
         public double Monto { get; set; }
 

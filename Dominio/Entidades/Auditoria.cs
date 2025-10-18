@@ -2,6 +2,7 @@
 using Dominio.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,10 @@ namespace Dominio.Entidades
     public class Auditoria : IValidable
     {
         public int Id { get; set; }
+        [Required]
         public string Accion { get; set; }
         public DateTime Fecha { get; set; }
+        [Required]
         public int? UsuarioId { get; set; }
 
         public Auditoria() { }

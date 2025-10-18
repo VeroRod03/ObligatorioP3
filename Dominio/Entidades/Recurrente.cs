@@ -12,7 +12,6 @@ namespace Dominio.Entidades
 {
     public class Recurrente : Pago, IValidable
     {
-        [Required]
         public DateTime? Hasta { get; set; }
 
         public override double CalcularMontoTotal()

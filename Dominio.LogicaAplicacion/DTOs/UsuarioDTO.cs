@@ -18,7 +18,7 @@ namespace Dominio.LogicaAplicacion.DTOs
         [Required(ErrorMessage = "El apellido del usuario es requerido")]
         public string Apellido { get; set; }
         [Required(ErrorMessage = "La contraseña del usuario es requerida")]
-        [StringLength(int.MaxValue, MinimumLength = 8, ErrorMessage = "La contraseña debe tener al menos 8 caracteres")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "La contraseña debe tener al menos 8 caracteres")]
         public string Contra { get; set; }
         public string Email { get; set; }
         public int EquipoId { get; set; } 

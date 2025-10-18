@@ -12,6 +12,7 @@ namespace Dominio.Entidades
 {
     public class Unico : Pago, IValidable
     {
+        [Required]
         public string NumRecibo {  get; set; }
 
         public override DateTime? DevolverFechaHasta()
