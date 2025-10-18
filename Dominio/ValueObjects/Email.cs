@@ -12,7 +12,7 @@ namespace Dominio.ValueObjects
     [Owned]
     public class Email
     {
-        public static string dominio = "@laEmpresa.com";
+        public static string s_dominio = "@laEmpresa.com";
         public string EmailUsuario { get; private set; }
         public Email() { }
         
@@ -41,7 +41,7 @@ namespace Dominio.ValueObjects
             {
                 dos = nombreCompleto.Apellido.Substring(0, 3);
             }
-            EmailUsuario = (uno + dos + dominio).ToLower();
+            EmailUsuario = (uno + dos + s_dominio).ToLower();
             EmailUsuario = EmailUsuario
                 .Replace("á", "a")
                 .Replace("é", "e")
