@@ -80,6 +80,9 @@ namespace Dominio.Entidades
             {
                 throw new PagoException("La fecha de finalizacion debe ser posterior a la de inicio");
             }
+            //podria ser de otra manera, ya que al no importarnos los dias de los pagos, se podria
+            //solo hacer un chequeo de que el mes sea diferente y no necesariamente que haya al menos
+            //30 dias en el medio de las dos fechas
             if (Hasta.Value < Fecha.AddMonths(1))
             {
                 throw new PagoException("Los pagos recurrentes se repiten una vez al mes");
