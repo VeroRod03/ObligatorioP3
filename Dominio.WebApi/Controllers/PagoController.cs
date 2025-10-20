@@ -28,8 +28,8 @@ namespace Dominio.WebApi.Controllers
             }
             catch (PagoException pe)
             {
-                //devolver 404 si el id que el usuario ingreso no existe.
-                return NotFound(new { error = pe.Message });
+                //devolver 400 si el id que el usuario ingreso no existe.
+                return BadRequest(new { error = pe.Message });
             }
             catch (Exception ex)
             {
