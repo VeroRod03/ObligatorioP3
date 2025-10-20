@@ -3,6 +3,10 @@
 *@
 @{
 }
+
+@if(!string.IsNullOrEmpty(ViewBag.Mensaje)) {
+    <div class="alert alert-success">@ViewBag.Mensaje</div>
+}
 <h2>Elegir Tipo de Pago a Crear</h2>
 <form asp-action="Create" method="get">
     <button type="submit" name="tipoPago" value="unico" class="btn btn-primary">Pago Unico</button>
