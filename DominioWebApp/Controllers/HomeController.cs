@@ -28,11 +28,11 @@ public class HomeController : Controller
     }
     
     [HttpPost]
-    public IActionResult Login(string email, string contra)
+    public IActionResult Login(UsuarioDTO dto)
     {
         try
         {
-            UsuarioDTO logueado = _loginCU.Login(email, contra);
+            UsuarioDTO logueado = _loginCU.Login(dto.Email, dto.Contra);
             HttpContext.Session.SetInt32("usuarioId", logueado.Id);
             HttpContext.Session.SetString("usuarioRol", logueado.Rol.ToString());
             return RedirectToAction("Index");
