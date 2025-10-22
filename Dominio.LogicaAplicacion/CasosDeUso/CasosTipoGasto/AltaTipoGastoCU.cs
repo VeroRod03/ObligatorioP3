@@ -30,7 +30,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
 
             _repositorioAuditoria.Add(new Auditoria
             {
-                Accion = "Borrar",
+                Accion = "Alta",
                 Fecha = DateTime.Today,
                 UsuarioId = usuarioId
             });
