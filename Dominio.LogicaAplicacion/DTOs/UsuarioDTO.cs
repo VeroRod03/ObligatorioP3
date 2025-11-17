@@ -27,6 +27,6 @@ namespace Dominio.LogicaAplicacion.DTOs
         public RolUsuario Rol { get; set; }
 
         //par manejar el token
-        public string token { get; set; }
+        public string Token { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Dominio.WebApi.Controllers
                 //generamos el token
                 var token = ManejadorJWT.GenerarToken(logueado);
                 //se lo asignamos al usuario que se esta logueando
-                logueado.token = token.ToString();
+                logueado.Token = token.ToString();
                 return Ok(logueado);
             }
             catch (UsuarioException uex)
