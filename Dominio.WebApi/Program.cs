@@ -59,7 +59,7 @@ namespace Dominio.WebApi
             //Casos de uso
             builder.Services.AddScoped<IObtenerPagoPorId, ObtenerPagoPorIdCU>();
 
-            //para el token
+            //para el la configuracion del token
             builder.Services.AddAuthorization(
                 options =>
                 {
