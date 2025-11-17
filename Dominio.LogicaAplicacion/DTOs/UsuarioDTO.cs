@@ -25,5 +25,8 @@ namespace Dominio.LogicaAplicacion.DTOs
         public int EquipoId { get; set; } 
         public EquipoDTO? Equipo { get; set; }
         public RolUsuario Rol { get; set; }
+
+        //par manejar el token
+        public string token { get; set; }
     }
 }
