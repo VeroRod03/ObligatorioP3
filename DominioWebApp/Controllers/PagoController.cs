@@ -65,8 +65,9 @@ namespace DominioWebApp.Controllers
             }
         }
 
-        public IActionResult AltaPago()
+        public IActionResult AltaPago(string mensaje)
         {
+            ViewBag.Mensaje = mensaje;
             return View();
         }
 
@@ -88,7 +89,7 @@ namespace DominioWebApp.Controllers
                 pagoDto.TipoPago = tipoPago;
                 pagoDto.UsuarioId = HttpContext.Session.GetInt32("usuarioId").Value;
                 _altaPagoCU.AgregarPago(pagoDto);
-                return RedirectToAction(nameof(AltaPago));
+                return RedirectToAction(nameof(AltaPago), new {mensaje = "Pago registrado exitosamente ! :)"});
             }
             catch (PagoException pe)
             {
