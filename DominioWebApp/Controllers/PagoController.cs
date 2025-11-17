@@ -41,6 +41,7 @@ namespace DominioWebApp.Controllers
         public ActionResult Index()
         {
             return View(_obtenerPagosCU.ObtenerPagos());
+
         }
 
         [FilterGerente]
