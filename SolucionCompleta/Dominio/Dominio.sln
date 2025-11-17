@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoDatos", "AccesoDatos\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio.LogicaAplicacion", "Dominio.LogicaAplicacion\Dominio.LogicaAplicacion.csproj", "{9DEB2B38-2F9A-4EF9-8805-962C337E0849}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DominioWebApp", "DominioWebApp\DominioWebApp.csproj", "{9F3F93F6-A30C-431F-9618-9B4425507B2A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio.WebApi", "Dominio.WebApi\Dominio.WebApi.csproj", "{4C00E841-4F02-4BBD-95FD-32672C6E37F8}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{9DEB2B38-2F9A-4EF9-8805-962C337E0849}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DEB2B38-2F9A-4EF9-8805-962C337E0849}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DEB2B38-2F9A-4EF9-8805-962C337E0849}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F3F93F6-A30C-431F-9618-9B4425507B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F3F93F6-A30C-431F-9618-9B4425507B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F3F93F6-A30C-431F-9618-9B4425507B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F3F93F6-A30C-431F-9618-9B4425507B2A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C00E841-4F02-4BBD-95FD-32672C6E37F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C00E841-4F02-4BBD-95FD-32672C6E37F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C00E841-4F02-4BBD-95FD-32672C6E37F8}.Release|Any CPU.ActiveCfg = Release|Any CPU

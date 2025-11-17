@@ -1,0 +1,43 @@
+﻿using Dominio.Enumerations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Dominio.DominioWebApp.DTOs
+{
+    public class PagoDTO
+    {
+        public int Id { get; set; }
+        public int TipoGastoId { get; set; }
+        public TipoGastoDTO? TipoGasto { get; set; }
+        public string MetodoPago { get; set; }
+        public int UsuarioId { get; set; }
+        public UsuarioDTO? Usuario { get; set; }
+        [Required(ErrorMessage = "La descripcion del pago es requerida")]
+        public string Descripcion { get; set; }
+        [Required(ErrorMessage = "El monto del pago es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "El monto no puede ser negativo")]
+        public double Monto { get; set; }
+        [Required(ErrorMessage = "La fecha del pago es requerida")]
+        public DateTime Fecha { get; set; }
+
+
+        //extras
+        public string TipoPago { get; set; }
+        public double MontoTotal { get; set; }
+        public double SaldoPendiente {  get; set; }
+
+        //recurrente
+        [Required(ErrorMessage = "La fecha hasta del pago recurrente es requerida")]
+        public DateTime? Hasta { get; set; }
+
+        //unico
+        [Required(ErrorMessage = "El numero de recibo del pago unico es requerido")]
+        public string NumRecibo { get; set; }
+
+    }
+}
