@@ -35,7 +35,8 @@ namespace Dominio.WebApi
             };
             //generamos el token con todo lo que acabamos de crear
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return token;
+            //le decimos al token handler que escriba el token en base a lo que acaba de crear
+            return tokenHandler.WriteToken(token);
         }
     }
 }
