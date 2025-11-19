@@ -19,12 +19,12 @@ namespace Dominio.WebApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("login")]
-        public ActionResult<UsuarioDTO> Login([FromBody] UsuarioDTO usuario)
+        //le sacamos la ruta "login"
+        public ActionResult<UsuarioDTO> Login([FromBody] UsuarioLoginDTO logindto)
         {
             try
             {
-                UsuarioDTO logueado = _loginCU.Login(usuario.Email, usuario.Contra);
+                UsuarioDTO logueado = _loginCU.Login(logindto.Email, logindto.Contra);
                 //generamos el token
                 var token = ManejadorJWT.GenerarToken(logueado);
                 //se lo asignamos al usuario que se esta logueando

@@ -11,10 +11,11 @@ namespace DominioWebApp.Controllers;
 
 public class HomeController : Controller
 {
-    private ILogin _loginCU;
-    public HomeController(ILogin loginCU)
+    public string URLApiLogin { get; set; }
+
+    public HomeController(IConfiguration config)
     {
-        _loginCU = loginCU;
+        URLApiLogin = config.GetValue<string>("URLApiLogin");
     }
     [FilterAutenticado]
     public IActionResult Index(string mensaje)
@@ -29,23 +30,36 @@ public class HomeController : Controller
     }
     
     [HttpPost]
-    public IActionResult Login(UsuarioDTO dto)
+    public IActionResult Login(string email, string password)
     {
+        UsuarioDTO usuario = null;
         try
         {
-            UsuarioDTO logueado = _loginCU.Login(dto.Email, dto.Contra);
-            HttpContext.Session.SetInt32("usuarioId", logueado.Id);
-            HttpContext.Session.SetString("usuarioRol", logueado.Rol.ToString());
-            return RedirectToAction("Index");
+            UsuarioLoginDTO logueado = new UsuarioLoginDTO();
+            logueado.Email = email;
+            logueado.Password = password;
+            
+            HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiLogin, "POST", logueado);
+
+            string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+            if (respuesta.IsSuccessStatusCode) // Serie 200
+            {
+                usuario = JsonConvert.DeserializeObject<UsuarioDTO>(body); // en el body hay JSON
+                HttpContext.Session.SetString("usuarioRol", usuario.Rol.ToString());
+                HttpContext.Session.SetInt32("usuarioId", usuario.Id);
+                HttpContext.Session.SetString("token", usuario.Token);
+                return RedirectToAction("Index");
+            }
+            else // Serie 400 o 500
+            {
+                ViewBag.Error = body; // en el body vino el mensaje del error
+                return View();
+            }
         }
-        catch (UsuarioException ue)
+        catch (Exception)
         {
-            ViewBag.Error = ue.Message;
-            return View();
-        }
-        catch (Exception e)
-        {
-            ViewBag.Error = "Error inesperado.";
+            ViewBag.Error = "Sucedio un error inesperado";
             return View();
         }
     }
