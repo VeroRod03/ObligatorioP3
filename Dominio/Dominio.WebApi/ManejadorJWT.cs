@@ -8,7 +8,7 @@ namespace Dominio.WebApi
 {
     public class ManejadorJWT
     {
-        internal static object GenerarToken(UsuarioDTO logueado)
+        internal static object GenerarToken(UsuarioDTO logueado) //test
         {
             //el que manjea la creacion del token
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -15,7 +15,7 @@ namespace WebAppClienteHttp.Auxiliares
                 tarea = cliente.GetAsync(url);
             }
             else if (verbo == "POST") {
-                tarea = cliente.PostAsJsonAsync(url, obj); //preuba
+                tarea = cliente.PostAsJsonAsync(url, obj); //preuba 2
             }
             else if (verbo == "DELETE") 
             {
