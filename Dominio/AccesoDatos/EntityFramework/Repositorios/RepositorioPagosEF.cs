@@ -49,19 +49,6 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Pago> FiltrarPagosPorFecha(int mes, int anio)
         {
-            if(mes == 0 && anio == 0)
-            {
-                return FindAll();
-            }
-            else if (mes == 0)
-            {
-                throw new PagoException("Debe seleccionar un mes");
-            }
-            else if (anio == 0)
-            {
-                throw new PagoException("Debe seleccionar un año");
-
-            }
             return _context.Pagos
                 .Include(pago => pago.Usuario)
                 //EF no sabe ejecutar PagoIncluyeFecha en una consulta SQL

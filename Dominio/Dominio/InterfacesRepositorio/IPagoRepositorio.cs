@@ -10,6 +10,6 @@ namespace Dominio.InterfacesRepositorio
 {
     public interface IPagoRepositorio : IRepositorio<Pago>
     {
-        public IEnumerable<Pago> FiltrarPagosPorFecha(Mes mes, int anio);
+        public IEnumerable<Pago> FiltrarPagosPorFecha(int mes, int anio);
     }
 }

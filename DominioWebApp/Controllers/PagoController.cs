@@ -1,4 +1,5 @@
-﻿using Dominio.Enumerations;
+﻿using Dominio.DominioWebApp.DTOs;
+using Dominio.Enumerations;
 using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
@@ -37,46 +38,33 @@ namespace DominioWebApp.Controllers
         [HttpPost]
         public ActionResult Index(int mes, int anio)
         {
-            try
-            {
-                return View(_obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio));
-            }
-            catch (PagoException pe)
-            {
-                ViewBag.Error = pe.Message;
-                return View(_obtenerPagosCU.ObtenerPagos());
-
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = ex.Message;
-                return View(_obtenerPagosCU.ObtenerPagos());
-            }
-
+            IEnumerable<PagoDTO> pagos = new List<PagoDTO>();
 
             try
             {
                 string token = HttpContext.Session.GetString("token");
-                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud("http://localhost:5027/api/PagosFiltrados?mes={mes}&anio={anio}", "GET", null, token);
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"http://localhost:5027/api/PagosFiltrados?mes={mes}&anio={anio}", "GET", null, token);
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 
                 if (respuesta.IsSuccessStatusCode) // Serie 200
                 {
-                    contenidos = JsonConvert.DeserializeObject<IEnumerable<ContenidoDTO>>(body); // en el body hay JSON
+                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(body); // en el body hay JSON
                 }
                 else // Serie 400 o 500
                 {
-                    ViewBag.Mesaje = body; // en el body vino el mensaje del error
+                    ViewBag.Error = body; // en el body vino el mensaje del error
+
+                    respuesta = AuxiliarClienteHttp.EnviarSolicitud("http://localhost:5027/api/Pago", "GET", null, token);
+                    string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuesta);
+                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(bodyTodos); // en el body hay JSON
                 }
             }
             catch (Exception)
             {
-                ViewBag.Mensaje = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
             }
-
-
-            return View(contenidos);
+            return View(pagos);
         }
 
         public IActionResult AltaPago(string mensaje)
