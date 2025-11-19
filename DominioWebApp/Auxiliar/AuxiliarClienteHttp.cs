@@ -19,7 +19,7 @@ namespace WebAppClienteHttp.Auxiliares
             }
             else if (verbo == "DELETE")
             {
-                tarea = cliente.DeleteAsync(url);
+                tarea = cliente.DeleteAsync(url); //prueba
             }
             else if (verbo == "PUT")
             {
