@@ -23,10 +23,10 @@ namespace Dominio.Entidades
             return NumRecibo;
         }
 
-        public override bool PagoIncluyeFecha(Mes mes, int anio)
+        public override bool PagoIncluyeFecha(int mes, int anio)
         {
             bool incluyeFecha = false;
-            if (Fecha.Month == (int)mes && Fecha.Year == anio)
+            if (Fecha.Month == mes && Fecha.Year == anio)
             {
                 incluyeFecha = true;
             }

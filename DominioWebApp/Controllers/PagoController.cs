@@ -10,30 +10,19 @@ using Dominio.LogicaAplicacion.Mappers;
 using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using WebAppClienteHttp.Auxiliares;
 
 namespace DominioWebApp.Controllers
 {
     [FilterAutenticado]
     public class PagoController : Controller
     {
-        private IAltaPago _altaPagoCU;
-        private IObtenerTipoGastos _obtenerTipoGastos;
-        private IGetById _obtenerTipoGastoPorId;
-        private IObtenerPagos _obtenerPagosCU;
-        private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
+        public string URLApiPagos { get; set; }
 
-        public PagoController(
-            IAltaPago altaPagoCU,
-            IObtenerTipoGastos obtenerTipoGastos,
-            IGetById obtenerTipoGastoPorId,
-            IObtenerPagos obtenerPagosCU,
-            IObtenerPagosFiltrados obtenerPagosFiltradosCU)
+        public PagoController(IConfiguration config)
         {
-            _altaPagoCU = altaPagoCU;
-            _obtenerTipoGastos = obtenerTipoGastos;
-            _obtenerTipoGastoPorId = obtenerTipoGastoPorId;
-            _obtenerPagosCU = obtenerPagosCU;
-            _obtenerPagosFiltradosCU = obtenerPagosFiltradosCU;
+            URLApiPagos = config.GetValue<string>("URLApiPago");
         }
 
         // GET: PagoController
@@ -46,7 +35,7 @@ namespace DominioWebApp.Controllers
 
         [FilterGerente]
         [HttpPost]
-        public ActionResult Index(Mes mes, int anio)
+        public ActionResult Index(int mes, int anio)
         {
             try
             {
@@ -63,6 +52,31 @@ namespace DominioWebApp.Controllers
                 ViewBag.Error = ex.Message;
                 return View(_obtenerPagosCU.ObtenerPagos());
             }
+
+
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud("http://localhost:5027/api/PagosFiltrados?mes={mes}&anio={anio}", "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode) // Serie 200
+                {
+                    contenidos = JsonConvert.DeserializeObject<IEnumerable<ContenidoDTO>>(body); // en el body hay JSON
+                }
+                else // Serie 400 o 500
+                {
+                    ViewBag.Mesaje = body; // en el body vino el mensaje del error
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Mensaje = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+            }
+
+
+            return View(contenidos);
         }
 
         public IActionResult AltaPago(string mensaje)

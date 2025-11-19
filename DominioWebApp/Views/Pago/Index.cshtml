@@ -25,7 +25,7 @@
         <option value="0"> Seleccione el mes </option>
         @foreach (Mes mes in Enum.GetValues(typeof(Mes)))
         {
-            <option value="@mes">@mes</option>
+            <option value="@((int)mes)">@mes</option>
         }
     </select>
     <select name="anio">

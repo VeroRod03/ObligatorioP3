@@ -11,9 +11,11 @@ namespace Dominio.WebApi.Controllers
     public class PagoController : ControllerBase
     {
         private IObtenerPagoPorId _obtenerPagoPorId;
-        public PagoController(IObtenerPagoPorId obtenerPagoPorId)
+        private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
+        public PagoController(IObtenerPagoPorId obtenerPagoPorId, IObtenerPagosFiltrados obtenerPagosFiltrados)
         {
             _obtenerPagoPorId = obtenerPagoPorId;
+            _obtenerPagosFiltradosCU = obtenerPagosFiltrados;
         }
 
         [HttpGet("{id}")]
@@ -37,5 +39,22 @@ namespace Dominio.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
         }
-    }
+
+        [HttpGet("PagosFiltrados")]
+        public IActionResult GetPagosFiltrados(int mes, int anio)
+        {
+            try
+            {
+                IEnumerable<PagoDTO> pagos = _obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio);
+                return Ok(pagos);
+            }catch(PagoException pe)
+            {
+                return BadRequest(new { error = pe.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+            }
+
+        }
 }

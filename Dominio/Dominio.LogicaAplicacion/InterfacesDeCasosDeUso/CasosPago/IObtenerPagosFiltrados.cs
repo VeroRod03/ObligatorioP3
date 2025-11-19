@@ -10,6 +10,6 @@ namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago
 {
     public interface IObtenerPagosFiltrados
     {
-        public IEnumerable<PagoDTO> ObtenerPagosFiltrados(Mes mes, int anio);
+        public IEnumerable<PagoDTO> ObtenerPagosFiltrados(int mes, int anio);
     }
 }

@@ -43,11 +43,11 @@ namespace Dominio.Entidades
             return null;
         }
 
-        public override bool PagoIncluyeFecha(Mes mes, int anio)
+        public override bool PagoIncluyeFecha(int mes, int anio)
         {
             bool incluyeFecha = false;
 
-            DateTime fechaInicioMes = new DateTime(anio, (int)mes, 1);
+            DateTime fechaInicioMes = new DateTime(anio, mes, 1);
             DateTime fechaFinDeMes = fechaInicioMes.AddMonths(1).AddDays(-1);
 
             //Primero creamos una fecha a partir del mes y el anio para poder comparar
