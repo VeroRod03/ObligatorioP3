@@ -81,7 +81,7 @@ namespace Dominio.WebApi.Controllers
             try
             {
                 _altaPagoCU.AgregarPago(pago);
-                return Created("api/pago", pago);
+                return Created("api/pago", pago); //id?
             }
             catch (PagoException pe)
             {
