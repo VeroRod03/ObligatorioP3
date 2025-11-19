@@ -17,9 +17,9 @@ namespace WebAppClienteHttp.Auxiliares
             else if (verbo == "POST") {
                 tarea = cliente.PostAsJsonAsync(url, obj);
             }
-            else if (verbo == "DELETE") //prueba 3
+            else if (verbo == "DELETE") 
             {
-                tarea = cliente.DeleteAsync(url); //prueba - prueba2 diegui
+                tarea = cliente.DeleteAsync(url); 
             }
             else if (verbo == "PUT")
             {
