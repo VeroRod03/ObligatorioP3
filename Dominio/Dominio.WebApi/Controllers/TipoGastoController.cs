@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dominio.LogicaAplicacion.DTOs;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +10,19 @@ namespace Dominio.WebApi.Controllers
     [ApiController]
     public class TipoGastoController : ControllerBase
     {
+
+        private IObtenerTipoGastos _obtenerTipoGastosCU;
+
+        public TipoGastoController(IObtenerTipoGastos obtenerTipoGastos)
+        {
+            _obtenerTipoGastosCU = obtenerTipoGastos;
+        }
+
         // GET: api/<TipoGastoController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<IEnumerable<TipoGastoDTO>>Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_obtenerTipoGastosCU.ObtenerTipoGastos());
         }
 
         // GET api/<TipoGastoController>/5
