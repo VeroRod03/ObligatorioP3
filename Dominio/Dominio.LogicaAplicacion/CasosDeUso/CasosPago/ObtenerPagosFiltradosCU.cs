@@ -21,7 +21,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
             _repositorio = repositorio;
         }
 
-         public IEnumerable<PagoDTO> ObtenerPagosFiltrados(Mes mes, int anio)
+         public IEnumerable<PagoDTO> ObtenerPagosFiltrados(int mes, int anio)
         {
             IEnumerable<Pago> aRetornar = _repositorio.FiltrarPagosPorFecha(mes, anio);
             return aRetornar.Select(p => PagoMapper.ToDTO(p));

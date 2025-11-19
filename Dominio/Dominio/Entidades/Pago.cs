@@ -38,7 +38,7 @@ namespace Dominio.Entidades
             return 0;
         }
 
-        public abstract bool PagoIncluyeFecha(Mes mes, int anio);
+        public abstract bool PagoIncluyeFecha(int mes, int anio);
 
         public abstract DateTime? DevolverFechaHasta();
 
