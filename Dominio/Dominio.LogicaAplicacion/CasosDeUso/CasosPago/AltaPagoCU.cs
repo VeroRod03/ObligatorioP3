@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dominio.Exceptions;
 
 namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
 {
@@ -21,6 +22,10 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
         }
         public void AgregarPago(PagoDTO pagodto)
         {
+            if (pagodto == null)
+            {
+                throw new PagoException("Datos incorrectos");
+            }
             if(pagodto.TipoPago == "unico")
             {
                 _repositorio.Add(PagoMapper.ToUnico(pagodto));

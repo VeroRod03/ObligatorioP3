@@ -13,13 +13,16 @@ namespace Dominio.WebApi.Controllers
         private IObtenerPagoPorId _obtenerPagoPorId;
         private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
         private IObtenerPagos _obtenerPagosCU;
+        private IAltaPago _altaPagoCU;
         public PagoController(IObtenerPagoPorId obtenerPagoPorId, 
             IObtenerPagosFiltrados obtenerPagosFiltrados,
-            IObtenerPagos obtenerPagosCU)
+            IObtenerPagos obtenerPagosCU,
+            IAltaPago altaPagoCU)
         {
             _obtenerPagoPorId = obtenerPagoPorId;
             _obtenerPagosFiltradosCU = obtenerPagosFiltrados;
             _obtenerPagosCU = obtenerPagosCU;
+            _altaPagoCU = altaPagoCU;
         }
 
         [HttpGet]
@@ -66,7 +69,28 @@ namespace Dominio.WebApi.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
+        }
 
+        [HttpPost]
+        public ActionResult<PagoDTO> Post([FromBody] PagoDTO pago)
+        {
+            if (pago == null)
+            {
+                return BadRequest("No se proporcionaron datos para el alta");
+            }
+            try
+            {
+                _altaPagoCU.AgregarPago(pago);
+                return Created("api/pago", pago);
+            }
+            catch (PagoException pe)
+            {
+                return BadRequest(pe.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+            }
         }
     }
 }
