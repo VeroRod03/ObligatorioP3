@@ -12,14 +12,24 @@ namespace Dominio.WebApi.Controllers
     {
         private IObtenerPagoPorId _obtenerPagoPorId;
         private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
-        public PagoController(IObtenerPagoPorId obtenerPagoPorId, IObtenerPagosFiltrados obtenerPagosFiltrados)
+        private IObtenerPagos _obtenerPagosCU;
+        public PagoController(IObtenerPagoPorId obtenerPagoPorId, 
+            IObtenerPagosFiltrados obtenerPagosFiltrados,
+            IObtenerPagos obtenerPagosCU)
         {
             _obtenerPagoPorId = obtenerPagoPorId;
             _obtenerPagosFiltradosCU = obtenerPagosFiltrados;
+            _obtenerPagosCU = obtenerPagosCU;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<PagoDTO>> Get()
+        {
+            return Ok(_obtenerPagosCU.ObtenerPagos());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public ActionResult<PagoDTO> Get(int id)
         {
             try
             {
@@ -41,13 +51,14 @@ namespace Dominio.WebApi.Controllers
         }
 
         [HttpGet("PagosFiltrados")]
-        public IActionResult GetPagosFiltrados(int mes, int anio)
+        public ActionResult<IEnumerable<PagoDTO>> GetPagosFiltrados(int mes, int anio)
         {
             try
             {
                 IEnumerable<PagoDTO> pagos = _obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio);
                 return Ok(pagos);
-            }catch(PagoException pe)
+            }
+            catch (PagoException pe)
             {
                 return BadRequest(new { error = pe.Message });
             }
@@ -57,4 +68,5 @@ namespace Dominio.WebApi.Controllers
             }
 
         }
+    }
 }

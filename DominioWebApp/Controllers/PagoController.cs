@@ -1,16 +1,17 @@
 ﻿using Dominio.DominioWebApp.DTOs;
 using Dominio.Enumerations;
 using Dominio.Exceptions;
-using Dominio.LogicaAplicacion.CasosDeUso.CasosPago;
-using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
-using Dominio.LogicaAplicacion.DTOs;
-using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
-using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
-using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
-using Dominio.LogicaAplicacion.Mappers;
+using Dominio.DominioWebApp.CasosDeUso.CasosPago;
+using Dominio.DominioWebApp.CasosDeUso.CasosTipoGasto;
+using Dominio.DominioWebApp.DTOs;
+using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosPago;
+using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosUsuario;
+using Dominio.DominioWebApp.Mappers;
 using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using WebAppClienteHttp.Auxiliares;
 
@@ -20,18 +21,42 @@ namespace DominioWebApp.Controllers
     public class PagoController : Controller
     {
         public string URLApiPagos { get; set; }
+        public string URLApiTipoGastos { get; set; }
 
         public PagoController(IConfiguration config)
         {
-            URLApiPagos = config.GetValue<string>("URLApiPago");
+            URLApiPagos = config.GetValue<string>("URLApiPagos");
+            URLApiTipoGastos = config.GetValue<string>("URLApiTipoGastos");
+
         }
 
         // GET: PagoController
         [FilterGerente]
         public ActionResult Index()
         {
-            return View(_obtenerPagosCU.ObtenerPagos());
+            IEnumerable<PagoDTO> pagos = new List<PagoDTO>();
 
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode) // Serie 200
+                {
+                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(body); // en el body hay JSON
+                }
+                else // Serie 400 o 500
+                {
+                    ViewBag.Error = body; // en el body vino el mensaje del error
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+            }
+            return View(pagos);
         }
 
         [FilterGerente]
@@ -43,7 +68,7 @@ namespace DominioWebApp.Controllers
             try
             {
                 string token = HttpContext.Session.GetString("token");
-                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"http://localhost:5027/api/PagosFiltrados?mes={mes}&anio={anio}", "GET", null, token);
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"{URLApiPagos}/PagosFiltrados?mes={mes}&anio={anio}", "GET", null, token);
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 
@@ -55,7 +80,7 @@ namespace DominioWebApp.Controllers
                 {
                     ViewBag.Error = body; // en el body vino el mensaje del error
 
-                    respuesta = AuxiliarClienteHttp.EnviarSolicitud("http://localhost:5027/api/Pago", "GET", null, token);
+                    respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "GET", null, token);
                     string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuesta);
                     pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(bodyTodos); // en el body hay JSON
                 }
@@ -77,7 +102,27 @@ namespace DominioWebApp.Controllers
         public ActionResult Create(string tipoPago)
         {
             ViewBag.TipoPago = tipoPago;
-            ViewBag.TipoGastos = _obtenerTipoGastos.ObtenerTipoGastos();
+
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos, "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    ViewBag.TipoGastos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(body); 
+                }
+                else 
+                {
+                    ViewBag.Error = body;  
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+            }
             return View();
         }
 

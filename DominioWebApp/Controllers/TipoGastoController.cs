@@ -1,8 +1,8 @@
 ﻿using AccesoDatos.EntityFramework;
 using Dominio.Entidades;
 using Dominio.Exceptions;
-using Dominio.LogicaAplicacion.DTOs;
-using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Dominio.DominioWebApp.DTOs;
+using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosTipoGasto;
 using DominioWebApp.Filters;
 using Humanizer;
 using Microsoft.AspNetCore.Http;

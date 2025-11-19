@@ -1,8 +1,8 @@
 ﻿using Dominio.Exceptions;
-using Dominio.LogicaAplicacion.DTOs;
-using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosEquipo;
-using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
-using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+using Dominio.DominioWebApp.DTOs;
+using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosEquipo;
+using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosUsuario;
 using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
