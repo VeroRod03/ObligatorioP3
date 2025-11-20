@@ -25,7 +25,13 @@ namespace Dominio.WebApi.Controllers
             _obtenerUsuariosFiltradosCU = obtenerUsuariosFiltradosCU;
         }
         // GET: api/<UsuarioController>
+        /// <summary>
+        /// Permite obtener todos los usuarios
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<UsuarioDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<UsuarioDTO>> Get()
         {
             try
@@ -35,11 +41,19 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
         }
 
+        /// <summary>
+        /// Permite obtener los Usuarios filtrados, segun si realizaron Pagos con un monto mayor al monto recibido por parametro
+        /// </summary>
+        /// <param name="monto"></param>
+        /// <returns></returns>
         [HttpGet("UsuariosFiltrados")]
+        [ProducesResponseType(typeof(IEnumerable<UsuarioDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<UsuarioDTO>> GetUsuariosFiltrados(double monto)
         {
             try
@@ -53,12 +67,19 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
         }
 
         // POST api/<UsuarioController>
+        /// <summary>
+        /// Permite dar de alta un Usuario dados los datos recibidos
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<UsuarioDTO> Post([FromBody] UsuarioDTO usuario)
         {
             if (usuario == null)
@@ -76,8 +97,8 @@ namespace Dominio.WebApi.Controllers
     }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
-}
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+            }
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Dominio.Exceptions;
+using Dominio.LogicaAplicacion;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +17,14 @@ namespace Dominio.WebApi.Controllers
         {
             _loginCU = login;
         }
-
+        /// <summary>
+        /// Permite realizar un Login segun los datos ingresados
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(UsuarioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         //le sacamos la ruta "login"
         public ActionResult<UsuarioDTO> Login([FromBody] UsuarioLoginDTO logindto)
         {
@@ -35,7 +41,12 @@ namespace Dominio.WebApi.Controllers
             {
                 return Unauthorized("Credenciales invalidas. Reintentar");
             }
-            
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+
+            }
+
         }
     }
 }

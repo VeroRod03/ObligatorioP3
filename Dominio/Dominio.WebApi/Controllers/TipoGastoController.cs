@@ -32,9 +32,15 @@ namespace Dominio.WebApi.Controllers
             _obtenerTipoGastoPorIdCU = getById;
             _eliminarTipoGastoCU = eliminarTipoGastoCU;
         }
-        
+
         // GET: api/<TipoGastoController>
+        /// <summary>
+        /// Permite obtener todos los Tipos De Gasto
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<TipoGastoDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<TipoGastoDTO>>Get()
         {
             try
@@ -43,13 +49,22 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
 
             }
         }
 
         // GET api/<TipoGastoController>/5
+        /// <summary>
+        /// Permite obtener los datos de un tipo de gasto en base al id que recibe por parámetro
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(TipoGastoDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TipoGastoDTO> Get(int id)
         {
             if (id <= 0)
@@ -67,12 +82,19 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
         }
 
         // POST api/<TipoGastoController>
+        /// <summary>
+        /// Permite dar de alta un Tipo De Gasto dados los datos recibidos
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TipoGastoDTO> Post([FromBody] TipoGastoDTO tipoGasto)
         {
             if (tipoGasto == null)
@@ -90,12 +112,20 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
         }
 
         // PUT api/<TipoGastoController>/5
+        /// <summary>
+        /// Permite modificar un Tipo De Gasto dado el id recibidio por parametro y los datos recibidos
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(TipoGastoDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TipoGastoDTO> Put(int id, [FromBody] TipoGastoDTO? dto)
         {
             if (id <= 0) return BadRequest("Id debe ser un número positivo");
@@ -117,14 +147,23 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
 
             return Ok(dto);
         }
 
         // DELETE api/<TipoGastoController>/5
+        /// <summary>
+        /// Permite eliminar un Tipo De Gasto dado el id recibido por parametro
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult Delete(int id) {
 
             if (id <= 0) return BadRequest("Id debe ser un número positivo");
@@ -144,7 +183,7 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
             return NoContent();
         }

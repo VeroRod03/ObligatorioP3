@@ -16,10 +16,22 @@ namespace Dominio.WebApi.Controllers
             _obtenerEquiposCU = obtenerEquiposCU;
         }
 
+        /// <summary>
+        /// Permite obtener todos los Equipos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult<IEnumerable<PagoDTO>> Get()
+        [ProducesResponseType(typeof(IEnumerable<EquipoDTO>), StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<EquipoDTO>> Get()
         {
-            return Ok(_obtenerEquiposCU.ObtenerEquipos());
+            try
+            {
+                return Ok(_obtenerEquiposCU.ObtenerEquipos());
+            }catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+
+            }
         }
     }
 }

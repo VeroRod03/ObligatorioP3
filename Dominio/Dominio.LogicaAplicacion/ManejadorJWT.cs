@@ -4,11 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Dominio.WebApi
+namespace Dominio.LogicaAplicacion
 {
     public class ManejadorJWT
     {
-        internal static object GenerarToken(UsuarioDTO logueado)
+        public static object GenerarToken(UsuarioDTO logueado)
         {
             //el que manjea la creacion del token
             var tokenHandler = new JwtSecurityTokenHandler();

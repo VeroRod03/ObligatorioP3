@@ -24,14 +24,36 @@ namespace Dominio.WebApi.Controllers
             _obtenerPagosCU = obtenerPagos;
             _altaPagoCU = altaPago;
         }
-
+        /// <summary>
+        /// Permite obtener todos los Pagos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<PagoDTO>), StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<PagoDTO>> Get()
         {
-            return Ok(_obtenerPagosCU.ObtenerPagos());
+            try
+            {
+                return Ok(_obtenerPagosCU.ObtenerPagos());
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+
+            }
         }
 
+        /// <summary>
+        /// Permite obtener los datos de un pago en base al id que recibe por parámetro
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PagoDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<PagoDTO> Get(int id)
         {
             if (id <= 0)
@@ -57,7 +79,16 @@ namespace Dominio.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite obtener los Pagos Filtrados dados un mes y anio recibidos por parametro
+        /// </summary>
+        /// <param name="mes"></param>
+        /// <param name="anio"></param>
+        /// <returns></returns>
         [HttpGet("PagosFiltrados")]
+        [ProducesResponseType(typeof(IEnumerable<PagoDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<PagoDTO>> GetPagosFiltrados(int mes, int anio)
         {
             try
@@ -75,7 +106,14 @@ namespace Dominio.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite dar de alta un Pago dados los datos recibidos
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<PagoDTO> Post([FromBody] PagoDTO pago)
         {
             if (pago == null)
@@ -91,7 +129,7 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
         }
     }
