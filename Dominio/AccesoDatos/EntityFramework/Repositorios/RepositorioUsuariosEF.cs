@@ -22,19 +22,13 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public Usuario Login(string email, string pass)
         {
-            Usuario logueado = _context.Usuarios.Where(
+            return _context.Usuarios.Where(
                                 user =>
                                 user.Email.EmailUsuario == email
                                 && user.Contra == pass
                             ).FirstOrDefault();
-
-            if (logueado == null)
-            {
-                throw new UsuarioException("Usuario o contraseña incorrecta.");
-            }
-
-            return logueado;
         }
+
         public void Add(Usuario obj)
         {
             try

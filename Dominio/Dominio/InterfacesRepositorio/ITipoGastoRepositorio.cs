@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Dominio.InterfacesRepositorio
 {
     public interface ITipoGastoRepositorio : IRepositorio<TipoGasto>
-    { 
+    {
+        public bool TipoGastoEnUso(int id);
     }
 }

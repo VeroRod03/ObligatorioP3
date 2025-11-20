@@ -16,7 +16,11 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario
 
         public UsuarioDTO Login(string email, string pass)
         {
-            return UsuarioMapper.ToDTO(_repositorio.Login(email.ToLower(), pass));
+            UsuarioDTO logueado = UsuarioMapper.ToDTO(_repositorio.Login(email.ToLower(), pass));
+            if (logueado == null)
+            {
+                throw new UsuarioException("Usuario o contraseña incorrecta.");
+            }
         }
     }
 }
