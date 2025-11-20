@@ -37,7 +37,7 @@
             <param name="anio"></param>
             <returns></returns>
         </member>
-        <member name="M:Dominio.WebApi.Controllers.PagoController.Post(Dominio.LogicaAplicacion.DTOs.PagoDTO)">
+        <member name="M:Dominio.WebApi.Controllers.PagoController.Post(Dominio.LogicaAplicacion.DTOs.AltaPagoDTO)">
             <summary>
             Permite dar de alta un Pago dados los datos recibidos
             </summary>

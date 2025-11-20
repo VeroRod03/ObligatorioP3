@@ -116,9 +116,9 @@ namespace Dominio.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<PagoDTO> Post([FromBody] PagoDTO pago) 
+        public ActionResult<PagoDTO> Post([FromBody] AltaPagoDTO altaPago) 
         {
-            if (pago == null)
+            if (altaPago == null)
             {
                 return BadRequest("No se proporcionaron datos para el alta");
             }
@@ -126,8 +126,18 @@ namespace Dominio.WebApi.Controllers
             {
                 //esta bien esto? O sino como hago para 
                 int usuarioId = int.Parse(User.FindFirst("usuarioId")!.Value);
-                pago.UsuarioId = usuarioId;
-                pago.Usuario.Id = usuarioId;
+
+                PagoDTO pago = new PagoDTO
+                {
+                    TipoGastoId = altaPago.TipoGastoId,
+                    MetodoPago = altaPago.MetodoPago,
+                    Descripcion = altaPago.Descripcion,
+                    Monto = altaPago.Monto,
+                    Fecha = altaPago.Fecha,
+                    TipoPago = altaPago.TipoPago,
+                    NumRecibo = altaPago.NumRecibo,
+                    UsuarioId = usuarioId
+                };
 
                 _altaPagoCU.AgregarPago(pago);
                 return Created("api/Pago", pago);
