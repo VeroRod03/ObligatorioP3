@@ -65,13 +65,13 @@ namespace DominioWebApp.Controllers
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 
-                if (respuesta.IsSuccessStatusCode) // Serie 200
+                if (respuesta.IsSuccessStatusCode) 
                 {
-                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(body); // en el body hay JSON
+                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(body); 
                 }
-                else // Serie 400 o 500
+                else 
                 {
-                    ViewBag.Error = body; // en el body vino el mensaje del error
+                    ViewBag.Error = body; 
 
                     respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "GET", null, token);
                     string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuesta);

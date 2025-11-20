@@ -16,7 +16,29 @@ namespace DominioWebApp.Controllers
         {
             ViewBag.Mensaje = mensaje;
             ViewBag.Error = error;
-            return View(_obtenerTipoGastosCU.ObtenerTipoGastos());
+            IEnumerable<TipoGastoDTO> tipoGastos = new List<TipoGastoDTO>();
+
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos, "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode) 
+                {
+                    tipoGastos = JsonConvert.DeserializeObject<IEnumerable<TipoGastoDTO>>(body); 
+                }
+                else 
+                {
+                    ViewBag.Error = body; 
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+            }
+            return View(tipoGastos);
         }
 
         // GET: TipoGastoController/Create
@@ -30,22 +52,27 @@ namespace DominioWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(TipoGastoDTO gasto)
         {
-            try
+           try
             {
-                _altaTipoGastoCU.AgregarTipoGasto(gasto,HttpContext.Session.GetInt32("usuarioId").Value);
-                return RedirectToAction(nameof(Index), new {mensaje = "Tipo de gasto creado existosamente! :)"});
-            }
-            catch (TipoGastoException tge)
-            {
-                ViewBag.Error = tge.Message;
-                return View();
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos, "POST", gasto, token);
 
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+					return RedirectToAction(nameof(Index), new {mensaje = "Tipo de gasto creado existosamente! :)"});
+                }
+                else 
+                {
+                    ViewBag.Error = body;
+                }
             }
-            catch (Exception ex) 
+            catch (Exception)
             {
-                ViewBag.Error = ex.Message;
-                return View();
+               ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
             }
+            return View();
         }
 
         // GET: TipoGastoController/Edit/5
@@ -53,17 +80,24 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                return View(_getById.ObtenerTipoGasto(id));
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{id}", "GET", null, token);
 
-            }
-            catch (TipoGastoException tge)
-            {
-                return RedirectToAction(nameof(Index), new { error = tge.Message });
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction(nameof(Index), new { error = ex.Message });
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    TipoGastoDTO gasto = JsonConvert.DeserializeObject<TipoGastoDTO>(body);
+					return View(gasto);
+                }
+                else 
+                {
+                return RedirectToAction(nameof(Index), new { error = body });
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index), new { error = "Ocurrió un error inesperado. Intente de nuevo más tarde." });
             }
         }
 
@@ -72,36 +106,80 @@ namespace DominioWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TipoGastoDTO dto)
         {
-            try
+			try
             {
-                _editarTipoGastoCU.EditarTipoGasto(dto,HttpContext.Session.GetInt32("usuarioId").Value);
-                return RedirectToAction(nameof(Index), new { mensaje = "Tipo de Gasto editado correctamente" });
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.Id}", "PUT", dto, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+					return RedirectToAction(nameof(Index), new {mensaje = "Tipo de gasto editado correctamente! :)"});
+                }
+                else 
+                {
+                    ViewBag.Error = body;
+					HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.id}", "GET", null, token);
+
+                	string bodyGet = AuxiliarClienteHttp.ObtenerBody(respuestaGet);
+
+                	if (respuestaGet.IsSuccessStatusCode)
+               		{
+                    	TipoGastoDTO gasto = JsonConvert.DeserializeObject<TipoGastoDTO>(bodyGet);
+						return View(gasto);
+                	}
+                	else 
+                	{
+                		return RedirectToAction(nameof(Index), new { error = bodyGet });
+                	}
+                }
+
             }
-            catch (TipoGastoException tge)
+            catch (Exception)
             {
-                ViewBag.Error = tge.Message;
-                return View(_getById.ObtenerTipoGasto(dto.Id));
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+				HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.id}", "GET", null, token);
+
+                string bodyGet = AuxiliarClienteHttp.ObtenerBody(respuestaGet);
+
+                if (respuestaGet.IsSuccessStatusCode)
+               	{
+                    TipoGastoDTO gasto = JsonConvert.DeserializeObject<TipoGastoDTO>(bodyGet);
+					return View(gasto);
+                }
+                else 
+                {
+                	return RedirectToAction(nameof(Index), new { error = bodyGet });
+                }
             }
         }
 
         // GET: TipoGastoController/Delete/5
         public ActionResult Delete(int id, string mensaje)
         {
-            try
+			try
             {
                 ViewBag.Error = mensaje;
-                return View(_getById.ObtenerTipoGasto(id));
-            }catch(TipoGastoException tge)
-            {
-                ViewBag.Error = tge.Message;
-                return RedirectToAction(nameof(Index));
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{id}", "GET", null, token);
 
-            }catch(Exception ex)
-            {
-                ViewBag.Error = ex.Message;
-                return RedirectToAction(nameof(Index));
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    TipoGastoDTO gasto = JsonConvert.DeserializeObject<TipoGastoDTO>(body);
+					return View(gasto);
+                }
+                else 
+                {
+                return RedirectToAction(nameof(Index), new { error = body });
+                }
             }
-
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index), new { error = "Ocurrió un error inesperado. Intente de nuevo más tarde." });
+            }
         }
 
         // POST: TipoGastoController/Delete/5
@@ -109,27 +187,48 @@ namespace DominioWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            try
+      		try
             {
-                _eliminarTipoGastoCU.EliminarTipoGasto(id,HttpContext.Session.GetInt32("usuarioId").Value);
-                return RedirectToAction(nameof(Index),new { mensaje = "Tipo de Gasto borrado correctamente" });
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{id}", "DELETE", null, token);
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+                if (respuesta.IsSuccessStatusCode)
+                {
+                	return RedirectToAction(nameof(Index), new { mensaje = "Tipo de Gasto borrado correctamente" });
+                }
+                else 
+                {
+					ViewBag.Error = body;
+					HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{id}", "GET", null, token);
+                	string bodyGet = AuxiliarClienteHttp.ObtenerBody(respuestaGet);
+                	if (respuestaGet.IsSuccessStatusCode)
+               		{
+                    	TipoGastoDTO gasto = JsonConvert.DeserializeObject<TipoGastoDTO>(bodyGet);
+						return View(gasto);
+                	}
+                	else 
+                	{
+                		return RedirectToAction(nameof(Index), new { error = bodyGet });
+                	}                
+				}
             }
-            catch (TipoGastoException tge)
+            catch (Exception)
             {
-                ViewBag.Error = tge.Message;
-                return View(_getById.ObtenerTipoGasto(id));
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = ex.Message;
-                return View(_getById.ObtenerTipoGasto(id));
-            }
-        }
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+				HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.id}", "GET", null, token);
 
-        // GET: TipoGastoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+                string bodyGet = AuxiliarClienteHttp.ObtenerBody(respuestaGet);
+
+                if (respuestaGet.IsSuccessStatusCode)
+               	{
+                    TipoGastoDTO gasto = JsonConvert.DeserializeObject<TipoGastoDTO>(bodyGet);
+					return View(gasto);
+                }
+                else 
+                {
+                	return RedirectToAction(nameof(Index), new { error = bodyGet });
+                }
+            }
         }
     }
 }
