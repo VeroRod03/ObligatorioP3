@@ -40,10 +40,6 @@ namespace AccesoDatos.EntityFramework.Repositorios
             try
             {
                 obj.Validar();
-                while (ExisteEmail(obj.Email))
-                {
-                    obj.Email.AgregarNumeroRandom();
-                }
                 _context.Usuarios.Add(obj);
                 _context.SaveChanges();
             }
@@ -56,6 +52,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
                 throw new UsuarioException("Hubo un error: ",ex);
             }
         }
+
         public bool ExisteEmail(Email email)
         {
             return _context.Usuarios
@@ -70,10 +67,6 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Usuario> FiltrarUsuariosPorMonto(double monto)
         {
-            if(monto < 0)
-            {
-                throw new UsuarioException("El monto para el filtrado no puede ser negativo");
-            }
             return _context.Pagos
                     .Where(pago => pago.Monto >= monto)
                     .Include(pago => pago.Usuario)

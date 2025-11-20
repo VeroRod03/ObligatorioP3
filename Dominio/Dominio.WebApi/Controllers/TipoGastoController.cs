@@ -1,4 +1,5 @@
-﻿using Dominio.LogicaAplicacion.DTOs;
+﻿using System.Linq.Expressions;
+using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,7 +35,15 @@ namespace Dominio.WebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<TipoGastoDTO>>Get()
         {
-            return Ok(_obtenerTipoGastosCU.ObtenerTipoGastos());
+            try
+            {
+                return Ok(_obtenerTipoGastosCU.ObtenerTipoGastos());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
+
+            }
         }
 
         // GET api/<TipoGastoController>/5
@@ -56,7 +65,7 @@ namespace Dominio.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
             }
         }
 

@@ -17,9 +17,15 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario
         {
             _repositorio = repositorio;
         }
-        public void AgregarUsuario(UsuarioDTO usuario)
+
+        public void AgregarUsuario(UsuarioDTO usuariodto)
         {
-            _repositorio.Add(UsuarioMapper.FromDTO(usuario));
+            Usuario usuario = UsuarioMapper.FromDTO(usuariodto);
+            while (_repositorio.ExisteEmail(usuario.Email))
+            {
+                usuario.Email.AgregarNumeroRandom();
+            }
+            _repositorio.Add(usuario);
         }
     }
 }
