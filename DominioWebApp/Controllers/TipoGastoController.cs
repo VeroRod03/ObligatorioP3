@@ -1,13 +1,8 @@
-﻿using AccesoDatos.EntityFramework;
-using Dominio.Entidades;
-using Dominio.Exceptions;
-using Dominio.DominioWebApp.DTOs;
-using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosTipoGasto;
+﻿using Dominio.DominioWebApp.DTOs;
 using DominioWebApp.Filters;
 using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DominioWebApp.Controllers
 {

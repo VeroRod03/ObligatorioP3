@@ -1,4 +1,6 @@
 ﻿using System.Linq.Expressions;
+using DefaultNamespace;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Microsoft.AspNetCore.Mvc;
@@ -79,7 +81,8 @@ namespace Dominio.WebApi.Controllers
             }
             try
             {
-                _altaTipoGastoCU.AgregarTipoGasto(tipoGasto);
+                int usuarioId = int.Parse(User.FindFirst("usuarioId")!.Value);
+                _altaTipoGastoCU.AgregarTipoGasto(tipoGasto,usuarioId);
                 return CreatedAtAction(nameof(Get), new { id = tipoGasto.Id }, tipoGasto);            }
             catch (TipoGastoException tge)
             {
@@ -119,7 +122,6 @@ namespace Dominio.WebApi.Controllers
 
             return Ok(dto);
         }
-        }
 
         // DELETE api/<TipoGastoController>/5
         [HttpDelete("{id}")]
@@ -129,7 +131,8 @@ namespace Dominio.WebApi.Controllers
 
             try
             {
-                _eliminarTipoGastoCU.EliminarTipoGasto(id);
+                int usuarioId = int.Parse(User.FindFirst("usuarioId")!.Value);
+                _eliminarTipoGastoCU.EliminarTipoGasto(id,usuarioId);
             }
             catch (TipoGastoException tge)
             {

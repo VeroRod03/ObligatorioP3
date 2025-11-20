@@ -1,4 +1,6 @@
-﻿using Dominio.LogicaAplicacion.DTOs;
+﻿using Dominio.Exceptions;
+using Dominio.LogicaAplicacion.DTOs;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -47,7 +49,7 @@ namespace Dominio.WebApi.Controllers
                     return BadRequest("El monto debe ser un número positivo");
                 }
                 IEnumerable<UsuarioDTO> usuarios = _obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto);
-                Ok(usuarios);
+                return Ok(usuarios);
             }
             catch (Exception)
             {
@@ -57,7 +59,7 @@ namespace Dominio.WebApi.Controllers
 
         // POST api/<UsuarioController>
         [HttpPost]
-        public ActionResult<UsuarioDTO> Post([FromBody] usuarioDTO usuario)
+        public ActionResult<UsuarioDTO> Post([FromBody] UsuarioDTO usuario)
         {
             if (usuario == null)
             {
@@ -74,7 +76,7 @@ namespace Dominio.WebApi.Controllers
     }
             catch (Exception ex)
             {
-                return StatusCode(500, "sOcurrió un error inesperado. Intente nuevamente más tarde");
+                return StatusCode(500, "Ocurrió un error inesperado. Intente nuevamente más tarde");
 }
         }
 

@@ -1,13 +1,6 @@
 ﻿using Dominio.DominioWebApp.DTOs;
 using Dominio.Enumerations;
-using Dominio.Exceptions;
-using Dominio.DominioWebApp.CasosDeUso.CasosPago;
-using Dominio.DominioWebApp.CasosDeUso.CasosTipoGasto;
 using Dominio.DominioWebApp.DTOs;
-using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosPago;
-using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosTipoGasto;
-using Dominio.DominioWebApp.InterfacesDeCasosDeUso.CasosUsuario;
-using Dominio.DominioWebApp.Mappers;
 using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -136,7 +129,7 @@ namespace DominioWebApp.Controllers
                 string token = HttpContext.Session.GetString("token");
                 pagoDto.TipoPago = tipoPago;
                 pagoDto.UsuarioId = HttpContext.Session.GetInt32("usuarioId").Value;
-                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos, "POST", pagoDto, token);
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "POST", pagoDto, token);
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 

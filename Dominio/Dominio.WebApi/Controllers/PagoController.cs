@@ -14,7 +14,7 @@ namespace Dominio.WebApi.Controllers
         private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
         private IObtenerPagos _obtenerPagosCU;
         private IAltaPago _altaPagoCU;
-        public PagoController(IObtenerPagoPorId obtenerPagoPorId, 
+        public PagoController(IObtenerPagoPorId obtenerPagoPorId,
             IObtenerPagosFiltrados obtenerPagosFiltrados,
             IObtenerPagos obtenerPagos,
             IAltaPago altaPago)
@@ -48,7 +48,7 @@ namespace Dominio.WebApi.Controllers
             catch (PagoException pe)
             {
                 //devolvemos 404 porque el unico pagoException es no encontrar un pago con ese id
-                return NotFound(new { error = pe.Message }); 
+                return NotFound(new { error = pe.Message });
             }
             catch (Exception ex)
             {
@@ -85,10 +85,8 @@ namespace Dominio.WebApi.Controllers
             try
             {
                 _altaPagoCU.AgregarPago(pago);
-                return CreatedAtAction(nameof(Get), new { id = pago.Id }, pago);            }
-            }
-            catch (PagoException pe)
-            {
+                return CreatedAtAction(nameof(Get), new { id = pago.Id }, pago); 
+            } catch (PagoException pe){
                 return BadRequest(pe.Message);
             }
             catch (Exception ex)
