@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dominio.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Dominio.WebApi.Controllers.EquipoController.Get">
+            <summary>
+            Permite obtener todos los Equipos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.LoginController.Login(Dominio.LogicaAplicacion.DTOs.UsuarioLoginDTO)">
+            <summary>
+            Permite realizar un Login segun los datos ingresados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.PagoController.Get">
+            <summary>
+            Permite obtener todos los Pagos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.PagoController.Get(System.Int32)">
+            <summary>
+            Permite obtener los datos de un pago en base al id que recibe por parámetro
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.PagoController.GetPagosFiltrados(System.Int32,System.Int32)">
+            <summary>
+            Permite obtener los Pagos Filtrados dados un mes y anio recibidos por parametro
+            </summary>
+            <param name="mes"></param>
+            <param name="anio"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.PagoController.Post(Dominio.LogicaAplicacion.DTOs.PagoDTO)">
+            <summary>
+            Permite dar de alta un Pago dados los datos recibidos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.TipoGastoController.Get">
+            <summary>
+            Permite obtener todos los Tipos De Gasto
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.TipoGastoController.Get(System.Int32)">
+            <summary>
+            Permite obtener los datos de un tipo de gasto en base al id que recibe por parámetro
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.TipoGastoController.Post(Dominio.LogicaAplicacion.DTOs.TipoGastoDTO)">
+            <summary>
+            Permite dar de alta un Tipo De Gasto dados los datos recibidos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.TipoGastoController.Put(System.Int32,Dominio.LogicaAplicacion.DTOs.TipoGastoDTO)">
+            <summary>
+            Permite modificar un Tipo De Gasto dado el id recibidio por parametro y los datos recibidos
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.TipoGastoController.Delete(System.Int32)">
+            <summary>
+            Permite eliminar un Tipo De Gasto dado el id recibido por parametro
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.UsuarioController.Get">
+            <summary>
+            Permite obtener todos los usuarios
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.UsuarioController.GetUsuariosFiltrados(System.Double)">
+            <summary>
+            Permite obtener los Usuarios filtrados, segun si realizaron Pagos con un monto mayor al monto recibido por parametro
+            </summary>
+            <param name="monto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dominio.WebApi.Controllers.UsuarioController.Post(Dominio.LogicaAplicacion.DTOs.UsuarioDTO)">
+            <summary>
+            Permite dar de alta un Usuario dados los datos recibidos
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

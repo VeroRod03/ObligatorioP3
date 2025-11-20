@@ -34,7 +34,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             catch (Exception ex)
             {
-                throw new PagoException("Hubo un error: ", ex);
+                throw new PagoException($"Hubo un error: {ex.Message}");
             }
 
         }

@@ -93,7 +93,7 @@ namespace Dominio.Entidades
 
         private void ValidarFecha()
         {
-            if(Fecha > DateTime.Today)
+            if(Fecha > DateTime.UtcNow && Fecha > DateTime.Now)
             {
                 throw new PagoException("La fecha no puede ser posterior a la fecha actual");
             }

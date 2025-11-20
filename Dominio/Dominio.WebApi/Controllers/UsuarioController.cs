@@ -1,6 +1,7 @@
 ﻿using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dominio.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -89,7 +91,7 @@ namespace Dominio.WebApi.Controllers
             try
             {
                 _altaUsuarioCU.AgregarUsuario(usuario);
-                return Created("api/Usuario/" + usuario.Id, usuario);
+                return Created("api/Usuario", usuario);
             }
             catch (UsuarioException ue)
             {

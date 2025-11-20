@@ -1,12 +1,14 @@
 ﻿using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dominio.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class PagoController : ControllerBase
     {
@@ -114,7 +116,7 @@ namespace Dominio.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<PagoDTO> Post([FromBody] PagoDTO pago)
+        public ActionResult<PagoDTO> Post([FromBody] PagoDTO pago) 
         {
             if (pago == null)
             {
@@ -122,8 +124,14 @@ namespace Dominio.WebApi.Controllers
             }
             try
             {
+                //esta bien esto? O sino como hago para 
+                int usuarioId = int.Parse(User.FindFirst("usuarioId")!.Value);
+                pago.UsuarioId = usuarioId;
+                pago.Usuario.Id = usuarioId;
+
                 _altaPagoCU.AgregarPago(pago);
-                return CreatedAtAction(nameof(Get), new { id = pago.Id }, pago); 
+                return Created("api/Pago", pago);
+               // return CreatedAtAction(nameof(Get), new { id = pago.Id }, pago); 
             } catch (PagoException pe){
                 return BadRequest(pe.Message);
             }

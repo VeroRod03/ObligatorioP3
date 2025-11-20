@@ -26,13 +26,16 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
             {
                 throw new PagoException("Datos incorrectos");
             }
-            if(pagodto.TipoPago == "unico")
+            if(pagodto.TipoPago.ToLower() == "unico")
             {
                 _repositorio.Add(PagoMapper.ToUnico(pagodto));
-            }else if (pagodto.TipoPago == "recurrente")
+            }else if (pagodto.TipoPago.ToLower() == "recurrente")
             {
                 _repositorio.Add(PagoMapper.ToRecurrente(pagodto));
 
+            }
+            else {
+                throw new PagoException("El tipo de pago solo accepta los valores Unico o Recurrente");
             }
         }
     }

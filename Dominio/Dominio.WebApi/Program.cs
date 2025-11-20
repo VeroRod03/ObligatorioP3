@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Dominio.WebApi
 {
@@ -30,34 +32,60 @@ namespace Dominio.WebApi
                 )
             );
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            var key = builder.Configuration["SecretTokenKey"];
+            var keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
+            System.Diagnostics.Debug.WriteLine($"CLAVE USADA: '{key}'");
+            System.Diagnostics.Debug.WriteLine($"Caracteres: {key.Length}, Bytes: {keyBytes.Length}");
+
+
+
 
             //para el token
-            builder.Services.AddAuthentication(
-                aut =>
-                {
-                    aut.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    aut.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }
-            )
-            .AddJwtBearer(
-                opciones =>
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opciones =>
                 {
                     opciones.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SecretTokenKey").Value!)),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
                     };
                 }
             );
 
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddSwaggerGen(opt => opt.IncludeXmlComments("Dominio.WebApi.xml")); 
+            builder.Services.AddSwaggerGen(opciones =>
+            {
+                opciones.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
+                {
+                    Description = "Autorización estándar mediante esquema Bearer",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                opciones.OperationFilter<SecurityRequirementsOperationFilter>();
+
+                opciones.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Documentación de Dominio.Api",
+                    Description = "Aqui se encuentran todos los endpoint activos para utilizar los servicios del proyecto My Wallet",
+                    Contact = new OpenApiContact
+                    {
+                        Email = "diegomdiaz15@gmail.com , veronicarod2003@gmail.com"
+
+                    },
+                    Version = "v1"
+                });
+
+                //opciones.IncludeXmlComments("Dominio.WebApi");
+            });
+
+            //builder.Services.AddSwaggerGen(opt => opt.IncludeXmlComments("Dominio.WebApi")); 
 
             // Inicializamos Repositorios
             builder.Services.AddScoped<ITipoGastoRepositorio, RepositorioTipoGastosEF>();
@@ -85,14 +113,6 @@ namespace Dominio.WebApi
             builder.Services.AddScoped<IAltaUsuario, AltaUsuarioCU>();
             builder.Services.AddScoped<IObtenerUsuarios, ObtenerUsuariosCU>();
             builder.Services.AddScoped<IObtenerUsuariosFiltrados, ObtenerUsuariosFiltradosCU>();
-
-            //para el la configuracion del token
-            builder.Services.AddAuthorization(
-                options =>
-                {
-                    options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                }
-            );
 
             var app = builder.Build();
 

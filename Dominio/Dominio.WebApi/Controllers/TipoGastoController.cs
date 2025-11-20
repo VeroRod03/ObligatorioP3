@@ -1,14 +1,17 @@
-﻿using System.Linq.Expressions;
+﻿using Dominio.Entidades;
 using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Dominio.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TipoGastoController : ControllerBase
     {
@@ -104,7 +107,8 @@ namespace Dominio.WebApi.Controllers
             {
                 int usuarioId = int.Parse(User.FindFirst("usuarioId")!.Value);
                 _altaTipoGastoCU.AgregarTipoGasto(tipoGasto,usuarioId);
-                return CreatedAtAction(nameof(Get), new { id = tipoGasto.Id }, tipoGasto);            
+                return Created("api/TipoGasto", tipoGasto);
+               // return CreatedAtAction(nameof(Get), new { id = tipoGasto.Id }, tipoGasto);            
             }
             catch (TipoGastoException tge)
             {

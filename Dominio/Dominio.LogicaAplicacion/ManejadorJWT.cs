@@ -1,4 +1,5 @@
 ﻿using Dominio.LogicaAplicacion.DTOs;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,12 +9,17 @@ namespace Dominio.LogicaAplicacion
 {
     public class ManejadorJWT
     {
-        public static object GenerarToken(UsuarioDTO logueado)
+        private IConfiguration _configuration;
+        public ManejadorJWT(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public string GenerarToken(UsuarioDTO logueado)
         {
             //el que manjea la creacion del token
             var tokenHandler = new JwtSecurityTokenHandler();
-            //llamamos a la clave (ahora esta ingresada manualmente pero luego hayq ue traerla desde appsettings)
-            var clave = Encoding.ASCII.GetBytes("claveSecreta_obligatorio_DDVR");
+            var claveSecreta = Encoding.ASCII.
+                GetBytes(_configuration["SecretTokenKey"]);
             //como se describe el token, lo que va a tener adentro
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -29,7 +35,7 @@ namespace Dominio.LogicaAplicacion
                 //cuando se vence
                 Expires = DateTime.UtcNow.AddMonths(1),
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(clave),
+                    new SymmetricSecurityKey(claveSecreta),
                     SecurityAlgorithms.HmacSha256Signature
                 )
             };

@@ -13,9 +13,12 @@ namespace Dominio.WebApi.Controllers
     public class LoginController : ControllerBase
     {
         private ILogin _loginCU;
-        public LoginController(ILogin login)
+        private IConfiguration _config;
+
+        public LoginController(ILogin login, IConfiguration config)
         {
             _loginCU = login;
+            _config = config;
         }
         /// <summary>
         /// Permite realizar un Login segun los datos ingresados
@@ -32,7 +35,8 @@ namespace Dominio.WebApi.Controllers
             {
                 UsuarioDTO logueado = _loginCU.Login(logindto.Email, logindto.Contra);
                 //generamos el token
-                var token = ManejadorJWT.GenerarToken(logueado);
+                ManejadorJWT manejadorJWT = new ManejadorJWT(_config);
+                var token = manejadorJWT.GenerarToken(logueado);
                 //se lo asignamos al usuario que se esta logueando
                 logueado.Token = token.ToString();
                 return Ok(logueado);

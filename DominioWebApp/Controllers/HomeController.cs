@@ -57,9 +57,9 @@ public class HomeController : Controller
                 return View();
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            ViewBag.Error = "Sucedio un error inesperado";
+            ViewBag.Error = "Sucedio un error inesperado ," + ex.Message;
             return View();
         }
     }
