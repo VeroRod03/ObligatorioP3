@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio.Enumerations
+namespace DominioWebApp.Enumerations
 {
     public enum Mes
     {

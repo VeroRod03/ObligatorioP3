@@ -1,12 +1,11 @@
-﻿using Dominio.Enumerations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio.DominioWebApp.DTOs
+namespace DominioWebApp.DTOs
 {
     public class UsuarioDTO
     {
@@ -22,7 +21,7 @@ namespace Dominio.DominioWebApp.DTOs
         public string Email { get; set; }
         public int EquipoId { get; set; } 
         public EquipoDTO? Equipo { get; set; }
-        public RolUsuario Rol { get; set; }
+        public string Rol { get; set; }
 
         //par manejar el token
         public string Token { get; set; }

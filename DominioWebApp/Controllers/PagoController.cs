@@ -1,6 +1,6 @@
-﻿using Dominio.DominioWebApp.DTOs;
-using Dominio.Enumerations;
-using Dominio.DominioWebApp.DTOs;
+﻿using DominioWebApp.DTOs;
+using DominioWebApp.Enumerations;
+using DominioWebApp.DTOs;
 using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -89,6 +89,7 @@ namespace DominioWebApp.Controllers
             catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                string token = HttpContext.Session.GetString("token");
                 HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "GET", null, token);
                 string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuestaTodos);
 
@@ -177,6 +178,7 @@ namespace DominioWebApp.Controllers
             catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                string token = HttpContext.Session.GetString("token");
                 ViewBag.TipoPago = tipoPago;
                 HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos, "GET", null, token);
 

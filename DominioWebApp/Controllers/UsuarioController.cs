@@ -1,7 +1,9 @@
-﻿using Dominio.DominioWebApp.DTOs;
+﻿using DominioWebApp.DTOs;
 using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using WebAppClienteHttp.Auxiliares;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DominioWebApp.Controllers
@@ -9,8 +11,8 @@ namespace DominioWebApp.Controllers
     [FilterAutenticado]
     public class UsuarioController : Controller
     {
-		public string URLApiUsuarios { get; set; }
-		public string URLApiEquipos {get; set; }
+        public string URLApiUsuarios { get; set; }
+        public string URLApiEquipos { get; set; }
 
         public UsuarioController(IConfiguration config)
         {
@@ -30,13 +32,13 @@ namespace DominioWebApp.Controllers
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 
-                if (respuesta.IsSuccessStatusCode) 
+                if (respuesta.IsSuccessStatusCode)
                 {
                     usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body);
                 }
-                else 
+                else
                 {
-                    ViewBag.Error = body; 
+                    ViewBag.Error = body;
                 }
             }
             catch (Exception)
@@ -49,21 +51,6 @@ namespace DominioWebApp.Controllers
         [HttpPost]
         public ActionResult Index(double monto)
         {
-            try
-            {
-                return View(_obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto));
-            }
-            catch (UsuarioException us)
-            {
-                ViewBag.Error = us.Message;
-                return View(_obtenerUsuariosCU.ObtenerUsuarios());
-            }
-            catch (Exception e)
-            {
-                ViewBag.Error = e.Message;
-                return View(_obtenerUsuariosCU.ObtenerUsuarios());
-            }
-            
             IEnumerable<UsuarioDTO> usuarios = new List<UsuarioDTO>();
 
             try
@@ -73,17 +60,17 @@ namespace DominioWebApp.Controllers
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 
-                if (respuesta.IsSuccessStatusCode) 
+                if (respuesta.IsSuccessStatusCode)
                 {
-                    usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body); 
+                    usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body);
                 }
-                else 
+                else
                 {
-                    ViewBag.Error = body; 
+                    ViewBag.Error = body;
 
-                    HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiPUsuarios, "GET", null, token);
+                    HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
                     string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuestaTodos);
-                    
+
                     if (respuestaTodos.IsSuccessStatusCode)
                     {
                         usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(bodyTodos);
@@ -97,9 +84,10 @@ namespace DominioWebApp.Controllers
             catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
-                HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiPUsuarios, "GET", null, token);
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
                 string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuestaTodos);
-                    
+
                 if (respuestaTodos.IsSuccessStatusCode)
                 {
                     usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(bodyTodos);
@@ -118,7 +106,7 @@ namespace DominioWebApp.Controllers
         {
             ViewBag.Mensaje = mensaje;
             ViewBag.Error = error;
-            
+
             try
             {
                 string token = HttpContext.Session.GetString("token");
@@ -128,11 +116,11 @@ namespace DominioWebApp.Controllers
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(body); 
+                    ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(body);
                 }
-                else 
+                else
                 {
-                    ViewBag.Error = body;  
+                    ViewBag.Error = body;
                 }
             }
             catch (Exception)
@@ -149,24 +137,6 @@ namespace DominioWebApp.Controllers
         {
             try
             {
-                _altaUsuarioCU.AgregarUsuario(usuarioDTO);
-                return RedirectToAction(nameof(Create), new {mensaje = "Usuario creado exitosamente!"});
-            }
-            catch (UsuarioException us)
-            {
-                ViewBag.Error = us.Message;
-                ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                return View();
-            }
-            catch (Exception e)
-            {
-                ViewBag.Error = e.Message;
-                ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
-                return View();
-            }
-            
-             try
-            {
                 string token = HttpContext.Session.GetString("token");
                 HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "POST", usuarioDTO, token);
 
@@ -174,41 +144,43 @@ namespace DominioWebApp.Controllers
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    return RedirectToAction(nameof(Create), new {mensaje = "Usuario creado exitosamente!"});
+                    return RedirectToAction(nameof(Create), new { mensaje = "Usuario creado exitosamente!" });
                 }
-                else 
+                else
                 {
-                    ViewBag.Error = body;  
+                    ViewBag.Error = body;
                     HttpResponseMessage respuestaEquipos = AuxiliarClienteHttp.EnviarSolicitud(URLApiEquipos, "GET", null, token);
 
                     string bodyEquipos = AuxiliarClienteHttp.ObtenerBody(respuestaEquipos);
 
                     if (respuestaEquipos.IsSuccessStatusCode)
                     {
-                        ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(bodyEquipos); 
+                        ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(bodyEquipos);
                     }
-                    else 
+                    else
                     {
-                        ViewBag.Error = bodyEquipos;  
-                    }                    
+                        ViewBag.Error = bodyEquipos;
+                    }
                 }
             }
             catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                string token = HttpContext.Session.GetString("token");
                 HttpResponseMessage respuestaEquipos = AuxiliarClienteHttp.EnviarSolicitud(URLApiEquipos, "GET", null, token);
 
                 string bodyEquipos = AuxiliarClienteHttp.ObtenerBody(respuestaEquipos);
 
                 if (respuestaEquipos.IsSuccessStatusCode)
                 {
-                    ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(bodyEquipos); 
+                    ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(bodyEquipos);
                 }
-                else 
+                else
                 {
-                    ViewBag.Error = bodyEquipos;  
-                }  
+                    ViewBag.Error = bodyEquipos;
+                }
             }
             return View();
         }
     }
+}

@@ -1,9 +1,11 @@
-using Dominio.DominioWebApp.DTOs;
-using Dominio.DominioWebApp.DTOs;
+using DominioWebApp.DTOs;
+using DominioWebApp.DTOs;
 using DominioWebApp.Filters;
 using DominioWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using WebAppClienteHttp.Auxiliares;
 
 namespace DominioWebApp.Controllers;
 
@@ -44,7 +46,7 @@ public class HomeController : Controller
             if (respuesta.IsSuccessStatusCode) // Serie 200
             {
                 usuario = JsonConvert.DeserializeObject<UsuarioDTO>(body); // en el body hay JSON
-                HttpContext.Session.SetString("usuarioRol", usuario.Rol.ToString());
+                HttpContext.Session.SetString("usuarioRol", usuario.Rol);
                 HttpContext.Session.SetInt32("usuarioId", usuario.Id);
                 HttpContext.Session.SetString("token", usuario.Token);
                 return RedirectToAction("Index");

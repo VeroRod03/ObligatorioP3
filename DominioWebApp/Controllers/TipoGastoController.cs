@@ -1,8 +1,10 @@
-﻿using Dominio.DominioWebApp.DTOs;
+﻿using DominioWebApp.DTOs;
 using DominioWebApp.Filters;
 using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using WebAppClienteHttp.Auxiliares;
 
 namespace DominioWebApp.Controllers
 {
@@ -126,7 +128,7 @@ namespace DominioWebApp.Controllers
                 else 
                 {
                     ViewBag.Error = body;
-					HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.id}", "GET", null, token);
+					HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.Id}", "GET", null, token);
 
                 	string bodyGet = AuxiliarClienteHttp.ObtenerBody(respuestaGet);
 
@@ -145,7 +147,8 @@ namespace DominioWebApp.Controllers
             catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
-				HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.id}", "GET", null, token);
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.Id}", "GET", null, token);
 
                 string bodyGet = AuxiliarClienteHttp.ObtenerBody(respuestaGet);
 
@@ -221,7 +224,8 @@ namespace DominioWebApp.Controllers
             catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
-				HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{dto.id}", "GET", null, token);
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuestaGet = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{id}", "GET", null, token);
 
                 string bodyGet = AuxiliarClienteHttp.ObtenerBody(respuestaGet);
 
