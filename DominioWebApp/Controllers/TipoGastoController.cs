@@ -10,6 +10,12 @@ namespace DominioWebApp.Controllers
     [FilterAdministrador]
     public class TipoGastoController : Controller
     {
+        public string URLApiTipoGastos { get; set; }
+
+        public TipoGastoController(IConfiguration config)
+        {
+            URLApiTipoGastos = config.GetValue<string>("URLApiTipoGastos");
+        }
         
         // GET: TipoGastoController
         public ActionResult Index(string mensaje, string error)

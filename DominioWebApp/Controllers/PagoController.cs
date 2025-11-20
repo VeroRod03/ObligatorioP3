@@ -73,14 +73,33 @@ namespace DominioWebApp.Controllers
                 {
                     ViewBag.Error = body; 
 
-                    respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "GET", null, token);
-                    string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuesta);
-                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(bodyTodos); // en el body hay JSON
+                    HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "GET", null, token);
+                    string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuestaTodos);
+
+                    if (respuestaTodos.IsSuccessStatusCode)
+                    {
+                        pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(bodyTodos);
+                    }
+                    else
+                    {
+                        ViewBag.Error = bodyTodos;
+                    }
                 }
             }
             catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiPagos, "GET", null, token);
+                string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuestaTodos);
+
+                if (respuestaTodos.IsSuccessStatusCode)
+                {
+                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(bodyTodos);
+                }
+                else
+                {
+                    ViewBag.Error = bodyTodos;
+                }
             }
             return View(pagos);
         }
@@ -105,7 +124,7 @@ namespace DominioWebApp.Controllers
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    ViewBag.TipoGastos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(body); 
+                    ViewBag.TipoGastos = JsonConvert.DeserializeObject<IEnumerable<TipoGastoDTO>>(body); 
                 }
                 else 
                 {
@@ -147,7 +166,7 @@ namespace DominioWebApp.Controllers
 
                     if (respuestaTipoGastos.IsSuccessStatusCode)
                     {
-                        ViewBag.TipoGastos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(bodyTipoGastos); 
+                        ViewBag.TipoGastos = JsonConvert.DeserializeObject<IEnumerable<TipoGastoDTO>>(bodyTipoGastos); 
                     }
                     else 
                     {
@@ -165,7 +184,7 @@ namespace DominioWebApp.Controllers
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    ViewBag.TipoGastos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(bodyTipoGastos); 
+                    ViewBag.TipoGastos = JsonConvert.DeserializeObject<IEnumerable<TipoGastoDTO>>(bodyTipoGastos); 
                 }
                 else 
                 {

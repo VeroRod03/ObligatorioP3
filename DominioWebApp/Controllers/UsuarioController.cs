@@ -9,28 +9,41 @@ namespace DominioWebApp.Controllers
     [FilterAutenticado]
     public class UsuarioController : Controller
     {
-        private IObtenerEquipos _obtenerEquiposCU;
-        private IAltaUsuario _altaUsuarioCU;
-        private IObtenerUsuarios _obtenerUsuariosCU;
-        private IObtenerUsuariosFiltrados _obtenerUsuariosFiltradosCU;
-        public UsuarioController(
-            IObtenerEquipos obtenerEquiposCU,
-            IAltaUsuario altaUsuario,
-            IObtenerUsuarios obtenerUsuariosCU,
-            IObtenerUsuariosFiltrados obtenerUsuariosFiltradosCU)
-        {
-            _obtenerEquiposCU = obtenerEquiposCU;
-            _altaUsuarioCU = altaUsuario;
-            _obtenerUsuariosCU = obtenerUsuariosCU;
-            _obtenerUsuariosFiltradosCU = obtenerUsuariosFiltradosCU;
-        }
+		public string URLApiUsuarios { get; set; }
+		public string URLApiEquipos {get; set; }
 
+        public UsuarioController(IConfiguration config)
+        {
+            URLApiUsuarios = config.GetValue<string>("URLApiUsuarios");
+            URLApiEquipos = config.GetValue<string>("URLApiEquipos");
+        }
         // GET: UsuarioController
         [FilterGerente]
         public ActionResult Index(string mensaje)
         {
             ViewBag.Error = mensaje;
-            return View(_obtenerUsuariosCU.ObtenerUsuarios());
+            IEnumerable<UsuarioDTO> usuarios = new List<UsuarioDTO>();
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode) 
+                {
+                    usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body);
+                }
+                else 
+                {
+                    ViewBag.Error = body; 
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+            }
+            return View(usuarios);
         }
 
         [HttpPost]
@@ -50,6 +63,53 @@ namespace DominioWebApp.Controllers
                 ViewBag.Error = e.Message;
                 return View(_obtenerUsuariosCU.ObtenerUsuarios());
             }
+            
+            IEnumerable<UsuarioDTO> usuarios = new List<UsuarioDTO>();
+
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"{URLApiUsuarios}/UsuariosFiltrados?monto={monto}", "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode) 
+                {
+                    usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body); 
+                }
+                else 
+                {
+                    ViewBag.Error = body; 
+
+                    HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiPUsuarios, "GET", null, token);
+                    string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuestaTodos);
+                    
+                    if (respuestaTodos.IsSuccessStatusCode)
+                    {
+                        usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(bodyTodos);
+                    }
+                    else
+                    {
+                        ViewBag.Error = bodyTodos;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                HttpResponseMessage respuestaTodos = AuxiliarClienteHttp.EnviarSolicitud(URLApiPUsuarios, "GET", null, token);
+                string bodyTodos = AuxiliarClienteHttp.ObtenerBody(respuestaTodos);
+                    
+                if (respuestaTodos.IsSuccessStatusCode)
+                {
+                    usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(bodyTodos);
+                }
+                else
+                {
+                    ViewBag.Error = bodyTodos;
+                }
+            }
+            return View(usuarios);
         }
 
         // GET: UsuarioController/Create
@@ -58,7 +118,27 @@ namespace DominioWebApp.Controllers
         {
             ViewBag.Mensaje = mensaje;
             ViewBag.Error = error;
-            ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
+            
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiEquipos, "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(body); 
+                }
+                else 
+                {
+                    ViewBag.Error = body;  
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+            }
             return View();
         }
 
@@ -84,55 +164,51 @@ namespace DominioWebApp.Controllers
                 ViewBag.Equipos = _obtenerEquiposCU.ObtenerEquipos();
                 return View();
             }
-        }
-
-        // GET: UsuarioController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: UsuarioController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            
+             try
             {
-                return RedirectToAction(nameof(Index));
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "POST", usuarioDTO, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Create), new {mensaje = "Usuario creado exitosamente!"});
+                }
+                else 
+                {
+                    ViewBag.Error = body;  
+                    HttpResponseMessage respuestaEquipos = AuxiliarClienteHttp.EnviarSolicitud(URLApiEquipos, "GET", null, token);
+
+                    string bodyEquipos = AuxiliarClienteHttp.ObtenerBody(respuestaEquipos);
+
+                    if (respuestaEquipos.IsSuccessStatusCode)
+                    {
+                        ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(bodyEquipos); 
+                    }
+                    else 
+                    {
+                        ViewBag.Error = bodyEquipos;  
+                    }                    
+                }
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                HttpResponseMessage respuestaEquipos = AuxiliarClienteHttp.EnviarSolicitud(URLApiEquipos, "GET", null, token);
+
+                string bodyEquipos = AuxiliarClienteHttp.ObtenerBody(respuestaEquipos);
+
+                if (respuestaEquipos.IsSuccessStatusCode)
+                {
+                    ViewBag.Equipos = JsonConvert.DeserializeObject<IEnumerable<EquipoDTO>>(bodyEquipos); 
+                }
+                else 
+                {
+                    ViewBag.Error = bodyEquipos;  
+                }  
             }
-        }
-
-        // GET: UsuarioController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: UsuarioController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        // GET: UsuarioController/Details/5
-        public ActionResult Details(int id)
-        {
             return View();
         }
     }
-}
