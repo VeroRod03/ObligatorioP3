@@ -10,19 +10,19 @@ namespace Dominio.WebApi.Controllers
     [ApiController]
     public class PagoController : ControllerBase
     {
-        private IObtenerPagoPorId _obtenerPagoPorId;
+        private IObtenerPagoPorId _obtenerPagoPorIdCU;
         private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
         private IObtenerPagos _obtenerPagosCU;
         private IAltaPago _altaPagoCU;
         public PagoController(IObtenerPagoPorId obtenerPagoPorId, 
             IObtenerPagosFiltrados obtenerPagosFiltrados,
-            IObtenerPagos obtenerPagosCU,
-            IAltaPago altaPagoCU)
+            IObtenerPagos obtenerPagos,
+            IAltaPago altaPago)
         {
-            _obtenerPagoPorId = obtenerPagoPorId;
+            _obtenerPagoPorIdCU = obtenerPagoPorId;
             _obtenerPagosFiltradosCU = obtenerPagosFiltrados;
-            _obtenerPagosCU = obtenerPagosCU;
-            _altaPagoCU = altaPagoCU;
+            _obtenerPagosCU = obtenerPagos;
+            _altaPagoCU = altaPago;
         }
 
         [HttpGet]
@@ -34,17 +34,21 @@ namespace Dominio.WebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<PagoDTO> Get(int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest("Id debe ser un número positivo");
+            }
             try
             {
                 //si sale todo bien que retorne status code 200 y la informacion del pago.
-                PagoDTO pago = _obtenerPagoPorId.ObtenerPagoPorId(id);
+                PagoDTO pago = _obtenerPagoPorIdCU.ObtenerPagoPorId(id);
                 return Ok(pago);
 
             }
             catch (PagoException pe)
             {
-                //devolver 400 si el id que el usuario ingreso no existe.
-                return BadRequest(new { error = pe.Message });
+                //devolvemos 404 porque el unico pagoException es no encontrar un pago con ese id
+                return NotFound(new { error = pe.Message }); 
             }
             catch (Exception ex)
             {
@@ -81,7 +85,7 @@ namespace Dominio.WebApi.Controllers
             try
             {
                 _altaPagoCU.AgregarPago(pago);
-                return Created("api/pago", pago); //id?
+                return CreatedAtAction(nameof(Get), new { id = pago.Id }, pago);            }
             }
             catch (PagoException pe)
             {

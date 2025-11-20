@@ -21,9 +21,9 @@ namespace Dominio.WebApi
                 Subject = new ClaimsIdentity
                 (new Claim[]
                     {
-                        new Claim(ClaimTypes.Email,logueado.Email),
                         //podria ser GetType en lugar de Rol
-                        new Claim(ClaimTypes.Role, logueado.Rol.ToString())
+                        new Claim(ClaimTypes.Role, logueado.Rol.ToString()),
+                        new Claim("usuarioId", logueado.Id.ToString()) //reemplazamos el mail por id
                     }
                 ),
                 //cuando se vence

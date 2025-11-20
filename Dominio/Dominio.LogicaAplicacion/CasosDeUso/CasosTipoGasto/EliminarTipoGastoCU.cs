@@ -13,13 +13,30 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
     {
         private ITipoGastoRepositorio _repositorio;
         private IAuditoriaRepositorio _repositorioAuditoria;
-        public EliminarTipoGastoCU(ITipoGastoRepositorio repositorio, IAuditoriaRepositorio repositorioAuditoria)
+        private IPagoRepositorio _repositorioPago;
+        public EliminarTipoGastoCU(
+            ITipoGastoRepositorio repositorio, 
+            IAuditoriaRepositorio repositorioAuditoria,
+            IPagoRepositorio repositorioPago
+            )
         {
             _repositorio = repositorio;
             _repositorioAuditoria = repositorioAuditoria;
+            _repositorioPago = repositorioPago;
         }
         public void EliminarTipoGasto(int id, int usuarioId)
         {
+            TipoGastoDTO aBorrar = _repositorio.FindById(id);
+            if (aBorrar == null)
+            {
+                throw new TipoGastoException("El contenido con id " + id + " no existe o ya fue eliminado");
+            }
+            
+            if (_repositorioPago.TipoGastoEnUso(id))
+            {
+                //excepcion creada especificamente para error 409; conflictos
+                throw new OperacionConflictivaException("El tipo de gasto esta en uso.");
+            }
             _repositorio.Remove(id);
             _repositorioAuditoria.Add(new Auditoria
             {

@@ -57,16 +57,16 @@ namespace AccesoDatos.EntityFramework.Repositorios
                 .Where(pago => pago.PagoIncluyeFecha(mes, anio));
         }
 
+        public bool TipoGastoEnUso(int id)
+        {
+            return _context.Pagos.Any(pago => pago.TipoGasto.Id == id);
+        }
+
         public Pago FindById(int id)
         {
-            Pago aRetornar = _context.Pagos
+            return _context.Pagos
                     .Where(pago => pago.Id == id)
                     .FirstOrDefault();
-            if(aRetornar == null)
-            {
-                throw new PagoException("No hay ningun pago con ese id");
-            }
-            return aRetornar;
         }
 
         public void Remove(int id)

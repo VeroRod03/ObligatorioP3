@@ -20,7 +20,11 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
 
         public TipoGastoDTO ObtenerTipoGasto(int id)
         {
-            return TipoGastoMapper.ToDTO(_repositorio.FindById(id));
+            TipoGastoDTO aRetornar = TipoGastoMapper.ToDTO(_repositorio.FindById(id));
+            if (aRetornar == null)
+            {
+                throw new TipoGastoException("No existe tipo de gasto con ese id");
+            }
         }
     
 }

@@ -43,13 +43,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public TipoGasto FindById(int id)
         {
-            TipoGasto aRetornar = _context.TipoGastos.Where(tg => tg.Id == id).FirstOrDefault();
-            if(aRetornar == null)
-            {
-                throw new TipoGastoException("No fue encontrado un tipo de gasto con ese id");
-
-            }
-            return aRetornar;
+            return _context.TipoGastos.Where(tg => tg.Id == id).FirstOrDefault();
         }
 
         public void Remove(int id)
@@ -57,13 +51,6 @@ namespace AccesoDatos.EntityFramework.Repositorios
             try
             {
                 TipoGasto aBorrar = new TipoGasto { Id = id };
-
-                bool enUso = _context.Pagos.Any(pago => pago.TipoGasto.Id == id);
- 
-                if (enUso)
-                {
-                    throw new TipoGastoException("El tipo de gasto esta en uso.");
-                }
                 _context.TipoGastos.Remove(aBorrar);
                 _context.SaveChanges();
             }

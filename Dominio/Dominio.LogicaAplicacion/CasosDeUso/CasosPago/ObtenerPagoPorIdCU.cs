@@ -21,7 +21,13 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
         }
         public PagoDTO ObtenerPagoPorId(int id)
         {
-            return PagoMapper.ToDTO(_repositorio.FindById(id));
+            PagoDTO aRetornar = PagoMapper.ToDTO(_repositorio.FindById(id));
+            if(aRetornar == null)
+            {
+                throw new PagoException("No hay ningun pago con ese id");
+            }
+
+            return aRetornar;
         }
     }
 }

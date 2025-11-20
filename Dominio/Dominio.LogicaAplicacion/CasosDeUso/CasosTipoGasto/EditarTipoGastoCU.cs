@@ -22,6 +22,11 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
         }
         public void EditarTipoGasto(TipoGastoDTO gasto,int usuarioId)
         {
+            TipoGastoDTO aModificar = _repositorio.FindById(gasto.Id);
+            if (aModificar == null)
+            {
+                throw new TipoGastoException("El tipo de gasto no existe");
+            }
             _repositorio.Update(TipoGastoMapper.FromDTO(gasto));
 
             _repositorioAuditoria.Add(new Auditoria

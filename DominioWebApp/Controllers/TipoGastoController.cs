@@ -15,25 +15,7 @@ namespace DominioWebApp.Controllers
     [FilterAdministrador]
     public class TipoGastoController : Controller
     {
-        private IObtenerTipoGastos _obtenerTipoGastosCU;
-        private IAltaTipoGasto _altaTipoGastoCU;
-        private IEditarTipoGasto _editarTipoGastoCU;
-        private IGetById _getById;
-        private IEliminarTipoGasto _eliminarTipoGastoCU;
-
-        public TipoGastoController(
-            IObtenerTipoGastos obtenerTipoGastosCU, 
-            IAltaTipoGasto altaTipoGastoCU,
-            IEditarTipoGasto editarTipoGastoCU,
-            IGetById getById,
-            IEliminarTipoGasto eliminarTipoGastoCU)
-        {
-            _obtenerTipoGastosCU = obtenerTipoGastosCU;
-            _altaTipoGastoCU = altaTipoGastoCU;
-            _editarTipoGastoCU = editarTipoGastoCU;
-            _getById = getById;
-            _eliminarTipoGastoCU = eliminarTipoGastoCU;
-        }
+        
         // GET: TipoGastoController
         public ActionResult Index(string mensaje, string error)
         {
