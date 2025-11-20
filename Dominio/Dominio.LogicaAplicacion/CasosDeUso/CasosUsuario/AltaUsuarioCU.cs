@@ -1,4 +1,5 @@
-﻿using Dominio.InterfacesRepositorio;
+﻿using Dominio.Entidades;
+using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 using Dominio.LogicaAplicacion.Mappers;

@@ -12,5 +12,6 @@ namespace Dominio.InterfacesRepositorio
     {
         public Usuario Login(string email, string pass);
         public IEnumerable<Usuario> FiltrarUsuariosPorMonto(double monto);
+        public bool ExisteEmail(Email email);
     }
 }

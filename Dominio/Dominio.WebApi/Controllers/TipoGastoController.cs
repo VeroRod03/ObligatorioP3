@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using DefaultNamespace;
 using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
@@ -47,7 +46,7 @@ namespace Dominio.WebApi.Controllers
             {
                 return Ok(_obtenerTipoGastosCU.ObtenerTipoGastos());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
 
@@ -105,7 +104,8 @@ namespace Dominio.WebApi.Controllers
             {
                 int usuarioId = int.Parse(User.FindFirst("usuarioId")!.Value);
                 _altaTipoGastoCU.AgregarTipoGasto(tipoGasto,usuarioId);
-                return CreatedAtAction(nameof(Get), new { id = tipoGasto.Id }, tipoGasto);            }
+                return CreatedAtAction(nameof(Get), new { id = tipoGasto.Id }, tipoGasto);            
+            }
             catch (TipoGastoException tge)
             {
                 return BadRequest(new { error = tge.Message });

@@ -11,5 +11,7 @@ namespace Dominio.InterfacesRepositorio
     public interface IPagoRepositorio : IRepositorio<Pago>
     {
         public IEnumerable<Pago> FiltrarPagosPorFecha(int mes, int anio);
+        public bool TipoGastoEnUso(int id);
+
     }
 }

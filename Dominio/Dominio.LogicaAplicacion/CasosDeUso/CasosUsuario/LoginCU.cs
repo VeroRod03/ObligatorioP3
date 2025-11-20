@@ -1,4 +1,5 @@
-﻿using Dominio.InterfacesRepositorio;
+﻿using Dominio.Exceptions;
+using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
 using Dominio.LogicaAplicacion.Mappers;
@@ -21,6 +22,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario
             {
                 throw new UsuarioException("Usuario o contraseña incorrecta.");
             }
+            return logueado;
         }
     }
 }

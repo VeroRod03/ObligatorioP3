@@ -1,6 +1,9 @@
 ﻿using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.InterfacesRepositorio;
+using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
+using Dominio.LogicaAplicacion.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +29,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
         }
         public void EliminarTipoGasto(int id, int usuarioId)
         {
-            TipoGastoDTO aBorrar = _repositorio.FindById(id);
+            TipoGastoDTO aBorrar = TipoGastoMapper.ToDTO(_repositorio.FindById(id));
             if (aBorrar == null)
             {
                 throw new TipoGastoException("El contenido con id " + id + " no existe o ya fue eliminado");

@@ -1,4 +1,5 @@
-﻿using Dominio.InterfacesRepositorio;
+﻿using Dominio.Exceptions;
+using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.Mappers;

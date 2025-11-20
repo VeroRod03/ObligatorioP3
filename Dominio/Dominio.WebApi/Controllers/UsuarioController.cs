@@ -39,7 +39,7 @@ namespace Dominio.WebApi.Controllers
                 return Ok(_obtenerUsuariosCU.ObtenerUsuarios());
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
@@ -65,7 +65,7 @@ namespace Dominio.WebApi.Controllers
                 IEnumerable<UsuarioDTO> usuarios = _obtenerUsuariosFiltradosCU.ObtenerUsuariosFiltrados(monto);
                 return Ok(usuarios);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }

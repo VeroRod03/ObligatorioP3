@@ -1,4 +1,5 @@
-﻿using Dominio.InterfacesRepositorio;
+﻿using Dominio.Exceptions;
+using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.Mappers;
@@ -25,6 +26,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             {
                 throw new TipoGastoException("No existe tipo de gasto con ese id");
             }
+            return aRetornar;
         }
     
 }
