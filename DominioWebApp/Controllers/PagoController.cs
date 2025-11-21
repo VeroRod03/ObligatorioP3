@@ -195,5 +195,36 @@ namespace DominioWebApp.Controllers
             }
             return View();
         }
+        
+        [FilterGerente] [FilterEmpleado]
+        public ActionResult PagosUsuario()
+        {
+            IEnumerable<PagoDTO> pagos = new List<PagoDTO>();
+            try
+            {
+                int id = HttpContext.Session.GetInt32("usuarioId");
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta =
+                    AuxiliarClienteHttp.EnviarSolicitud($"{URLApiPagos}/PagosUsuario?idUsuario={id}", "GET", null,
+                        token);
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    pagos = JsonConvert.DeserializeObject<IEnumerable<PagoDTO>>(body);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { mensaje = body });
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home",
+                    new { mensaje = "Ocurrió un error inesperado. Intente de nuevo más tarde." });
+            }
+
+            return View(pagos);
+        }
     }
 }

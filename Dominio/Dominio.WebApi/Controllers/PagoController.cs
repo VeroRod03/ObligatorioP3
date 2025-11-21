@@ -95,7 +95,7 @@ namespace Dominio.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<PagoDTO>> GetPagosFiltrados(int mes, int anio)
         {
-            if(mes < 0 || anio < 0)
+            if(mes < 0 || anio < 0 || mes > 12)
             {
                 return BadRequest("El mes y anio escogidos deben ser validos");
             }
@@ -180,7 +180,11 @@ namespace Dominio.WebApi.Controllers
             }
             try
             {
-                IEnumerable<PagoDTO> pagos = _obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio);
+                if (idUsuario != int.Parse(User.FindFirst("usuarioId")!.Value))
+                {
+                    return BadRequest("El id debe coincidir con el id del usuario logueado")
+                }
+                IEnumerable<PagoDTO> pagos = _obtenerPagosUsuarioCU.ObtenerPagosUsuario(idUsuario);
                 return Ok(pagos);
             }
             catch (PagoException pe)
