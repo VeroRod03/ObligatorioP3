@@ -133,7 +133,7 @@ namespace DominioWebApp.Controllers
         // POST: UsuarioController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UsuarioDTO usuarioDTO)
+        public ActionResult Create(AltaUsuarioDTO usuarioDTO)
         {
             try
             {

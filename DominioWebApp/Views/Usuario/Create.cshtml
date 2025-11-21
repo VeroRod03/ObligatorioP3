@@ -1,6 +1,6 @@
 ﻿@using DominioWebApp.Enumerations
 @using DominioWebApp.DTOs
-@model DominioWebApp.DTOs.UsuarioDTO
+@model DominioWebApp.DTOs.AltaUsuarioDTO
 
 @{
     ViewData["Title"] = "Create";
@@ -44,14 +44,14 @@
                     {
                         <option value=@equipo.Id>@equipo.Nombre</option>
                     }
-                    <span asp-validation-for="Equipo" class="text-danger"></span>
+                    <span asp-validation-for="EquipoId" class="text-danger"></span>
                 </select>
             </div>
             <div class="form-group">
                 <label for="Rol" class="control-label">Rol</label>
                 <select name="Rol" id="Rol" class="form-control" required>
-                    <option value="EMPLEADO">EMPLEADO</option>
-                    <option value="GERENTE">GERENTE</option>
+                    <option value="3">EMPLEADO</option>
+                    <option value="2">GERENTE</option>
                     <<span asp-validation-for="Rol" class="text-danger"></span>
                 </select>
             </div>

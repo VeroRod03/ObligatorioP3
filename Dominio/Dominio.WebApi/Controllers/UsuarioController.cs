@@ -1,6 +1,10 @@
-﻿using Dominio.Exceptions;
+﻿using Dominio.Entidades;
+using Dominio.Enumerations;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosUsuario;
+using Dominio.ValueObjects;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -82,14 +86,23 @@ namespace Dominio.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<UsuarioDTO> Post([FromBody] UsuarioDTO usuario)
+        public ActionResult<UsuarioDTO> Post([FromBody] AltaUsuarioDTO altaUsuario)
         {
-            if (usuario == null)
+            if (altaUsuario == null)
             {
                 return BadRequest("No se proporcionaron datos para el alta");
             }
             try
             {
+                UsuarioDTO usuario = new UsuarioDTO
+                {
+                    Nombre = altaUsuario.Nombre,
+                    Apellido = altaUsuario.Apellido,
+                    Contra = altaUsuario.Contra,
+                    EquipoId = altaUsuario.EquipoId,
+                    Rol = (RolUsuario)altaUsuario.Rol
+                };
+
                 _altaUsuarioCU.AgregarUsuario(usuario);
                 return Created("api/Usuario", usuario);
             }

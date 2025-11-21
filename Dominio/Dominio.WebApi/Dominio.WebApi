@@ -89,7 +89,7 @@
             <param name="monto"></param>
             <returns></returns>
         </member>
-        <member name="M:Dominio.WebApi.Controllers.UsuarioController.Post(Dominio.LogicaAplicacion.DTOs.UsuarioDTO)">
+        <member name="M:Dominio.WebApi.Controllers.UsuarioController.Post(Dominio.LogicaAplicacion.DTOs.AltaUsuarioDTO)">
             <summary>
             Permite dar de alta un Usuario dados los datos recibidos
             </summary>
