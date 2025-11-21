@@ -6,6 +6,12 @@
 
 <h1>Editar Tipo de Gasto</h1>
 
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+
 <hr />
 <div class="row">
     <div class="col-md-4">

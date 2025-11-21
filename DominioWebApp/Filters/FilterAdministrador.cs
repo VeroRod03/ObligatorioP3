@@ -8,7 +8,7 @@ namespace DominioWebApp.Filters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             string rol = context.HttpContext.Session.GetString("usuarioRol");
-            if (rol != "ADMINISTRADOR")
+            if (rol != "1") //admin
             {
                 context.Result = new RedirectToActionResult("Index", "Home", new { mensaje = "No tiene acceso." });
             }

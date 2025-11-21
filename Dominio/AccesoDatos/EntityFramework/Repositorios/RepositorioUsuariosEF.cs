@@ -43,7 +43,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             catch (Exception ex)
             {
-                throw new UsuarioException("Hubo un error: ",ex);
+                throw new UsuarioException($"Hubo un error: {ex.Message}");
             }
         }
 

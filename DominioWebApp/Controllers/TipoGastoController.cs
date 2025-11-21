@@ -89,7 +89,7 @@ namespace DominioWebApp.Controllers
             try
             {
                 string token = HttpContext.Session.GetString("token");
-                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiTipoGastos + $"/{id}", "GET", null, token);
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"{URLApiTipoGastos}/{id}", "GET", null, token);
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 

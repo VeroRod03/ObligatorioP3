@@ -31,7 +31,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             catch (Exception ex)
             {
-                throw new TipoGastoException("Hubo un error: ", ex);
+                throw new TipoGastoException($"Hubo un error: {ex.Message}");
             }
 
         }

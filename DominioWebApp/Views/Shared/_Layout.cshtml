@@ -25,13 +25,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                         }
-                        @if(Context.Session.GetString("usuarioRol") == "ADMINISTRADOR")
+                        @if(Context.Session.GetString("usuarioRol") == "1") //admin
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="TipoGasto" asp-action="Index">Gestion Gastos</a>
                             </li>
                         }
-                        @if (Context.Session.GetString("usuarioRol") == "GERENTE")
+                        @if (Context.Session.GetString("usuarioRol") == "2") //gerente
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="Index">Gestion Mensual Pagos</a>
@@ -40,7 +40,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Filtrado Usuarios</a>
                             </li>
                         }
-                        @if (Context.Session.GetString("usuarioRol") == "GERENTE" || Context.Session.GetString("usuarioRol") == "ADMINISTRADOR")
+                        @if (Context.Session.GetString("usuarioRol") == "2" || Context.Session.GetString("usuarioRol") == "1") //gerente o admin
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Create">Crear Usuario</a>

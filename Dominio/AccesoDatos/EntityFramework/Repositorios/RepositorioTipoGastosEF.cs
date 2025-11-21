@@ -32,7 +32,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             catch(Exception ex)
             {
-                throw new TipoGastoException("Hubo un error: ", ex);
+                throw new TipoGastoException($"Hubo un error: {ex.Message}");
             }
         }
 
@@ -50,7 +50,9 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             try
             {
-                TipoGasto aBorrar = new TipoGasto { Id = id };
+                //TipoGasto aBorrar = new TipoGasto { Id = id };
+                //este cambio se tuvo que hacer para evitar un erro de tracking
+                TipoGasto aBorrar = _context.TipoGastos.Find(id);
                 _context.TipoGastos.Remove(aBorrar);
                 _context.SaveChanges();
             }
@@ -60,7 +62,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             catch (Exception ex)
             {
-                throw new TipoGastoException("Hubo un error: ", ex);
+                throw new TipoGastoException($"Hubo un error: {ex.Message}");
             }
         }
 
@@ -69,7 +71,13 @@ namespace AccesoDatos.EntityFramework.Repositorios
             try
             {
                 obj.Validar();
-                _context.TipoGastos.Update(obj);
+
+                //cambio para evitar error de tracking
+                TipoGasto aModificar = _context.TipoGastos.Find(obj.Id);
+                aModificar.Nombre = obj.Nombre;
+                aModificar.Descripcion = obj.Descripcion;
+
+                _context.TipoGastos.Update(aModificar);
                 _context.SaveChanges();
             }
             catch (TipoGastoException tge)
@@ -78,7 +86,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
             }
             catch (Exception ex)
             {
-                throw new TipoGastoException("Hubo un error: ", ex);
+                throw new TipoGastoException($"Hubo un error: {ex.Message}");
             }
         }
     }
