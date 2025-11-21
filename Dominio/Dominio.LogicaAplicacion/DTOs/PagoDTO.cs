@@ -38,7 +38,7 @@ namespace Dominio.LogicaAplicacion.DTOs
 
         //unico
         //[Required(ErrorMessage = "El numero de recibo del pago unico es requerido")]
-        public string NumRecibo { get; set; }
+        public string? NumRecibo { get; set; }
 
     }
 }

@@ -28,12 +28,12 @@ namespace DominioWebApp.DTOs
         public double SaldoPendiente { get; set; }
 
         //recurrente
-        [Required(ErrorMessage = "La fecha hasta del pago recurrente es requerida")]
+       [Required(ErrorMessage = "La fecha hasta del pago recurrente es requerida")]
         public DateTime? Hasta { get; set; }
 
         //unico
         [Required(ErrorMessage = "El numero de recibo del pago unico es requerido")]
-        public string NumRecibo { get; set; }
+        public string? NumRecibo { get; set; }
 
     }
 }

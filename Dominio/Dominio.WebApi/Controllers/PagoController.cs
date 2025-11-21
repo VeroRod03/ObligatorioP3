@@ -138,6 +138,9 @@ namespace Dominio.WebApi.Controllers
                     Fecha = altaPago.Fecha,
                     TipoPago = altaPago.TipoPago,
                     NumRecibo = altaPago.NumRecibo,
+                    MontoTotal = altaPago.MontoTotal,
+                    SaldoPendiente = altaPago.SaldoPendiente,
+                    Hasta = altaPago.Hasta,
                     UsuarioId = usuarioId
                 };
 
