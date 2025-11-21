@@ -202,7 +202,7 @@ namespace DominioWebApp.Controllers
             IEnumerable<PagoDTO> pagos = new List<PagoDTO>();
             try
             {
-                int id = HttpContext.Session.GetInt32("usuarioId");
+                int? id = HttpContext.Session.GetInt32("usuarioId");
                 string token = HttpContext.Session.GetString("token");
                 HttpResponseMessage respuesta =
                     AuxiliarClienteHttp.EnviarSolicitud($"{URLApiPagos}/PagosUsuario?idUsuario={id}", "GET", null,
