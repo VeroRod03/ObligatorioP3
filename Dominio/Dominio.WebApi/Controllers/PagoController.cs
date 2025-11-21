@@ -17,15 +17,18 @@ namespace Dominio.WebApi.Controllers
         private IObtenerPagosFiltrados _obtenerPagosFiltradosCU;
         private IObtenerPagos _obtenerPagosCU;
         private IAltaPago _altaPagoCU;
+        private IObtenerPagosUsuario _obtenerPagosUsuarioCU;
         public PagoController(IObtenerPagoPorId obtenerPagoPorId,
             IObtenerPagosFiltrados obtenerPagosFiltrados,
             IObtenerPagos obtenerPagos,
-            IAltaPago altaPago)
+            IAltaPago altaPago,
+            IObtenerPagosUsuario obtenerPagosUsuario)
         {
             _obtenerPagoPorIdCU = obtenerPagoPorId;
             _obtenerPagosFiltradosCU = obtenerPagosFiltrados;
             _obtenerPagosCU = obtenerPagos;
             _altaPagoCU = altaPago;
+            _obtenerPagosUsuarioCU = obtenerPagosUsuario;
         }
         /// <summary>
         /// Permite obtener todos los Pagos
@@ -168,7 +171,7 @@ namespace Dominio.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("PagosUsuario")]
-        [Authorize(Roles = "GERENTE", "EMPLEADO")]
+        [Authorize(Roles = "GERENTE, EMPLEADO")]
         [ProducesResponseType(typeof(IEnumerable<PagoDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -182,7 +185,7 @@ namespace Dominio.WebApi.Controllers
             {
                 if (idUsuario != int.Parse(User.FindFirst("usuarioId")!.Value))
                 {
-                    return BadRequest("El id debe coincidir con el id del usuario logueado")
+                    return BadRequest("El id debe coincidir con el id del usuario logueado");
                 }
                 IEnumerable<PagoDTO> pagos = _obtenerPagosUsuarioCU.ObtenerPagosUsuario(idUsuario);
                 return Ok(pagos);

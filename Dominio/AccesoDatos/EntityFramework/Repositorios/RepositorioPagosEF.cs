@@ -61,7 +61,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             return _context.Pagos
                 .Include(p => p.TipoGasto)
-                .Where(p => p.UsuarioId == id)
+                .Where(p => p.UsuarioId == id);
         }
         public bool TipoGastoEnUso(int id)
         {
