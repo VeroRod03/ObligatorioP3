@@ -12,6 +12,6 @@ namespace Dominio.InterfacesRepositorio
     {
         public IEnumerable<Pago> FiltrarPagosPorFecha(int mes, int anio);
         public bool TipoGastoEnUso(int id);
-
+        public IEnumerable<Pago> FiltrarPagosPorUsuario(int id);
     }
 }

@@ -95,6 +95,10 @@ namespace Dominio.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<PagoDTO>> GetPagosFiltrados(int mes, int anio)
         {
+            if(mes < 0 || anio < 0)
+            {
+                return BadRequest("El mes y anio escogidos deben ser validos");
+            }
             try
             {
                 IEnumerable<PagoDTO> pagos = _obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio);
@@ -150,6 +154,38 @@ namespace Dominio.WebApi.Controllers
                // return CreatedAtAction(nameof(Get), new { id = pago.Id }, pago); 
             } catch (PagoException pe){
                 return BadRequest(pe.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+            }
+        }
+        
+        
+        /// <summary>
+        /// Permite obtener los Pagos filtrados por el id de un usuario (el usuario logueado)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("PagosUsuario")]
+        [Authorize(Roles = "GERENTE", "EMPLEADO")]
+        [ProducesResponseType(typeof(IEnumerable<PagoDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<IEnumerable<PagoDTO>> GetPagosUsuario(int idUsuario)
+        {
+            if(idUsuario < 0)
+            {
+                return BadRequest("El id debe ser un numero positivo");
+            }
+            try
+            {
+                IEnumerable<PagoDTO> pagos = _obtenerPagosFiltradosCU.ObtenerPagosFiltrados(mes, anio);
+                return Ok(pagos);
+            }
+            catch (PagoException pe)
+            {
+                return BadRequest(new { error = pe.Message });
             }
             catch (Exception ex)
             {

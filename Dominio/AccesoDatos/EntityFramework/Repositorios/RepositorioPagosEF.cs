@@ -57,6 +57,12 @@ namespace AccesoDatos.EntityFramework.Repositorios
                 .Where(pago => pago.PagoIncluyeFecha(mes, anio));
         }
 
+        public IEnumerable<Pago> FiltrarPagosPorUsuario(int id)
+        {
+            return _context.Pagos
+                .Include(p => p.TipoGasto)
+                .Where(p => p.UsuarioId == id)
+        }
         public bool TipoGastoEnUso(int id)
         {
             return _context.Pagos.Any(pago => pago.TipoGasto.Id == id);

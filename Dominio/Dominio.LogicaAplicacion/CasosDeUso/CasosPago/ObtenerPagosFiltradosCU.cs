@@ -24,10 +24,6 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
 
         public IEnumerable<PagoDTO> ObtenerPagosFiltrados(int mes, int anio)
         {
-            if(mes < 0 || anio < 0)
-            {
-                throw new PagoException("El mes y anio escogidos deben ser validos");
-            }
             if (mes == 0 && anio == 0)
                 return _repositorio.FindAll().Select(PagoMapper.ToDTO); 
 
