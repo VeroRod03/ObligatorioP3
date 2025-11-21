@@ -30,14 +30,14 @@ public class HomeController : Controller
     }
     
     [HttpPost]
-    public IActionResult Login(string email, string password)
+    public IActionResult Login(string email, string contra)
     {
         UsuarioDTO usuario = null;
         try
         {
             UsuarioLoginDTO logueado = new UsuarioLoginDTO();
             logueado.Email = email;
-            logueado.Password = password;
+            logueado.Contra = contra;
             
             HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiLogin, "POST", logueado);
 
@@ -53,13 +53,15 @@ public class HomeController : Controller
             }
             else // Serie 400 o 500
             {
+                //para poder ver solo el mensaje de error
+                //var errorObj = JsonConvert.DeserializeObject<dynamic>(body);
                 ViewBag.Error = body; // en el body vino el mensaje del error
                 return View();
             }
         }
         catch (Exception ex)
         {
-            ViewBag.Error = "Sucedio un error inesperado ," + ex.Message;
+            ViewBag.Error = "Sucedio un error inesperado , " + ex.Message;
             return View();
         }
     }

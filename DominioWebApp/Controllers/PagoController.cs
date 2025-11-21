@@ -142,7 +142,7 @@ namespace DominioWebApp.Controllers
         // POST: PagoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PagoDTO pagoDto, string tipoPago)
+        public ActionResult Create(AltaPagoDTO pagoDto, string tipoPago)
         {
             try
             {

@@ -11,7 +11,7 @@ namespace Dominio.LogicaAplicacion.DTOs
     public class AltaPagoDTO
     {
         public int TipoGastoId { get; set; }
-        public MetodoPago MetodoPago { get; set; }
+        public int MetodoPago { get; set; }
         public int UsuarioId { get; set; }
         [Required(ErrorMessage = "La descripcion del pago es requerida")]
         public string Descripcion { get; set; }
@@ -28,11 +28,11 @@ namespace Dominio.LogicaAplicacion.DTOs
         public double SaldoPendiente { get; set; }
 
         //recurrente
-        [Required(ErrorMessage = "La fecha hasta del pago recurrente es requerida")]
+        //[Required(ErrorMessage = "La fecha hasta del pago recurrente es requerida")]
         public DateTime? Hasta { get; set; }
 
         //unico
-        [Required(ErrorMessage = "El numero de recibo del pago unico es requerido")]
+        //[Required(ErrorMessage = "El numero de recibo del pago unico es requerido")]
         public string NumRecibo { get; set; }
 
     }

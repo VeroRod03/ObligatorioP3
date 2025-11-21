@@ -1,6 +1,6 @@
 ﻿@using DominioWebApp.Enumerations
 @using DominioWebApp.DTOs
-@model DominioWebApp.DTOs.PagoDTO
+@model DominioWebApp.DTOs.AltaPagoDTO
 
 @{
     ViewData["Title"] = "Create";
@@ -26,13 +26,13 @@
                         <option value="@gastoDTO.Id">@gastoDTO.Nombre</option>
                     }
                 </select>
-                <span asp-validation-for="TipoGasto" class="text-danger"></span>
+                <span asp-validation-for="TipoGastoId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="MetodoPago" class="control-label">Metodo De Pago</label>
                 <select name="MetodoPago" id="MetodoPago" class="form-control" required>
-                    <option value="CREDITO">CREDITO</option >
-                    <option value="EFECTIVO">EFECTIVO</option>
+                    <option value=1>CREDITO</option >
+                    <option value=2>EFECTIVO</option>
                 </select>
                 <span asp-validation-for="MetodoPago" class="text-danger"></span>
             </div>

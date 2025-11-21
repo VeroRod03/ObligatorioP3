@@ -1,4 +1,5 @@
-﻿using Dominio.Exceptions;
+﻿using Dominio.Enumerations;
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Microsoft.AspNetCore.Authorization;
@@ -130,7 +131,8 @@ namespace Dominio.WebApi.Controllers
                 PagoDTO pago = new PagoDTO
                 {
                     TipoGastoId = altaPago.TipoGastoId,
-                    MetodoPago = altaPago.MetodoPago,
+                    //convertimos el string del valor de metodo de pago a un int para parsearlo al enum
+                    MetodoPago = (MetodoPago)(altaPago.MetodoPago),
                     Descripcion = altaPago.Descripcion,
                     Monto = altaPago.Monto,
                     Fecha = altaPago.Fecha,
