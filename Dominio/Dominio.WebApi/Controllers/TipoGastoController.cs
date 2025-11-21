@@ -94,6 +94,7 @@ namespace Dominio.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "ADMINISTRADOR")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -127,6 +128,7 @@ namespace Dominio.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMINISTRADOR")]
         [ProducesResponseType(typeof(TipoGastoDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -164,6 +166,7 @@ namespace Dominio.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMINISTRADOR")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

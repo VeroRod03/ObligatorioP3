@@ -89,6 +89,7 @@ namespace Dominio.WebApi.Controllers
         /// <param name="anio"></param>
         /// <returns></returns>
         [HttpGet("PagosFiltrados")]
+        [Authorize(Roles = "GERENTE")]
         [ProducesResponseType(typeof(IEnumerable<PagoDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

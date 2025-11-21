@@ -57,6 +57,7 @@ namespace Dominio.WebApi.Controllers
         /// <param name="monto"></param>
         /// <returns></returns>
         [HttpGet("UsuariosFiltrados")]
+        [Authorize(Roles = "GERENTE")]
         [ProducesResponseType(typeof(IEnumerable<UsuarioDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -83,6 +84,7 @@ namespace Dominio.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "ADMINISTRADOR,GERENTE")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -91,6 +93,10 @@ namespace Dominio.WebApi.Controllers
             if (altaUsuario == null)
             {
                 return BadRequest("No se proporcionaron datos para el alta");
+            }
+            if(altaUsuario.Rol != 2 && altaUsuario.Rol != 3)
+            {
+                return BadRequest("Solo se pueden dar de alta Empleados o Gerentes");
             }
             try
             {
