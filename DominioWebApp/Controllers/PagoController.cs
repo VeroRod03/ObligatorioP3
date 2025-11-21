@@ -196,7 +196,7 @@ namespace DominioWebApp.Controllers
             return View();
         }
         
-        [FilterGerente] [FilterEmpleado]
+        [FilterGerenteEmpleado] 
         public ActionResult PagosUsuario()
         {
             IEnumerable<PagoDTO> pagos = new List<PagoDTO>();

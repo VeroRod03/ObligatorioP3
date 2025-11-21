@@ -46,6 +46,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Create">Crear Usuario</a>
                             </li>
                         }
+                        @if (Context.Session.GetString("usuarioRol") == "2" || Context.Session.GetString("usuarioRol") == "3") //gerente o empleado
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="PagosUsuario">Mis Pagos</a>
+                            </li>
+                        }
                         @if (Context.Session.GetInt32("usuarioId") != null)
                         {
                             <li class="nav-item">
@@ -53,12 +59,6 @@
                             </li>
                             <li class="nav-item ms-auto">
                                 <a class="nav-link text-danger fw-bold" asp-controller="Home" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        @if (Context.Session.GetString("usuarioRol") == "2" || Context.Session.GetString("usuarioRol") == "3") //gerente o empleado
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="PagosUsuario">Mis Pagos</a>
                             </li>
                         }
                         

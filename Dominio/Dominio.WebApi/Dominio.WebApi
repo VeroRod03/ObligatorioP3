@@ -43,6 +43,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Dominio.WebApi.Controllers.PagoController.GetPagosUsuario(System.Int32)">
+            <summary>
+            Permite obtener los Pagos filtrados por el id de un usuario (el usuario logueado)
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:Dominio.WebApi.Controllers.TipoGastoController.Get">
             <summary>
             Permite obtener todos los Tipos De Gasto
