@@ -14,6 +14,7 @@ namespace Dominio.Entidades
         public int Id { get; set; }
         [Required]
         public string Nombre { get; set; }
+        public Equipo() { }
         public void Validar()
         {
             ValidarNombre();

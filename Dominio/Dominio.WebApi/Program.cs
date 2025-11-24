@@ -82,7 +82,7 @@ namespace Dominio.WebApi
                     Version = "v1"
                 });
 
-                //opciones.IncludeXmlComments("Dominio.WebApi");
+                opciones.IncludeXmlComments("Dominio.WebApi");
             });
 
             //builder.Services.AddSwaggerGen(opt => opt.IncludeXmlComments("Dominio.WebApi")); 
