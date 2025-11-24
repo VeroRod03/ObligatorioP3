@@ -28,7 +28,7 @@ namespace Dominio.WebApi
             //Configuracion de Base de datos
             builder.Services.AddDbContext<DominioContext>(
                 options => options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("Dominio")
+                    builder.Configuration.GetConnectionString("MyWallet")
                 )
             );
 
