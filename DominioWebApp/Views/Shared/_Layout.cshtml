@@ -39,6 +39,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Filtrado Usuarios</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Index">Filtrado Equipos</a>
+                            </li>
                         }
                         @if (Context.Session.GetString("usuarioRol") == "2" || Context.Session.GetString("usuarioRol") == "1") //gerente o admin
                         {

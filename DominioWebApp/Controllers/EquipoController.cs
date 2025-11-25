@@ -1,10 +1,13 @@
 ﻿using DominioWebApp.DTOs;
+using DominioWebApp.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebAppClienteHttp.Auxiliares;
 
 namespace DominioWebApp.Controllers
 {
+    [FilterAutenticado]
+
     public class EquipoController : Controller
     {
         public string URLApiEquipos { get; set; }
@@ -14,6 +17,8 @@ namespace DominioWebApp.Controllers
             URLApiEquipos = config.GetValue<string>("URLApiEquips");
 
         }
+
+        [FilterGerente]
         public IActionResult Index()
         {
             return View();
