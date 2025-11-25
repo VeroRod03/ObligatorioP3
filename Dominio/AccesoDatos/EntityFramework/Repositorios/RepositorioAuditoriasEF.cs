@@ -25,15 +25,22 @@ namespace AccesoDatos.EntityFramework.Repositorios
                 obj.Validar();
                 _context.Auditorias.Add(obj);
                 _context.SaveChanges();
-            }catch(TipoGastoException tge)
+            }catch(AuditoriaException aex)
             {
-                throw tge;
+                throw aex;
             }
             catch (Exception ex)
             {
-                throw new TipoGastoException($"Hubo un error: {ex.Message}");
+                throw new AuditoriaException($"Hubo un error: {ex.Message}");
             }
 
+        }
+
+        public IEnumerable<Auditoria> FiltrarAuditoriasPorTipoGasto(int id)
+        {
+            return _context.Auditorias
+                .Where(a => a.TipoGastoId == id)
+                .ToList();
         }
 
         public IEnumerable<Auditoria> FindAll()

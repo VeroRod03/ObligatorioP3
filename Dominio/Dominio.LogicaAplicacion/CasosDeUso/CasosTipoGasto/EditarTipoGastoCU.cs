@@ -34,7 +34,8 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             {
                 Accion = "Editar",
                 Fecha = DateTime.Today,
-                UsuarioId = usuarioId
+                UsuarioId = usuarioId,
+                TipoGastoId = gasto.Id
             });
         }
     }

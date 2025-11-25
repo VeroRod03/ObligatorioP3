@@ -32,7 +32,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             TipoGastoDTO aBorrar = TipoGastoMapper.ToDTO(_repositorio.FindById(id));
             if (aBorrar == null)
             {
-                throw new TipoGastoException("El contenido con id " + id + " no existe o ya fue eliminado");
+                throw new TipoGastoException("El tipo de gasto con id " + id + " no existe o ya fue eliminado");
             }
             
             if (_repositorioPago.TipoGastoEnUso(id))
@@ -45,7 +45,8 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             {
                 Accion = "Eliminar",
                 Fecha = DateTime.Today,
-                UsuarioId = usuarioId
+                UsuarioId = usuarioId,
+                TipoGastoId = id
             });
         }
     }

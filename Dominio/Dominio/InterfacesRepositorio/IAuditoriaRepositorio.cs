@@ -9,5 +9,6 @@ namespace Dominio.InterfacesRepositorio
 {
     public interface IAuditoriaRepositorio : IRepositorio<Auditoria>
     {
+        public IEnumerable<Auditoria> FiltrarAuditoriasPorTipoGasto(int id);
     }
 }

@@ -24,17 +24,17 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto
             _repositorioAuditoria = repositorioAuditoria; 
         }
 
-        public void AgregarTipoGasto(TipoGastoDTO nuevo,int usuarioId)
+        public void AgregarTipoGasto(TipoGastoDTO nuevo, int usuarioId)
         {
-            _repositorio.Add(TipoGastoMapper.FromDTO(nuevo));
-
+            TipoGasto tipoGasto = TipoGastoMapper.FromDTO(nuevo); //instanciamos el tipoGasto para poder acceder a su id
+            _repositorio.Add(tipoGasto);
             _repositorioAuditoria.Add(new Auditoria
             {
                 Accion = "Alta",
                 Fecha = DateTime.Today,
-                UsuarioId = usuarioId
+                UsuarioId = usuarioId,
+                TipoGastoId = tipoGasto.Id 
             });
-
         }
     }
 }
