@@ -10,6 +10,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Dominio.WebApi.Controllers.EquipoController.GetEquiposFiltrados(System.Double)">
+            <summary>
+            Permite obtener los equipos filtrados, ordenados por nombre segun si los usuarios pertenecientes realizaron Pagos con un monto mayor al monto recibido por parametro
+            </summary>
+            <param name="monto"></param>
+            <returns></returns>
+        </member>
         <member name="M:Dominio.WebApi.Controllers.LoginController.Login(Dominio.LogicaAplicacion.DTOs.UsuarioLoginDTO)">
             <summary>
             Permite realizar un Login segun los datos ingresados

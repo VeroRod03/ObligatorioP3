@@ -14,14 +14,16 @@ namespace DominioWebApp.Controllers
 
         public EquipoController(IConfiguration config)
         {
-            URLApiEquipos = config.GetValue<string>("URLApiEquips");
+            URLApiEquipos = config.GetValue<string>("URLApiEquipos");
 
         }
 
         [FilterGerente]
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<EquipoDTO> equipos = new List<EquipoDTO>();
+
+            return View(equipos);
         }
         [HttpPost]
         public ActionResult Index(double monto)

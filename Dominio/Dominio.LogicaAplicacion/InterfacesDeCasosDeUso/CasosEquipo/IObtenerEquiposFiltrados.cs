@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dominio.LogicaAplicacion.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosEquipo
 {
-    internal interface IObtenerEquiposFiltrados
+    public interface IObtenerEquiposFiltrados
     {
+        public IEnumerable<EquipoDTO> ObtenerEquiposFiltrados(double monto);
     }
 }

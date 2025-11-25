@@ -102,6 +102,8 @@ namespace Dominio.WebApi
             builder.Services.AddScoped<IEliminarTipoGasto, EliminarTipoGastoCU>();
 
             builder.Services.AddScoped<IObtenerEquipos, ObtenerEquiposCU>();
+            builder.Services.AddScoped<IObtenerEquiposFiltrados, ObtenerEquiposFiltradosCU>();
+
 
             builder.Services.AddScoped<ILogin, LoginCU>();
 
