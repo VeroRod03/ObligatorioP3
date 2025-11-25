@@ -15,6 +15,15 @@ namespace AccesoDatos.EntityFramework.Repositorios
         {
             _context = context;
         }
+        public IEnumerable<Equipo> FiltrarEquiposPorMonto(double monto)
+        {
+            return _context.Pagos
+                    .Where(pago => pago.Monto >= monto)
+                    .Select(pago => pago.Usuario.Equipo)
+                    .Distinct()
+                    .OrderByDescending(equipo => equipo.Nombre)
+                    .ToList();
+        }
         public void Add(Equipo obj)
         {
             throw new NotImplementedException();

@@ -9,5 +9,6 @@ namespace Dominio.InterfacesRepositorio
 {
     public interface IEquipoRepositorio : IRepositorio<Equipo>
     {
+        public IEnumerable<Equipo> FiltrarEquiposPorMonto(double monto);
     }
 }
