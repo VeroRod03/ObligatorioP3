@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<DominioWebApp.DTOs.EquipoDTO>
+
+<h1>Equipos</h1>
+
+@if (string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="danger alert-danger ">@ViewBag.Error</div>
+}
+
+<h3>Filtrar Equipos por monto</h3>
+
+<form method="post">
+    <input type="number" name="monto" />
+    <input type="submit" value="Filtrar" />
+</form>
+
+@if(Model.Count() == 0)
+{
+    <div class="warning alert-warning">Ingrese un monto válido para filtrar los equipos</div>
+}
+else 
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} 
