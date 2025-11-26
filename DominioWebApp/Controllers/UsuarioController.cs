@@ -182,5 +182,96 @@ namespace DominioWebApp.Controllers
             }
             return View();
         }
+        
+        [FilterAdministrador]
+        public IActionResult GenerarContra()
+        {
+            IEnumerable<UsuarioDTO> usuarios = new List<UsuarioDTO>();
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    ViewBag.Usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body);
+                }
+                else
+                {
+                    ViewBag.Error = body;
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+            }
+            return View(usuarios);
+        }
+        [HttpPost]
+        public ActionResult GenerarContra(int usuarioId)
+        {
+            IEnumerable<UsuarioDTO> usuarios = new List<UsuarioDTO>();
+
+            try
+            {
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"{URLApiUsuarios}/GenerarContra?id={usuarioId}", "PUT", null, token);
+
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body);
+                    HttpResponseMessage respuestaUsuarios = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
+
+                    string bodyUsuarios = AuxiliarClienteHttp.ObtenerBody(respuestaUsuarios);
+
+                    if (respuestaUsuarios.IsSuccessStatusCode)
+                    {
+                        ViewBag.Usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(bodyUsuarios);
+                    }
+                    else
+                    {
+                        ViewBag.Error = bodyUsuarios;
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = body;
+                    HttpResponseMessage respuestaUsuarios = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
+
+                    string bodyUsuarios = AuxiliarClienteHttp.ObtenerBody(respuestaUsuarios);
+
+                    if (respuestaUsuarios.IsSuccessStatusCode)
+                    {
+                        ViewBag.Usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(bodyUsuarios); 
+                    }
+                    else 
+                    {
+                        ViewBag.Error = bodyUsuarios;  
+                    }                    
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
+                string token = HttpContext.Session.GetString("token");
+                HttpResponseMessage respuestaUsuarios = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
+
+                string bodyUsuarios = AuxiliarClienteHttp.ObtenerBody(respuestaUsuarios);
+
+                if (respuestaUsuarios.IsSuccessStatusCode)
+                {
+                    ViewBag.Usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(bodyUsuarios); 
+                }
+                else 
+                {
+                    ViewBag.Error = bodyUsuarios;  
+                }                       
+            }
+            return View(usuarios);
+        }
     }
 }
