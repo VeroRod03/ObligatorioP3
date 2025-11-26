@@ -62,7 +62,7 @@ namespace Dominio.WebApi
             {
                 opciones.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
                 {
-                    Description = "Autorización estándar mediante esquema Bearer",
+                    Description = "Autorizaciï¿½n estï¿½ndar mediante esquema Bearer",
                     In = ParameterLocation.Header,
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
@@ -72,7 +72,7 @@ namespace Dominio.WebApi
 
                 opciones.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Documentación de Dominio.Api",
+                    Title = "Documentaciï¿½n de Dominio.Api",
                     Description = "Aqui se encuentran todos los endpoint activos para utilizar los servicios del proyecto My Wallet",
                     Contact = new OpenApiContact
                     {
@@ -103,8 +103,7 @@ namespace Dominio.WebApi
 
             builder.Services.AddScoped<IObtenerEquipos, ObtenerEquiposCU>();
             builder.Services.AddScoped<IObtenerEquiposFiltrados, ObtenerEquiposFiltradosCU>();
-
-
+            
             builder.Services.AddScoped<ILogin, LoginCU>();
 
             builder.Services.AddScoped<IAltaPago, AltaPagoCU>();
@@ -112,11 +111,12 @@ namespace Dominio.WebApi
             builder.Services.AddScoped<IObtenerPagosFiltrados, ObtenerPagosFiltradosCU>();
             builder.Services.AddScoped<IObtenerPagoPorId, ObtenerPagoPorIdCU>();
             builder.Services.AddScoped<IObtenerPagosUsuario, ObtenerPagosUsuarioCU>();
-
-
+            
             builder.Services.AddScoped<IAltaUsuario, AltaUsuarioCU>();
             builder.Services.AddScoped<IObtenerUsuarios, ObtenerUsuariosCU>();
             builder.Services.AddScoped<IObtenerUsuariosFiltrados, ObtenerUsuariosFiltradosCU>();
+
+            builder.Services.AddScoped<IObtenerAuditoriasTipoGasto, ObtenerAuditoriasTipoGastoCU>();
 
             var app = builder.Build();
 

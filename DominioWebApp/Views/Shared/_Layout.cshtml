@@ -30,6 +30,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="TipoGasto" asp-action="Index">Gestion Gastos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auditoria" asp-action="Index">Auditorias</a>
+                            </li>
                         }
                         @if (Context.Session.GetString("usuarioRol") == "2") //gerente
                         {
