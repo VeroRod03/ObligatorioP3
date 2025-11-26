@@ -139,10 +139,10 @@ namespace Dominio.WebApi.Controllers
         public ActionResult<UsuarioDTO> GenerarContraUsuario(int id) //ignoramos el dto, lo sacamos de la firma
         {
             if (id <= 0) return BadRequest("Id debe ser un número positivo");
-            
+            UsuarioDTO dto = new UsuarioDTO();
             try
             {
-                UsuarioDTO dto = _generarContraCU.GenerarContra(id);
+                dto = _generarContraCU.GenerarContra(id);
             }
             catch (UsuarioException tge)
             {

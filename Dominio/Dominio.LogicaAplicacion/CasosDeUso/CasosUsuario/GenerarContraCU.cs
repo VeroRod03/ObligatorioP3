@@ -35,7 +35,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario
 
             for (int i = 0; i <= 7; i++)
             {
-                contraNueva.Insert(i, chars[random.Next(chars.Length)]) //tomamos el largo de chars, generamos un numero dentro de ese rango, y le asignamos a la i de contraNueva el caracter de chars en esa posicion random
+                contraNueva += chars[random.Next(chars.Length)]; //tomamos el largo de chars, generamos un numero dentro de ese rango, y le asignamos a la i de contraNueva el caracter de chars en esa posicion random
             }
             
             aModificar.Contra = contraNueva;

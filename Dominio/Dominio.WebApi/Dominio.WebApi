@@ -115,5 +115,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Dominio.WebApi.Controllers.UsuarioController.GenerarContraUsuario(System.Int32)">
+            <summary>
+            Permite modificar la contraseña (por una generada random) de un usuario dado su id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
