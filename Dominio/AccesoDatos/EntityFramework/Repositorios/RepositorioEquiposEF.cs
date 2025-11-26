@@ -17,7 +17,7 @@ namespace AccesoDatos.EntityFramework.Repositorios
         }
         public IEnumerable<Equipo> FiltrarEquiposPorMonto(double monto)
         {
-            return _context.Pagos
+            return _context.Unicos
                     .Where(pago => pago.Monto >= monto)
                     .Select(pago => pago.Usuario.Equipo)
                     .Distinct()
