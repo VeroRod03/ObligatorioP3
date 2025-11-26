@@ -99,7 +99,7 @@ namespace Dominio.WebApi.Controllers
             }
             if(altaUsuario.Rol != 2 && altaUsuario.Rol != 3)
             {
-                return BadRequest("Solo se pueden dar de alta Empleados o Gerentes");
+                return BadRequest("Solo se pueden dar de alta Empleados (3) o Gerentes (2)");
             }
             try
             {

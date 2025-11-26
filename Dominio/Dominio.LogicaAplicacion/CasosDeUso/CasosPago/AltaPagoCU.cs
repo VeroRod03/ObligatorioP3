@@ -9,16 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dominio.Exceptions;
+using Dominio.Enumerations;
 
 namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
 {
     public class AltaPagoCU : IAltaPago
     {
         private IPagoRepositorio _repositorio;
+        private ITipoGastoRepositorio _repoGasto;
 
-        public AltaPagoCU(IPagoRepositorio repositorio)
+        public AltaPagoCU(IPagoRepositorio repositorio, ITipoGastoRepositorio repoGasto)
         {
             _repositorio = repositorio;
+            _repoGasto = repoGasto;
         }
         public void AgregarPago(PagoDTO pagodto)
         {
@@ -26,7 +29,16 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosPago
             {
                 throw new PagoException("Datos incorrectos");
             }
-            if(pagodto.TipoPago.ToLower() == "unico")
+            TipoGasto gasto = _repoGasto.FindById(pagodto.TipoGastoId);
+            if(gasto == null)
+            {
+                throw new PagoException("No existe un tipo de gasto con ese id");
+            }
+            if ((int)pagodto.MetodoPago != 1 && (int)pagodto.MetodoPago != 2)
+            {
+                throw new PagoException("El metodo de pago solo puede ser Credito (1) o Efectivo (2)");
+            }
+            if (pagodto.TipoPago.ToLower() == "unico")
             {
                 _repositorio.Add(PagoMapper.ToUnico(pagodto));
             }else if (pagodto.TipoPago.ToLower() == "recurrente")
