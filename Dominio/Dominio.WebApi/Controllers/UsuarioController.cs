@@ -20,15 +20,18 @@ namespace Dominio.WebApi.Controllers
         private IAltaUsuario _altaUsuarioCU;
         private IObtenerUsuarios _obtenerUsuariosCU;
         private IObtenerUsuariosFiltrados _obtenerUsuariosFiltradosCU;
+        private IGenerarContra _generarContraCU;
 
         public UsuarioController(
             IAltaUsuario altaUsuarioCU,
             IObtenerUsuarios obtenerUsuariosCU,
-            IObtenerUsuariosFiltrados obtenerUsuariosFiltradosCU)
+            IObtenerUsuariosFiltrados obtenerUsuariosFiltradosCU,
+            IGenerarContra generarContraCU)
         {
             _altaUsuarioCU = altaUsuarioCU;
             _obtenerUsuariosCU = obtenerUsuariosCU;
             _obtenerUsuariosFiltradosCU = obtenerUsuariosFiltradosCU;
+            _generarContraCU = generarContraCU;
         }
         // GET: api/<UsuarioController>
         /// <summary>
@@ -115,11 +118,42 @@ namespace Dominio.WebApi.Controllers
             catch (UsuarioException ue)
             {
                 return BadRequest(ue.Message);
-    }
+            }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
             }
+        }
+        
+        // PUT api/<UsuarioController>/5
+        /// <summary>
+        /// Permite modificar la contraseña (por una generada random) de un usuario dado su id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("GenerarContra/{id}")]
+        [Authorize(Roles = "ADMINISTRADOR")]
+        [ProducesResponseType(typeof(UsuarioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<UsuarioDTO> GenerarContraUsuario(int id) //ignoramos el dto, lo sacamos de la firma
+        {
+            if (id <= 0) return BadRequest("Id debe ser un número positivo");
+            
+            try
+            {
+                UsuarioDTO dto = _generarContraCU.GenerarContra(id);
+            }
+            catch (UsuarioException tge)
+            {
+                return BadRequest(new { error = tge.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
+            }
+
+            return Ok(dto);
         }
 
     }
