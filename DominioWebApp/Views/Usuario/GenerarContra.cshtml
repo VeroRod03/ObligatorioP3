@@ -1,0 +1,29 @@
+﻿@using DominioWebApp.DTOs
+
+@model DominioWebApp.DTOs.UsuarioDTO
+
+@{
+    ViewData["Title"] = "GenerarContra";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+{
+    <div class="alert alert-success">@ViewBag.Mensaje</div>
+}
+
+<h1>Generar Contraseña</h1>
+
+<form method="post">
+    <select name="usuarioId" id="usuarioId" class="form-control" required>
+        @foreach (UsuarioDTO usuarioDTO in ViewBag.Usuarios)
+        {
+            <option value="@usuarioDTO.Id">@usuarioDTO.Email</option>
+        }
+    </select>
+    <input type="submit" value="Generar Contraseña" />
+</form>

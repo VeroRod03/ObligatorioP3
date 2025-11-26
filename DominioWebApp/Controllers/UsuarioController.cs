@@ -186,7 +186,7 @@ namespace DominioWebApp.Controllers
         [FilterAdministrador]
         public IActionResult GenerarContra()
         {
-            IEnumerable<UsuarioDTO> usuarios = new List<UsuarioDTO>();
+            UsuarioDTO usuario = new UsuarioDTO();
             try
             {
                 string token = HttpContext.Session.GetString("token");
@@ -207,12 +207,12 @@ namespace DominioWebApp.Controllers
             {
                 ViewBag.Error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
             }
-            return View(usuarios);
+            return View(usuario);
         }
         [HttpPost]
         public ActionResult GenerarContra(int usuarioId)
         {
-            IEnumerable<UsuarioDTO> usuarios = new List<UsuarioDTO>();
+            UsuarioDTO usuario = new UsuarioDTO();
 
             try
             {
@@ -223,10 +223,12 @@ namespace DominioWebApp.Controllers
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    usuarios = JsonConvert.DeserializeObject<IEnumerable<UsuarioDTO>>(body);
+                    usuario = JsonConvert.DeserializeObject<UsuarioDTO>(body);
                     HttpResponseMessage respuestaUsuarios = AuxiliarClienteHttp.EnviarSolicitud(URLApiUsuarios, "GET", null, token);
 
                     string bodyUsuarios = AuxiliarClienteHttp.ObtenerBody(respuestaUsuarios);
+
+                    ViewBag.Mensaje = "Contraseña generada exitosamente :)";
 
                     if (respuestaUsuarios.IsSuccessStatusCode)
                     {
@@ -271,7 +273,7 @@ namespace DominioWebApp.Controllers
                     ViewBag.Error = bodyUsuarios;  
                 }                       
             }
-            return View(usuarios);
+            return View(usuario);
         }
     }
 }
