@@ -113,10 +113,12 @@ namespace Dominio.WebApi
             builder.Services.AddScoped<IObtenerPagosFiltrados, ObtenerPagosFiltradosCU>();
             builder.Services.AddScoped<IObtenerPagoPorId, ObtenerPagoPorIdCU>();
             builder.Services.AddScoped<IObtenerPagosUsuario, ObtenerPagosUsuarioCU>();
+
             
             builder.Services.AddScoped<IAltaUsuario, AltaUsuarioCU>();
             builder.Services.AddScoped<IObtenerUsuarios, ObtenerUsuariosCU>();
             builder.Services.AddScoped<IObtenerUsuariosFiltrados, ObtenerUsuariosFiltradosCU>();
+            builder.Services.AddScoped<IGenerarContra, GenerarContraCU>();
 
             builder.Services.AddScoped<IObtenerAuditoriasTipoGasto, ObtenerAuditoriasTipoGastoCU>();
 

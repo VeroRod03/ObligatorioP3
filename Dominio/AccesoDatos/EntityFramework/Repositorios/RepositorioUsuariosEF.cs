@@ -83,7 +83,25 @@ namespace AccesoDatos.EntityFramework.Repositorios
 
         public void Update(Usuario obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                obj.Validar();
+
+                //cambio para evitar error de tracking
+                Usuario aModificar = _context.Usuarios.Find(obj.Id);
+                aModificar.Contra = obj.Contra;
+
+                _context.Usuarios.Update(aModificar);
+                _context.SaveChanges();
+            }
+            catch (UsuarioException uex)
+            {
+                throw uex;
+            }
+            catch (Exception ex)
+            {
+                throw new UsuarioException($"Hubo un error: {ex.Message}");
+            }
         }
     }
 }
