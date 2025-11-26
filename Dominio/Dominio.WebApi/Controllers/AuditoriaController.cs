@@ -1,3 +1,4 @@
+using Dominio.Exceptions;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosAuditoria;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosAuditoria;
@@ -39,9 +40,9 @@ namespace Dominio.WebApi.Controllers
                 IEnumerable<AuditoriaDTO> auditorias = _obtenerAuditoriasTipoGastoCU.ObtenerAuditoriasTipoGasto(idTipoGasto);
                 return Ok(auditorias);
             }
-            catch (AuditoriaException pe)
+            catch (AuditoriaException aex)
             {
-                return BadRequest(new { error = pe.Message });
+                return BadRequest(new { error = aex.Message });
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 using Dominio.Entidades;
+using Dominio.Exceptions;
 using Dominio.InterfacesRepositorio;
 using Dominio.LogicaAplicacion.DTOs;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosAuditoria;
@@ -24,7 +25,7 @@ namespace Dominio.LogicaAplicacion.CasosDeUso.CasosAuditoria
         }
         public IEnumerable<AuditoriaDTO> ObtenerAuditoriasTipoGasto(int id)
         {
-            TipoGasto gasto = _repositorioTipoGasto.FindById(id));
+            TipoGasto gasto = _repositorioTipoGasto.FindById(id);
             if (gasto == null)
             {
                 throw new AuditoriaException("El tipo de gasto con id " + id + " no existe");

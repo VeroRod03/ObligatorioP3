@@ -4,6 +4,12 @@
         <name>Dominio.WebApi</name>
     </assembly>
     <members>
+        <member name="M:Dominio.WebApi.Controllers.AuditoriaController.GetAuditoriasTipoGasto(System.Int32)">
+            <summary>
+            Permite obtener todas las auditorias dado un id de tipo de gasto
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Dominio.WebApi.Controllers.EquipoController.Get">
             <summary>
             Permite obtener todos los Equipos

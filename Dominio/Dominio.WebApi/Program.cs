@@ -1,10 +1,12 @@
 using AccesoDatos.EntityFramework;
 using AccesoDatos.EntityFramework.Repositorios;
 using Dominio.InterfacesRepositorio;
+using Dominio.LogicaAplicacion.CasosDeUso.CasosAuditoria;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosEquipos;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosTipoGasto;
 using Dominio.LogicaAplicacion.CasosDeUso.CasosUsuario;
+using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosAuditoria;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosEquipo;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosPago;
 using Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosTipoGasto;

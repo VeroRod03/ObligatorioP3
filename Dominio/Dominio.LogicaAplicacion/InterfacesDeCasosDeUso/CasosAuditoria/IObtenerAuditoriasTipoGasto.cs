@@ -9,6 +9,6 @@ namespace Dominio.LogicaAplicacion.InterfacesDeCasosDeUso.CasosAuditoria
 {
     public interface IObtenerAuditoriasTipoGasto
     {
-        public IEnumerable<AuditoriaDTO> ObtenerAuditoriasTipoGasto();
+        public IEnumerable<AuditoriaDTO> ObtenerAuditoriasTipoGasto(int id);
     }
 }

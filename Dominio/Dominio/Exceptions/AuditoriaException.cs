@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Exceptions
 {
-    public class AuditoriaException : Auditoria
+    public class AuditoriaException : Exception
     {
         public AuditoriaException() { }
         public AuditoriaException(string mensaje) : base(mensaje) { }
