@@ -217,7 +217,7 @@ namespace DominioWebApp.Controllers
             try
             {
                 string token = HttpContext.Session.GetString("token");
-                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"{URLApiUsuarios}/GenerarContra?id={usuarioId}", "PUT", null, token);
+                HttpResponseMessage respuesta = AuxiliarClienteHttp.EnviarSolicitud($"{URLApiUsuarios}/GenerarContra/{usuarioId}", "PUT", null, token);
 
                 string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
 
